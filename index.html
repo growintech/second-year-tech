@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lezioni — Grow in Tech</title>
+  <meta name="description" content="Materiali delle lezioni di JavaScript per il secondo anno — Grow in Tech." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Custom properties ───────────────────────────────────────────── */
+    :root {
+      --git-cyan:   #00E1FF;
+      --git-blue:   #0061FF;
+      --git-green:  #00FF9E;
+      --git-yellow: #E1FF00;
+      --git-dark:   #010034;
+      --git-white:  #F4FEFF;
+
+      --card-radius: 12px;
+      --transition:  0.25s ease;
+    }
+
+    /* ── Reset & base ────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      color: var(--git-dark);
+      background-color: var(--git-white);
+      background-image: radial-gradient(circle, rgba(1,0,52,0.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ── Decorative corner shapes ────────────────────────────────────── */
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Top-right triangle — cyan */
+    body::before {
+      top: 0;
+      right: 0;
+      width: 340px;
+      height: 340px;
+      background: var(--git-cyan);
+      opacity: 0.12;
+      clip-path: polygon(100% 0, 0 0, 100% 100%);
+    }
+
+    /* Bottom-left triangle — blue */
+    body::after {
+      bottom: 0;
+      left: 0;
+      width: 300px;
+      height: 300px;
+      background: var(--git-blue);
+      opacity: 0.12;
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
+
+    /* Extra decorative bar — green, bottom-right */
+    .deco-green {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 180px;
+      height: 180px;
+      background: var(--git-green);
+      opacity: 0.12;
+      clip-path: polygon(100% 0, 0 100%, 100% 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Extra decorative bar — yellow, top-left */
+    .deco-yellow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 160px;
+      height: 160px;
+      background: var(--git-yellow);
+      opacity: 0.12;
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout wrapper ──────────────────────────────────────────────── */
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── SVG logo mark ───────────────────────────────────────────────── */
+    .logo-mark {
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* ── Header ──────────────────────────────────────────────────────── */
+    .site-header {
+      background: var(--git-white);
+      border-bottom: 2px solid rgba(0, 225, 255, 0.25);
+      padding: 0 clamp(1.25rem, 5vw, 3rem);
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .header-wordmark {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--git-dark);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    /* ── Hero ────────────────────────────────────────────────────────── */
+    .hero {
+      padding: clamp(3rem, 8vw, 5.5rem) clamp(1.25rem, 5vw, 3rem) clamp(2rem, 5vw, 3.5rem);
+    }
+
+    .hero-eyebrow {
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--git-blue);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--git-dark);
+      max-width: 18ch;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 700;
+      color: var(--git-blue);
+      margin-top: 0.6rem;
+    }
+
+    .hero-bar {
+      margin-top: 1.5rem;
+      height: 5px;
+      width: clamp(80px, 15vw, 140px);
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--git-cyan), var(--git-blue));
+    }
+
+    /* ── Lessons section ─────────────────────────────────────────────── */
+    .lessons-section {
+      flex: 1;
+      padding: 0 clamp(1.25rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem);
+    }
+
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 560px) {
+      .lessons-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 900px) {
+      .lessons-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── Card ────────────────────────────────────────────────────────── */
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: var(--card-radius);
+      border: 1px solid var(--card-border, rgba(0,225,255,0.25));
+      text-decoration: none;
+      color: var(--git-dark);
+      overflow: hidden;
+      transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        opacity var(--transition);
+
+      /* Staggered entrance animation */
+      opacity: 0;
+      transform: translateY(18px);
+      animation: card-in 0.45s ease forwards;
+      animation-delay: var(--delay, 0ms);
+    }
+
+    @keyframes card-in {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card:not(.card--soon):hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(1, 0, 52, 0.12);
+    }
+
+    /* Accent bar at top of each card */
+    .card__bar {
+      height: 6px;
+      background: var(--card-accent, var(--git-cyan));
+      flex-shrink: 0;
+    }
+
+    .card__body {
+      padding: 1.4rem 1.4rem 1.6rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .card__number {
+      font-size: 2.25rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--card-accent, var(--git-cyan));
+      letter-spacing: -0.04em;
+    }
+
+    .card__title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--git-dark);
+    }
+
+    /* "Prossimamente" badge */
+    .card__badge {
+      display: inline-block;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--git-dark);
+      opacity: 0.5;
+    }
+
+    /* Coming-soon card state */
+    .card--soon {
+      opacity: 0.4;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    /* Override animation end-state for soon cards so opacity stays 0.4 */
+    .card--soon {
+      animation-name: card-in-soon;
+    }
+
+    @keyframes card-in-soon {
+      to {
+        opacity: 0.4;
+        transform: translateY(0);
+      }
+    }
+
+    /* Accent color variants */
+    .card--cyan   { --card-accent: var(--git-cyan);   --card-border: rgba(0,225,255,0.30); }
+    .card--blue   { --card-accent: var(--git-blue);   --card-border: rgba(0,97,255,0.25);  }
+    .card--green  { --card-accent: var(--git-green);  --card-border: rgba(0,255,158,0.30); }
+    .card--yellow { --card-accent: var(--git-yellow); --card-border: rgba(225,255,0,0.35); }
+
+    /* ── Footer ──────────────────────────────────────────────────────── */
+    .site-footer {
+      border-top: 2px solid rgba(0, 225, 255, 0.35);
+      padding: 1.5rem clamp(1.25rem, 5vw, 3rem);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-copy {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--git-dark);
+      opacity: 0.55;
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative corner shapes -->
+  <div class="deco-green" aria-hidden="true"></div>
+  <div class="deco-yellow" aria-hidden="true"></div>
+
+  <div class="page-wrap">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <a class="header-brand" href="./">
+        <!-- Logo mark: two chevrons >> as inline SVG -->
+        <svg class="logo-mark" width="36" height="28" viewBox="0 0 36 28" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lg-header" x1="0" y1="0" x2="36" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00E1FF"/>
+              <stop offset="100%" stop-color="#0061FF"/>
+            </linearGradient>
+          </defs>
+          <!-- First chevron -->
+          <polyline points="2,2 13,14 2,26" stroke="url(#lg-header)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Second chevron -->
+          <polyline points="14,2 25,14 14,26" stroke="url(#lg-header)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="header-wordmark">Grow in Tech</span>
+      </a>
+    </header>
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+      <p class="hero-eyebrow">GIT — Coding Education</p>
+      <h1 class="hero-title">Materiali delle lezioni</h1>
+      <p class="hero-sub">Secondo anno — JavaScript</p>
+      <div class="hero-bar" aria-hidden="true"></div>
+    </section>
+
+    <!-- ── Lessons grid ── -->
+    <main class="lessons-section">
+      <div class="lessons-grid" id="lessons-grid">
+
+        <!-- 01 -->
+        <a class="card card--cyan" href="./lesson1/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">01</div>
+            <div class="card__title">Introduzione a JavaScript</div>
+          </div>
+        </a>
+
+        <!-- 02 -->
+        <a class="card card--blue" href="./lesson2/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">02</div>
+            <div class="card__title">Identity Card</div>
+          </div>
+        </a>
+
+        <!-- 03 -->
+        <a class="card card--green" href="./lesson3/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">03</div>
+            <div class="card__title">Tipi di dati e if/else</div>
+          </div>
+        </a>
+
+        <!-- 04 -->
+        <a class="card card--yellow" href="./lesson4/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">04</div>
+            <div class="card__title">Guess the Number</div>
+          </div>
+        </a>
+
+        <!-- 05 -->
+        <a class="card card--cyan" href="./lesson5/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">05</div>
+            <div class="card__title">Input e numeri random</div>
+          </div>
+        </a>
+
+        <!-- 06 -->
+        <a class="card card--blue" href="./lesson6/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">06</div>
+            <div class="card__title">Funzioni e condizioni</div>
+          </div>
+        </a>
+
+        <!-- 07 -->
+        <a class="card card--green" href="./lesson7/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">07</div>
+            <div class="card__title">Operatori booleani</div>
+          </div>
+        </a>
+
+        <!-- 08 -->
+        <a class="card card--yellow" href="./lesson8/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">08</div>
+            <div class="card__title">Whac-A-Mole / parte 1</div>
+          </div>
+        </a>
+
+        <!-- 09 -->
+        <a class="card card--cyan" href="./lesson9/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">09</div>
+            <div class="card__title">Whac-A-Mole / parte 2</div>
+          </div>
+        </a>
+
+        <!-- 10 — coming soon -->
+        <div class="card card--blue card--soon" aria-hidden="true">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">10</div>
+            <div class="card__title">—</div>
+            <span class="card__badge">prossimamente</span>
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <a class="card card--green" href="./lesson11/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">11</div>
+            <div class="card__title">To-Do List</div>
+          </div>
+        </a>
+
+        <!-- 12 -->
+        <a class="card card--yellow" href="./lesson12/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">12</div>
+            <div class="card__title">JSON e localStorage</div>
+          </div>
+        </a>
+
+        <!-- 13 -->
+        <a class="card card--cyan" href="./lesson13/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">13</div>
+            <div class="card__title">Slideshow di immagini</div>
+          </div>
+        </a>
+
+        <!-- 14 -->
+        <a class="card card--blue" href="./lesson14/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">14</div>
+            <div class="card__title">Date e countdown</div>
+          </div>
+        </a>
+
+        <!-- 15 -->
+        <a class="card card--green" href="./lesson15/">
+          <div class="card__bar"></div>
+          <div class="card__body">
+            <div class="card__number">15</div>
+            <div class="card__title">Bootstrap</div>
+          </div>
+        </a>
+
+      </div>
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <svg class="logo-mark" width="28" height="22" viewBox="0 0 36 28" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg-footer" x1="0" y1="0" x2="36" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00E1FF"/>
+            <stop offset="100%" stop-color="#0061FF"/>
+          </linearGradient>
+        </defs>
+        <polyline points="2,2 13,14 2,26" stroke="url(#lg-footer)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <polyline points="14,2 25,14 14,26" stroke="url(#lg-footer)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="footer-copy">Grow in Tech &copy; 2025</span>
+    </footer>
+
+  </div><!-- .page-wrap -->
+
+  <script>
+    // Staggered entrance: set --delay on each card based on its index.
+    // Animation is driven entirely by CSS; JS only injects the timing.
+    (function () {
+      var cards = document.querySelectorAll('#lessons-grid .card');
+      var BASE_DELAY = 60; // ms between each card
+      var START_DELAY = 80; // initial offset
+      cards.forEach(function (card, i) {
+        card.style.setProperty('--delay', (START_DELAY + i * BASE_DELAY) + 'ms');
+      });
+    })();
+  </script>
+</body>
+</html>
