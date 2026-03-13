@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 4: Countdown Banner · GIT Lesson 14</title>
+  <link rel="stylesheet" href="style.css">
+  <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    .preview-countdown {
+      background: #0d0f14;
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+      margin: 16px 0;
+    }
+    .preview-countdown .units {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .preview-countdown .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .preview-countdown .unit .num {
+      font-family: 'DM Mono', monospace;
+      font-size: 36px;
+      font-weight: 600;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      min-width: 64px;
+    }
+    .preview-countdown .unit .lbl {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    /* Bigger output iframe for the countdown */
+    #output-07 { min-height: 120px; }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="topbar">
+    <a class="topbar-logo" href="index.html">
+      <img src="logo.svg" alt="Grow in Tech">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">JS · Year 2 · Lesson 14</span>
+      <span class="topbar-countdown" id="topbar-cd">--:--:--</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀️</button>
+    </div>
+  </header>
+
+  <div class="progress-bar">
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot active"></div>
+  </div>
+
+  <div class="hero">
+    <div class="activity-badge badge-red">🔴 Level 4 — Main Challenge</div>
+    <h1>Countdown<br><span class="grad">Banner</span></h1>
+    <p class="lead">
+      Put everything together: <code>Date</code>, <code>getTime()</code>, the remainder pattern,
+      <code>querySelector</code>, and <code>setInterval</code> — all in one project.
+    </p>
+  </div>
+
+  <section>
+    <h2>The target</h2>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">Here's what you're building — a live timer that ticks every second:</p>
+    <div class="preview-countdown">
+      <div class="units">
+        <div class="unit"><div class="num" id="prev-days">--</div><div class="lbl">Days</div></div>
+        <div class="unit"><div class="num" id="prev-hours">--</div><div class="lbl">Hours</div></div>
+        <div class="unit"><div class="num" id="prev-min">--</div><div class="lbl">Minutes</div></div>
+        <div class="unit"><div class="num" id="prev-sec">--</div><div class="lbl">Seconds</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What's in the iframe</h2>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:12px;">
+      The output panel below already has this HTML structure loaded. Your JS code needs to find these elements
+      and fill in the numbers.
+    </p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre>&lt;<span class="kw">div</span> <span class="fn">id</span>=<span class="str">"countdown"</span>&gt;
+  &lt;<span class="kw">span</span> <span class="fn">id</span>=<span class="str">"days"</span>&gt;&lt;/<span class="kw">span</span>&gt; days
+  &lt;<span class="kw">span</span> <span class="fn">id</span>=<span class="str">"hours"</span>&gt;&lt;/<span class="kw">span</span>&gt; hours
+  &lt;<span class="kw">span</span> <span class="fn">id</span>=<span class="str">"minutes"</span>&gt;&lt;/<span class="kw">span</span>&gt; min
+  &lt;<span class="kw">span</span> <span class="fn">id</span>=<span class="str">"seconds"</span>&gt;&lt;/<span class="kw">span</span>&gt; sec
+&lt;/<span class="kw">div</span>&gt;</pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>Build it — step by step</h2>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:20px;">
+      Don't try to write everything at once. Complete each step before moving on.
+    </p>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:inline-block;background:rgba(0,225,255,0.08);border:1px solid rgba(0,225,255,0.3);border-radius:6px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--grad-start);padding:2px 8px;margin-bottom:8px;text-transform:uppercase;">Step A</div>
+      <h3>Show only the days</h3>
+      <p>Start simple. Calculate the days left and put the number into <code>#days</code>. Ignore hours/minutes/seconds for now.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><span class="kw">var</span> target = <span class="kw">new</span> <span class="fn">Date</span>(<span class="str">"2025-07-11 14:00:00"</span>);
+<span class="kw">var</span> now = <span class="kw">new</span> <span class="fn">Date</span>();
+<span class="kw">var</span> diff = target.<span class="met">getTime</span>() - now.<span class="met">getTime</span>();
+<span class="kw">var</span> days = <span class="fn">parseInt</span>(diff / (<span class="num">24</span> * <span class="num">60</span> * <span class="num">60</span> * <span class="num">1000</span>));
+
+document.<span class="met">querySelector</span>(<span class="str">"#days"</span>).innerText = days;</pre>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:inline-block;background:var(--surface-2);border:1px solid var(--border-2);border-radius:6px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--text-muted);padding:2px 8px;margin-bottom:8px;text-transform:uppercase;">Step B</div>
+      <h3>Add hours, minutes, seconds</h3>
+      <p>After extracting days, subtract them from <code>diff</code>, then extract hours from the remainder. Repeat for minutes and seconds.</p>
+    </div>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:inline-block;background:var(--surface-2);border:1px solid var(--border-2);border-radius:6px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--text-muted);padding:2px 8px;margin-bottom:8px;text-transform:uppercase;">Step C</div>
+      <h3>Wrap everything in <code>setInterval</code></h3>
+      <p>Right now your code runs once and freezes. Move all of it inside <code>setInterval(function() { ... }, 1000)</code> so it recalculates every second.</p>
+      <div class="callout callout-info" style="margin-top:8px;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Key point</strong>
+          Move <code>var now = new Date()</code> and <code>var diff = ...</code> inside the interval too — they must be recalculated each tick.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Your code</h2>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:4px;">
+      Write your full solution here. The output panel already has the HTML spans — click <strong>Run</strong> to start your countdown live, then <strong>Check</strong> to verify it.
+    </p>
+
+    <div class="editor-wrap">
+      <div class="editor-titlebar">
+        <div class="editor-dots"><span></span><span></span><span></span></div>
+        <span class="editor-filename">countdown.js</span>
+        <span class="editor-lang-badge">JS</span>
+      </div>
+      <textarea class="code-editor" id="editor-07" rows="16" spellcheck="false">var target = new Date("2025-07-11 14:00:00");
+
+setInterval(function() {
+
+  var now = new Date();
+  var diff = target.getTime() - now.getTime();
+
+  // YOUR CODE HERE: extract days, hours, minutes, seconds
+  // then put them into the spans using querySelector
+
+
+
+}, 1000);</textarea>
+      <div class="editor-actions">
+        <button class="run-btn" onclick="run07()">▶ Run</button>
+        <button class="check-btn" onclick="check07()">✓ Check</button>
+        <a class="jsbin-btn" href="https://jsbin.com/?html,js,output" target="_blank" style="margin:0">↗ JSBin</a>
+      </div>
+      <iframe id="output-07" class="editor-output"></iframe>
+      <div id="feedback-07" class="check-feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Full solution</h2>
+    <details>
+      <summary style="color:var(--text-muted); font-size:14px; padding:12px 0; cursor:pointer; user-select:none;">
+        Click to reveal — only after completing step C!
+      </summary>
+
+      <div class="code-block" style="margin-top:8px;">
+        <button class="copy-btn">Copy</button>
+        <pre><span class="kw">var</span> target = <span class="kw">new</span> <span class="fn">Date</span>(<span class="str">"2025-07-11 14:00:00"</span>);
+
+<span class="fn">setInterval</span>(<span class="kw">function</span>() {
+
+  <span class="kw">var</span> now = <span class="kw">new</span> <span class="fn">Date</span>();
+  <span class="kw">var</span> diff = target.<span class="met">getTime</span>() - now.<span class="met">getTime</span>();
+
+  <span class="kw">var</span> days = <span class="fn">parseInt</span>(diff / (<span class="num">24</span> * <span class="num">60</span> * <span class="num">60</span> * <span class="num">1000</span>));
+  diff = diff - days * (<span class="num">24</span> * <span class="num">60</span> * <span class="num">60</span> * <span class="num">1000</span>);
+
+  <span class="kw">var</span> hours = <span class="fn">parseInt</span>(diff / (<span class="num">60</span> * <span class="num">60</span> * <span class="num">1000</span>));
+  diff = diff - hours * (<span class="num">60</span> * <span class="num">60</span> * <span class="num">1000</span>);
+
+  <span class="kw">var</span> minutes = <span class="fn">parseInt</span>(diff / (<span class="num">60</span> * <span class="num">1000</span>));
+  diff = diff - minutes * (<span class="num">60</span> * <span class="num">1000</span>);
+
+  <span class="kw">var</span> seconds = <span class="fn">parseInt</span>(diff / <span class="num">1000</span>);
+
+  document.<span class="met">querySelector</span>(<span class="str">"#days"</span>).innerText = days;
+  document.<span class="met">querySelector</span>(<span class="str">"#hours"</span>).innerText = hours;
+  document.<span class="met">querySelector</span>(<span class="str">"#minutes"</span>).innerText = minutes;
+  document.<span class="met">querySelector</span>(<span class="str">"#seconds"</span>).innerText = seconds;
+
+}, <span class="num">1000</span>);</pre>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2>Extra challenges</h2>
+    <div class="card">
+      <h3>If you finish early…</h3>
+      <p>🎨 <strong>Style the banner</strong> — big numbers, dark background, gradient colors.</p>
+      <p>🎉 <strong>End message</strong> — show "Time's up!" when <code>diff &lt; 0</code>.</p>
+      <p>💬 <strong>User-chosen date</strong> — use <code>prompt()</code> to ask for a target date before starting.</p>
+      <p>🔢 <strong>Pad with zeros</strong> — show <code>07</code> instead of <code>7</code> using a string comparison or <code>padStart()</code>.</p>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a class="nav-btn nav-btn-outline" href="06-remainder.html">← Remainder pattern</a>
+    <span class="nav-spacer"></span>
+    <a class="nav-btn nav-btn-outline" href="index.html">↩ Back to index</a>
+  </div>
+
+</div>
+<script src="app.js"></script>
+<script>
+  // The HTML pre-loaded in the iframe output
+  var COUNTDOWN_HTML = '<div id="countdown" style="font-family:monospace;font-size:22px;padding:12px;">'
+    + '<span id="days">--</span> days '
+    + '<span id="hours">--</span> hours '
+    + '<span id="minutes">--</span> min '
+    + '<span id="seconds">--</span> sec'
+    + '</div>';
+
+  function run07() {
+    runCode('editor-07', 'output-07', COUNTDOWN_HTML);
+  }
+
+  function check07() {
+    var code = document.getElementById('editor-07').value;
+    var checks = {
+      setInterval: code.includes('setInterval'),
+      getTime:     code.includes('getTime()'),
+      days:        code.includes('"#days"') || code.includes("'#days'"),
+      hours:       code.includes('"#hours"') || code.includes("'#hours'"),
+      minutes:     code.includes('"#minutes"') || code.includes("'#minutes'"),
+      seconds:     code.includes('"#seconds"') || code.includes("'#seconds'"),
+    };
+
+    if (!checks.setInterval) {
+      showFeedback('feedback-07', false, 'Wrap your code in setInterval(function() { ... }, 1000) to make it update every second.');
+      return;
+    }
+    if (!checks.getTime) {
+      showFeedback('feedback-07', false, 'Use getTime() on both dates to calculate the difference in milliseconds.');
+      return;
+    }
+    var missing = [];
+    if (!checks.days)    missing.push('#days');
+    if (!checks.hours)   missing.push('#hours');
+    if (!checks.minutes) missing.push('#minutes');
+    if (!checks.seconds) missing.push('#seconds');
+    if (missing.length > 0) {
+      showFeedback('feedback-07', false, 'Missing querySelector for: ' + missing.join(', ') + '. You need to update all four spans.');
+      return;
+    }
+    showFeedback('feedback-07', true, 'Looks great! setInterval ✓, getTime() ✓, all four querySelector calls ✓. Click Run to see it tick!');
+  }
+
+  // Animate the preview countdown in the hero section
+  (function() {
+    var target = new Date();
+    target.setDate(target.getDate() + 14);
+    target.setHours(target.getHours() + 3);
+    target.setMinutes(target.getMinutes() + 22);
+    target.setSeconds(target.getSeconds() + 45);
+    setInterval(function() {
+      var now = new Date();
+      var diff = target.getTime() - now.getTime();
+      if (diff < 0) return;
+      var days = parseInt(diff / (24*60*60*1000));
+      diff -= days * 24*60*60*1000;
+      var hours = parseInt(diff / (60*60*1000));
+      diff -= hours * 60*60*1000;
+      var minutes = parseInt(diff / 60000);
+      diff -= minutes * 60000;
+      var seconds = parseInt(diff / 1000);
+      var pad = function(n) { return String(n).padStart(2,'0'); };
+      document.getElementById('prev-days').textContent = pad(days);
+      document.getElementById('prev-hours').textContent = pad(hours);
+      document.getElementById('prev-min').textContent = pad(minutes);
+      document.getElementById('prev-sec').textContent = pad(seconds);
+    }, 1000);
+  })();
+</script>
+</body>
+</html>

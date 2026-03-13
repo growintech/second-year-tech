@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept: getTime() · GIT Lesson 14</title>
+  <link rel="stylesheet" href="style.css">
+  <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');</script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="topbar">
+    <a class="topbar-logo" href="index.html">
+      <img src="logo.svg" alt="Grow in Tech">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">JS · Year 2 · Lesson 14</span>
+      <span class="topbar-countdown" id="topbar-cd">--:--:--</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀️</button>
+    </div>
+  </header>
+
+  <div class="progress-bar">
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot active"></div>
+    <div class="progress-bar-dot"></div>
+    <div class="progress-bar-dot"></div>
+    <div class="progress-bar-dot"></div>
+  </div>
+
+  <div class="hero">
+    <div class="activity-badge badge-concept">⏱️ Concept</div>
+    <h1><span class="grad">getTime()</span> and<br>time differences</h1>
+    <p class="lead">
+      To calculate <em>how many days between two dates</em>, we need a common unit.
+      JavaScript measures time in <strong>milliseconds</strong> — and that's the key.
+    </p>
+  </div>
+
+  <section>
+    <h2>What is getTime()?</h2>
+    <div class="card">
+      <h3>The Unix Epoch</h3>
+      <p>
+        <code>getTime()</code> returns the number of <strong>milliseconds</strong> since
+        <strong>1 January 1970, 00:00:00 UTC</strong> — the "Unix Epoch".
+        Both dates become plain numbers, so subtracting one from the other gives the difference in milliseconds.
+      </p>
+    </div>
+
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><span class="kw">var</span> now = <span class="kw">new</span> <span class="fn">Date</span>();
+console.<span class="met">log</span>(now.<span class="met">getTime</span>());
+<span class="cmt">// e.g. → 1746000000000</span></pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>Calculating a difference</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Subtract two dates</h4>
+          <div class="code-block">
+            <button class="copy-btn">Copy</button>
+            <pre><span class="kw">var</span> d1 = <span class="kw">new</span> <span class="fn">Date</span>(<span class="str">"2025-01-01"</span>);
+<span class="kw">var</span> d2 = <span class="kw">new</span> <span class="fn">Date</span>(<span class="str">"2025-07-11"</span>);
+
+<span class="kw">var</span> diff = d2.<span class="met">getTime</span>() - d1.<span class="met">getTime</span>();
+console.<span class="met">log</span>(diff);   <span class="cmt">// milliseconds</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Convert milliseconds → days</h4>
+          <p>1,000 ms = 1 second · 60 seconds = 1 minute · 60 minutes = 1 hour · 24 hours = 1 day:</p>
+          <div class="code-block">
+            <button class="copy-btn">Copy</button>
+            <pre><span class="kw">var</span> days = <span class="fn">parseInt</span>(diff / (<span class="num">24</span> * <span class="num">60</span> * <span class="num">60</span> * <span class="num">1000</span>));
+console.<span class="met">log</span>(<span class="str">"Days between: "</span> + days);</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-warn" style="margin-top: 16px;">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        <strong>Remember parseInt()</strong>
+        Division gives a decimal like <code>84.07</code>. Use <code>parseInt()</code> to keep only the whole number: <code>parseInt(84.07)</code> → <code>84</code>.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The conversion chain</h2>
+
+    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-family: 'DM Mono', monospace; font-size: 13px;">
+      <div style="background:var(--surface-2); border:1px solid var(--border-2); border-radius:8px; padding:10px 14px; text-align:center;">
+        <div style="color:var(--grad-start); font-weight:600;">ms</div>
+        <div style="color:var(--text-dim); font-size:11px;">milliseconds</div>
+      </div>
+      <div style="color:var(--text-dim); font-size:18px; padding:0 2px;">÷ 1,000</div>
+      <div style="background:var(--surface-2); border:1px solid var(--border-2); border-radius:8px; padding:10px 14px; text-align:center;">
+        <div style="color:var(--grad-start); font-weight:600;">sec</div>
+        <div style="color:var(--text-dim); font-size:11px;">seconds</div>
+      </div>
+      <div style="color:var(--text-dim); font-size:18px; padding:0 2px;">÷ 60</div>
+      <div style="background:var(--surface-2); border:1px solid var(--border-2); border-radius:8px; padding:10px 14px; text-align:center;">
+        <div style="color:var(--grad-start); font-weight:600;">min</div>
+        <div style="color:var(--text-dim); font-size:11px;">minutes</div>
+      </div>
+      <div style="color:var(--text-dim); font-size:18px; padding:0 2px;">÷ 60</div>
+      <div style="background:var(--surface-2); border:1px solid var(--border-2); border-radius:8px; padding:10px 14px; text-align:center;">
+        <div style="color:var(--grad-start); font-weight:600;">h</div>
+        <div style="color:var(--text-dim); font-size:11px;">hours</div>
+      </div>
+      <div style="color:var(--text-dim); font-size:18px; padding:0 2px;">÷ 24</div>
+      <div style="background: var(--grad); border-radius:8px; padding:10px 14px; text-align:center;">
+        <div style="color:#fff; font-weight:700;">days</div>
+        <div style="color:rgba(255,255,255,0.7); font-size:11px;">days</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Try it yourself</h2>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:4px;">
+      Run the code below. How many days between 1 Jan 2025 and 11 Jul 2025?
+      Then change the dates and experiment.
+    </p>
+
+    <div class="editor-wrap">
+      <div class="editor-titlebar">
+        <div class="editor-dots"><span></span><span></span><span></span></div>
+        <span class="editor-filename">gettime.js</span>
+        <span class="editor-lang-badge">JS</span>
+      </div>
+      <textarea class="code-editor" id="editor-04" rows="8" spellcheck="false">var d1 = new Date("2025-01-01");
+var d2 = new Date("2025-07-11");
+
+// YOUR CODE HERE
+// 1. Calculate 'diff' in milliseconds using getTime()
+// 2. Convert 'diff' to 'days' using parseInt()
+// 3. Log both with console.log</textarea>
+      <div class="editor-actions">
+        <button class="run-btn" onclick="runCode('editor-04','output-04','')">▶ Run</button>
+        <button class="check-btn" onclick="check04()">✓ Check</button>
+        <a class="jsbin-btn" href="https://jsbin.com/?js,console" target="_blank" style="margin:0">↗ JSBin</a>
+      </div>
+      <iframe id="output-04" class="editor-output" style="min-height:80px;"></iframe>
+      <div id="feedback-04" class="check-feedback"></div>
+    </div>
+
+    <div class="qa" style="margin-top: 16px;">
+      <div class="qa-q">How many days between 1 Jan 2025 and 11 Jul 2025? (click to check)</div>
+      <div class="qa-a" style="display:none">191 days — Jan(31) + Feb(28) + Mar(31) + Apr(30) + May(31) + Jun(30) + Jul 1–10(10) = 191</div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a class="nav-btn nav-btn-outline" href="03-age.html">← Level 2</a>
+    <span class="nav-spacer"></span>
+    <a class="nav-btn nav-btn-primary" href="05-school.html">Next: Level 3 →</a>
+  </div>
+
+</div>
+<script src="app.js"></script>
+<script>
+  function check04() {
+    var code = document.getElementById('editor-04').value;
+    if (!code.includes('getTime()')) {
+      showFeedback('feedback-04', false, 'Use getTime() on both dates to get milliseconds.');
+      return;
+    }
+    var result = checkStudentCode(code, ['diff', 'days']);
+    if (result.error) {
+      showFeedback('feedback-04', false, 'Error: ' + result.error);
+      return;
+    }
+    var diff = result.vars.diff;
+    var days = result.vars.days;
+    if (typeof diff === 'number' && diff > 0) {
+      showFeedback('feedback-04', true, 'Correct! diff = ' + diff + ' ms = ' + days + ' days. getTime() gives you a plain number to do arithmetic with.');
+    } else if (typeof diff === 'number' && diff < 0) {
+      showFeedback('feedback-04', false, 'Your diff is negative — that means d1 is after d2. Subtract the earlier date from the later one.');
+    } else {
+      showFeedback('feedback-04', false, 'Make sure you store the result of getTime() subtraction in a variable called "diff".');
+    }
+  }
+</script>
+</body>
+</html>

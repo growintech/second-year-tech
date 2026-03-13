@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore: The Date Object · GIT Lesson 14</title>
+  <link rel="stylesheet" href="style.css">
+  <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');</script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="topbar">
+    <a class="topbar-logo" href="index.html">
+      <img src="logo.svg" alt="Grow in Tech">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">JS · Year 2 · Lesson 14</span>
+      <span class="topbar-countdown" id="topbar-cd">--:--:--</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀️</button>
+    </div>
+  </header>
+
+  <div class="progress-bar">
+    <div class="progress-bar-dot active"></div>
+    <div class="progress-bar-dot"></div>
+    <div class="progress-bar-dot"></div>
+    <div class="progress-bar-dot"></div>
+    <div class="progress-bar-dot"></div>
+    <div class="progress-bar-dot"></div>
+    <div class="progress-bar-dot"></div>
+  </div>
+
+  <div class="hero">
+    <div class="activity-badge badge-concept">🔍 Exploration</div>
+    <h1>The <span class="grad">Date</span> object</h1>
+    <p class="lead">
+      JavaScript has a built-in <code>Date</code> object for working with dates and times.
+      Let's explore its methods — type code below and see the results live.
+    </p>
+  </div>
+
+  <section>
+    <h2>Step 1 — Create a date</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Today's date and time</h4>
+          <p>Calling <code>new Date()</code> with no arguments gives you the current moment. Run the code below and see what appears.</p>
+          <div class="code-block">
+            <button class="copy-btn">Copy</button>
+            <pre><span class="kw">var</span> now = <span class="kw">new</span> <span class="fn">Date</span>();
+console.<span class="met">log</span>(now);</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>A specific date</h4>
+          <p>Pass a string in <code>YYYY-MM-DD</code> format to create a date for a specific day:</p>
+          <div class="code-block">
+            <button class="copy-btn">Copy</button>
+            <pre><span class="kw">var</span> birthday = <span class="kw">new</span> <span class="fn">Date</span>(<span class="str">"2008-05-13"</span>);
+console.<span class="met">log</span>(birthday);</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Step 2 — Extract values</h2>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">
+      A Date object has many methods to read individual parts. Try each one and <strong>predict the output before running</strong>.
+    </p>
+
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><span class="kw">var</span> now = <span class="kw">new</span> <span class="fn">Date</span>();
+
+now.<span class="met">getFullYear</span>()   <span class="cmt">// the year, e.g. 2025</span>
+now.<span class="met">getMonth</span>()      <span class="cmt">// ⚠️ tricky! see below</span>
+now.<span class="met">getDate</span>()       <span class="cmt">// day of the month (1–31)</span>
+now.<span class="met">getDay</span>()        <span class="cmt">// ⚠️ tricky! see below</span>
+now.<span class="met">getHours</span>()      <span class="cmt">// hour (0–23)</span>
+now.<span class="met">getMinutes</span>()    <span class="cmt">// minutes (0–59)</span>
+now.<span class="met">getSeconds</span>()    <span class="cmt">// seconds (0–59)</span></pre>
+    </div>
+
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        <strong>Two famous gotchas</strong>
+        <code>getMonth()</code> returns <strong>0 for January</strong>, 1 for February… 11 for December.<br><br>
+        <code>getDay()</code> returns <strong>0 for Sunday</strong>, 1 for Monday… 6 for Saturday.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Questions to answer</h2>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">
+      Click each question to reveal the answer.
+    </p>
+
+    <div class="qa">
+      <div class="qa-q">What does <code>getMonth()</code> return if today is in January?</div>
+      <div class="qa-a" style="display:none">0 — not 1. January is month 0.</div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-q">What is the difference between <code>getDate()</code> and <code>getDay()</code>?</div>
+      <div class="qa-a" style="display:none">getDate() → day number in the month (e.g. 13). getDay() → day of the week (e.g. 2 = Tuesday).</div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-q">If today is a Monday, what does <code>getDay()</code> return?</div>
+      <div class="qa-a" style="display:none">1 — because Sunday = 0, Monday = 1.</div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-q">What does <code>getFullYear()</code> return right now?</div>
+      <div class="qa-a" style="display:none">The current 4-digit year, e.g. 2025.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Try it live</h2>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:4px;">
+      Edit the code below, then click <strong>Run</strong> to see the output. Try changing which methods you call.
+    </p>
+
+    <div class="editor-wrap">
+      <div class="editor-titlebar">
+        <div class="editor-dots"><span></span><span></span><span></span></div>
+        <span class="editor-filename">explore.js</span>
+        <span class="editor-lang-badge">JS</span>
+      </div>
+      <textarea class="code-editor" id="editor-01" rows="9" spellcheck="false">var now = new Date();
+
+console.log("Full year:", now.getFullYear());
+console.log("Month (0=Jan):", now.getMonth());
+console.log("Day of month:", now.getDate());
+console.log("Day of week (0=Sun):", now.getDay());
+console.log("Hours:", now.getHours());
+console.log("Minutes:", now.getMinutes());
+console.log("Seconds:", now.getSeconds());</textarea>
+      <div class="editor-actions">
+        <button class="run-btn" onclick="runCode('editor-01','output-01','')">▶ Run</button>
+        <button class="check-btn" onclick="check01()">✓ Check</button>
+        <a class="jsbin-btn" href="https://jsbin.com/?js,console" target="_blank" style="margin:0">↗ JSBin</a>
+      </div>
+      <iframe id="output-01" class="editor-output" style="min-height:140px;"></iframe>
+      <div id="feedback-01" class="check-feedback"></div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a class="nav-btn nav-btn-outline" href="index.html">← Back</a>
+    <span class="nav-spacer"></span>
+    <a class="nav-btn nav-btn-primary" href="02-birthday.html">Next: Level 1 →</a>
+  </div>
+
+</div>
+<script src="app.js"></script>
+<script>
+  function check01() {
+    var code = document.getElementById('editor-01').value;
+    var result = checkStudentCode(code, ['now']);
+    if (result.error) {
+      showFeedback('feedback-01', false, 'Error in your code: ' + result.error);
+      return;
+    }
+    var usesDate = code.includes('new Date()');
+    var usesMethod = code.includes('getFullYear()') || code.includes('getMonth()') ||
+                     code.includes('getDate()') || code.includes('getDay()');
+    if (usesDate && usesMethod) {
+      showFeedback('feedback-01', true, 'Great! You\'re calling Date methods correctly. Notice how getMonth() is 0-indexed!');
+    } else if (!usesDate) {
+      showFeedback('feedback-01', false, 'Make sure you create a date with new Date() first.');
+    } else {
+      showFeedback('feedback-01', false, 'Call at least one Date method like getFullYear() or getDay().');
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 3: Days until end of school · GIT Lesson 14</title>
+  <link rel="stylesheet" href="style.css">
+  <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');</script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="topbar">
+    <a class="topbar-logo" href="index.html">
+      <img src="logo.svg" alt="Grow in Tech">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">JS · Year 2 · Lesson 14</span>
+      <span class="topbar-countdown" id="topbar-cd">--:--:--</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀️</button>
+    </div>
+  </header>
+
+  <div class="progress-bar">
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot active"></div>
+    <div class="progress-bar-dot"></div>
+    <div class="progress-bar-dot"></div>
+  </div>
+
+  <div class="hero">
+    <div class="activity-badge badge-yellow">🟡 Level 3 — Medium</div>
+    <h1>Days until<br><span class="grad">end of school</span></h1>
+    <p class="lead">
+      Apply <code>getTime()</code> to calculate how many days are left until the last day of school.
+      You now have all the tools you need!
+    </p>
+  </div>
+
+  <section>
+    <h2>Your task</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Create a target date</h4>
+          <p>Create a Date for the last day of school (e.g. <code>"2025-07-11"</code>).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Get today's date</h4>
+          <p>Create another Date with <code>new Date()</code> for right now.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Calculate the difference in days</h4>
+          <p>Subtract milliseconds, divide by ms in a day. Use <code>parseInt()</code> to get a whole number.</p>
+          <div class="callout callout-info" style="margin-top:8px;">
+            <span class="callout-icon">💡</span>
+            <div class="callout-body">
+              <strong>Formula reminder</strong>
+              ms in one day = <code>24 * 60 * 60 * 1000</code> = <code>86,400,000</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Write your code</h2>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:4px;">
+      Write your solution below. Click <strong>Run</strong> to see the result, <strong>Check</strong> to verify.
+    </p>
+
+    <div class="editor-wrap">
+      <div class="editor-titlebar">
+        <div class="editor-dots"><span></span><span></span><span></span></div>
+        <span class="editor-filename">school.js</span>
+        <span class="editor-lang-badge">JS</span>
+      </div>
+      <textarea class="code-editor" id="editor-05" rows="8" spellcheck="false">var endOfSchool = new Date("2025-07-11");
+var now = new Date();
+
+// YOUR CODE HERE
+// Calculate the number of days between now and endOfSchool
+// Store it in a variable called 'days'
+// Hint: getTime() + parseInt() + 86400000</textarea>
+      <div class="editor-actions">
+        <button class="run-btn" onclick="runCode('editor-05','output-05','')">▶ Run</button>
+        <button class="check-btn" onclick="check05()">✓ Check</button>
+        <a class="jsbin-btn" href="https://jsbin.com/?js,console" target="_blank" style="margin:0">↗ JSBin</a>
+      </div>
+      <iframe id="output-05" class="editor-output" style="min-height:70px;"></iframe>
+      <div id="feedback-05" class="check-feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Edge cases</h2>
+    <div class="card">
+      <h3>What if the date is in the past?</h3>
+      <p>Try setting the target to something that already happened, like <code>"2020-01-01"</code>. What does the result look like?</p>
+    </div>
+
+    <div class="qa">
+      <div class="qa-q">What happens when the target date is in the past? (click to check)</div>
+      <div class="qa-a" style="display:none">The result is a negative number — because you're subtracting a larger number from a smaller one.</div>
+    </div>
+
+    <div class="callout callout-bonus" style="margin-top:12px;">
+      <span class="callout-icon">⭐</span>
+      <div class="callout-body">
+        <strong>Bonus — handle the past case</strong>
+        Show "School is over!" if the number of days is negative.
+        <div class="code-block" style="margin-top:10px;">
+          <button class="copy-btn">Copy</button>
+          <pre><span class="kw">if</span> (days &lt; <span class="num">0</span>) {
+  console.<span class="met">log</span>(<span class="str">"School is over! 🎉"</span>);
+} <span class="kw">else</span> {
+  console.<span class="met">log</span>(<span class="str">"Days until end of school: "</span> + days);
+}</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a class="nav-btn nav-btn-outline" href="04-gettime.html">← getTime()</a>
+    <span class="nav-spacer"></span>
+    <a class="nav-btn nav-btn-primary" href="06-remainder.html">Next: The hard part →</a>
+  </div>
+
+</div>
+<script src="app.js"></script>
+<script>
+  function check05() {
+    var code = document.getElementById('editor-05').value;
+    if (!code.includes('getTime()')) {
+      showFeedback('feedback-05', false, 'Use getTime() to get milliseconds from both dates.');
+      return;
+    }
+    if (!code.includes('parseInt')) {
+      showFeedback('feedback-05', false, 'Use parseInt() to get a whole number of days.');
+      return;
+    }
+    var result = checkStudentCode(code, ['days']);
+    if (result.error) {
+      showFeedback('feedback-05', false, 'Error: ' + result.error);
+      return;
+    }
+    var days = result.vars.days;
+    if (typeof days === 'number' && Number.isFinite(days)) {
+      if (days < 0) {
+        showFeedback('feedback-05', true, 'Your code works! The result is ' + days + ' (negative because that date is in the past — try a future date!).');
+      } else {
+        showFeedback('feedback-05', true, 'Correct! ' + days + ' days until that date. parseInt() gives you a clean whole number.');
+      }
+    } else {
+      showFeedback('feedback-05', false, 'Store the number of days in a variable called "days".');
+    }
+  }
+</script>
+</body>
+</html>

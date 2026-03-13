@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 14 — Date & Time · Grow in Tech</title>
+  <link rel="stylesheet" href="style.css">
+  <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');</script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="topbar">
+    <a class="topbar-logo" href="index.html">
+      <img src="logo.svg" alt="Grow in Tech">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">JS · Year 2 · Lesson 14</span>
+      <span class="topbar-countdown" id="topbar-cd">--:--:--</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀️</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="activity-badge badge-blue">📅 Date &amp; Time</div>
+    <h1>Working with<br><span class="grad">dates in JavaScript</span></h1>
+    <p class="lead">
+      A step-by-step guide to the <code>Date</code> object, time differences, and a real countdown timer.
+      Complete each activity in order — each one builds on the previous.
+    </p>
+  </div>
+
+  <div class="lesson-countdown">
+    <div class="lesson-countdown-label">⏱ Lesson ends in</div>
+    <div class="lesson-countdown-units">
+      <div class="lc-unit">
+        <div class="lc-num" id="cd-days">--</div>
+        <div class="lc-lbl">days</div>
+      </div>
+      <div class="lc-sep">:</div>
+      <div class="lc-unit">
+        <div class="lc-num" id="cd-hours">--</div>
+        <div class="lc-lbl">hours</div>
+      </div>
+      <div class="lc-sep">:</div>
+      <div class="lc-unit">
+        <div class="lc-num" id="cd-minutes">--</div>
+        <div class="lc-lbl">min</div>
+      </div>
+      <div class="lc-sep">:</div>
+      <div class="lc-unit">
+        <div class="lc-num" id="cd-seconds">--</div>
+        <div class="lc-lbl">sec</div>
+      </div>
+    </div>
+    <div class="lesson-countdown-target">13 Mar 2026 · 16:00 Rome</div>
+  </div>
+
+  <section>
+    <h2>Today's activities</h2>
+    <div class="activity-grid">
+
+      <a class="activity-card" href="01-explore.html">
+        <div class="activity-card-icon">🔍</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Explore — The Date object</div>
+          <div class="activity-card-desc">Create dates and extract day, month, year… right in the page</div>
+        </div>
+        <span class="activity-card-time">15 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="02-birthday.html">
+        <div class="activity-card-icon">🟢</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Level 1 — Birthday Finder</div>
+          <div class="activity-card-desc">Find out which day of the week you were born</div>
+        </div>
+        <span class="activity-card-time">10 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="03-age.html">
+        <div class="activity-card-icon">🟡</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Level 2 — Age Calculator</div>
+          <div class="activity-card-desc">Calculate your age from your year of birth</div>
+        </div>
+        <span class="activity-card-time">10 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="04-gettime.html">
+        <div class="activity-card-icon">⏱️</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Concept — getTime() and differences</div>
+          <div class="activity-card-desc">Measure time in milliseconds and convert to human units</div>
+        </div>
+        <span class="activity-card-time">10 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="05-school.html">
+        <div class="activity-card-icon">🟡</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Level 3 — Days until end of school</div>
+          <div class="activity-card-desc">Apply date differences to count down to a real date</div>
+        </div>
+        <span class="activity-card-time">10 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="06-remainder.html">
+        <div class="activity-card-icon">📝</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Concept — The remainder pattern</div>
+          <div class="activity-card-desc">Understand extract → subtract → repeat. On paper, then in code.</div>
+        </div>
+        <span class="activity-card-time">10 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="07-countdown.html">
+        <div class="activity-card-icon">🔴</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Level 4 — Countdown Banner</div>
+          <div class="activity-card-desc">Build a live countdown that updates every second</div>
+        </div>
+        <span class="activity-card-time">30 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <h2>Before you start</h2>
+    <div class="card">
+      <h3>All exercises run in the page</h3>
+      <p>Every activity has an inline code editor. Type your code, click <strong>Run</strong> to see results, and click <strong>Check</strong> to verify your answer. No external tools needed.</p>
+      <p>Each page also has an <strong>↗ JSBin</strong> link if you want more space.</p>
+    </div>
+    <div class="card">
+      <h3>Difficulty levels</h3>
+      <p>🟢 <strong>Easy</strong> — short, warm-up exercises.</p>
+      <p>🟡 <strong>Medium</strong> — requires combining ideas.</p>
+      <p>🔴 <strong>Hard</strong> — the main challenge. Take it step by step.</p>
+    </div>
+  </section>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>
