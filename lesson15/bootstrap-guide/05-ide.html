@@ -134,6 +134,52 @@
     .cm-s-vscode-light .cm-property { color:#001080; }
     .cm-s-vscode-light .cm-builtin { color:#267f99; }
     .cm-s-vscode-light .cm-def { color:#795e26; }
+
+    /* ── Item 1: Better Next button ── */
+    .ide-nav-btn { min-height: 44px; padding: 0 28px; font-size: 13px; }
+    #next-btn, #finish-btn { min-width: 160px; justify-content: center; }
+    .ide-nav-btn-primary { transition: filter 0.15s, transform 0.15s; }
+    .ide-nav-btn-primary:hover { filter: brightness(1.12); transform: scale(1.02); opacity: 1 !important; background: var(--grad) !important; }
+    .ide-nav-btn-disabled { pointer-events: all; cursor: not-allowed; }
+    @media (max-width: 600px) {
+      #next-btn, #finish-btn { width: 100%; }
+      #ide-nav { flex-wrap: wrap; gap: 6px; }
+    }
+
+    /* ── Item 2: Drag handles ── */
+    .drag-handle { flex-shrink: 0; background: transparent; transition: background 0.15s; z-index: 10; }
+    #shell.layout-split .drag-handle { width: 6px; cursor: col-resize; }
+    #shell.layout-topdown .drag-handle { height: 6px; cursor: row-resize; }
+    .drag-handle:hover, .drag-handle.dragging { background: rgba(0,225,255,0.35); }
+
+    /* ── Item 4: Console close button ── */
+    .console-msg { display: flex; align-items: flex-start; gap: 4px; }
+    .console-msg-text { flex: 1; }
+    .console-close { background: none; border: none; cursor: pointer; color: inherit; font-size: 14px; line-height: 1; opacity: 0.5; padding: 0 2px; flex-shrink: 0; font-family: inherit; }
+    .console-close:hover { opacity: 1; }
+
+    /* ── Item 9: Hints section ── */
+    .hints-section { margin-top: 14px; border-top: 1px solid var(--vsc-border); padding-top: 12px; }
+    .hints-toggle { background: none; border: 1px solid var(--vsc-border); color: var(--vsc-muted); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; font-family: 'DM Sans', sans-serif; width: 100%; text-align: left; display: flex; justify-content: space-between; }
+    .hints-toggle:hover { background: var(--vsc-tab-inactive); }
+    .hints-body { display: none; margin-top: 8px; }
+    .hints-body.open { display: block; }
+    .hint-item { padding: 7px 10px; border-left: 2px solid var(--vsc-border); margin-bottom: 6px; font-size: 12px; color: var(--vsc-muted); display: none; line-height: 1.5; }
+    .hint-item.revealed { display: block; border-left-color: var(--grad-start); }
+    .reveal-btn { background: none; border: none; color: var(--grad-start); cursor: pointer; font-size: 12px; font-family: 'DM Sans', sans-serif; padding: 2px 0; }
+    .reveal-btn:hover { text-decoration: underline; }
+    .reveal-btn:disabled { color: var(--vsc-muted); cursor: default; text-decoration: none; }
+
+    /* ── Item 10: Panel pills JSBin-style ── */
+    .pills-group { display: flex; gap: 4px; }
+    .sub-right { display: flex; align-items: center; gap: 10px; }
+    .pill-btn { border: 1px solid rgba(0,225,255,0.4); color: rgba(0,225,255,0.7); }
+    .pill-btn.pill-active { background: var(--grad); color: #fff; border-color: transparent; }
+    .pill-btn:hover:not(.pill-active) { background: rgba(0,225,255,0.1); }
+    #sub-row { justify-content: space-between; }
+
+    /* ── Item 11: Editor breadcrumb ── */
+    .editor-breadcrumb { padding: 3px 14px; font-size: 11px; color: var(--vsc-muted); background: var(--vsc-bg); border-bottom: 1px solid var(--vsc-border); font-family: 'DM Mono', monospace; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -243,12 +289,16 @@
   </div>
 
   <div id="sub-row">
-    <button class="pill-btn pill-active" id="pill-instructions" onclick="togglePanel('instructions')">Instructions</button>
-    <button class="pill-btn pill-active" id="pill-editor" onclick="togglePanel('editor')">Editor</button>
-    <button class="pill-btn" id="pill-console" onclick="toggleConsolePanel()">Console</button>
-    <button class="pill-btn pill-active" id="pill-preview" onclick="togglePanel('preview')">Preview</button>
-    <span class="sub-step-label">Step 5 of 5</span>
-    <a href="./05-intro.html" class="sub-intro-link">← Back to theory</a>
+    <div class="pills-group">
+      <button class="pill-btn pill-active" id="pill-instructions" onclick="togglePanel('instructions')">Instructions</button>
+      <button class="pill-btn pill-active" id="pill-editor" onclick="togglePanel('editor')">Editor</button>
+      <button class="pill-btn" id="pill-console" onclick="toggleConsolePanel()">Console</button>
+      <button class="pill-btn pill-active" id="pill-preview" onclick="togglePanel('preview')">Preview</button>
+    </div>
+    <div class="sub-right">
+      <span class="sub-step-label">Step 5 of 5 · Footer</span>
+      <a href="./05-intro.html" class="sub-intro-link">← Theory</a>
+    </div>
   </div>
 
   <div id="main">
@@ -267,10 +317,21 @@
       <div class="hint-box">
         <strong>Hint:</strong> The © symbol in HTML is <code>&amp;copy;</code> or the character © pasted directly. <code>text-muted</code> on the paragraph gives it a softer grey color.
       </div>
+      <div class="hints-section">
+        <button class="hints-toggle" onclick="toggleHints(this)">💡 Hints <span>▶</span></button>
+        <div class="hints-body">
+          <div class="hint-item revealed">Hint 1: Use the semantic <code>&lt;footer&gt;</code> HTML element. Bootstrap has no footer component — you compose utility classes directly on it.</div>
+          <div class="hint-item">Hint 2: Stack the classes on the footer element: <code>class="bg-dark text-white py-4 mt-5"</code>. <code>py-4</code> adds top/bottom padding, <code>mt-5</code> adds margin-top.</div>
+          <div class="hint-item">Hint 3: Inside the footer, add <code>&lt;div class="container text-center"&gt;</code> then a paragraph with the © symbol: you can type © directly or use <code>&amp;copy;</code>.</div>
+          <button class="reveal-btn" onclick="revealNextHint(this)">Show next hint →</button>
+        </div>
+      </div>
     </div>
+    <div class="drag-handle" id="drag-1" data-panel-a="panel-instructions" data-panel-b="panel-editor-console"></div>
 
     <div id="panel-editor-console">
       <div id="panel-editor">
+        <div class="editor-breadcrumb">Bootstrap Guide › Step 5 — Footer</div>
         <div class="editor-tabs">
           <button class="editor-tab active" id="tab-html" onclick="switchTab('html')"><span>index.html</span></button>
           <button class="editor-tab" id="tab-js" onclick="switchTab('js')"><span>script.js</span></button>
@@ -287,6 +348,7 @@
         <div class="console-body" id="console-body"><div class="console-msg" data-default>No output yet.</div></div>
       </div>
     </div>
+    <div class="drag-handle" id="drag-2" data-panel-a="panel-editor-console" data-panel-b="panel-preview"></div>
 
     <div id="panel-preview">
       <div class="preview-header">Preview</div>
@@ -296,7 +358,7 @@
 
   <div id="ide-nav">
     <a href="./05-intro.html" class="ide-nav-btn">← Theory</a>
-    <button id="finish-btn" class="ide-nav-btn ide-nav-btn-disabled" disabled onclick="showCompletion()">Finish ✓</button>
+    <button id="finish-btn" class="ide-nav-btn ide-nav-btn-disabled" disabled title="Complete the check above to finish the lesson." onclick="showCompletion()">Finish ✓</button>
   </div>
 
   <div id="status-bar">
@@ -329,7 +391,31 @@
   function updatePanelFlex() { if (currentLayout !== 'split') return; var i = !document.getElementById('panel-instructions').classList.contains('hidden'); var e = !document.getElementById('panel-editor-console').classList.contains('hidden'); var p = !document.getElementById('panel-preview').classList.contains('hidden'); document.getElementById('panel-instructions').style.flex = i ? '0 0 280px' : ''; document.getElementById('panel-editor-console').style.flex = e ? '1' : ''; document.getElementById('panel-preview').style.flex = p ? '1' : ''; setTimeout(function() { if (editor) editor.refresh(); }, 80); }
   function toggleConsolePanel() { var pill = document.getElementById('pill-console'); var con = document.getElementById('panel-console'); con.classList.toggle('hidden'); pill.classList.toggle('pill-active'); }
   function toggleConsoleExpand() { var con = document.getElementById('panel-console'); con.classList.toggle('expanded'); document.getElementById('console-chevron').textContent = con.classList.contains('expanded') ? '▲' : '▼'; }
-  function addConsoleMessage(msg, type) { var body = document.getElementById('console-body'); var def = body.querySelector('[data-default]'); if (def) def.remove(); var div = document.createElement('div'); div.className = 'console-msg' + (type === 'error' ? ' error' : ''); div.textContent = msg; body.appendChild(div); if (type === 'error') { document.getElementById('panel-console').classList.remove('hidden'); document.getElementById('panel-console').classList.add('expanded'); document.getElementById('console-chevron').textContent = '▲'; } }
+  function addConsoleMessage(msg, type) {
+    var body = document.getElementById('console-body');
+    var def = body.querySelector('[data-default]');
+    if (def) def.remove();
+    var div = document.createElement('div');
+    div.className = 'console-msg' + (type === 'error' ? ' error' : '');
+    var textSpan = document.createElement('span');
+    textSpan.className = 'console-msg-text';
+    textSpan.textContent = msg;
+    div.appendChild(textSpan);
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'console-close';
+    closeBtn.textContent = '×';
+    closeBtn.title = 'Dismiss';
+    closeBtn.onclick = function() { div.remove(); };
+    div.appendChild(closeBtn);
+    body.appendChild(div);
+    if (type === 'error') {
+      var panel = document.getElementById('panel-console');
+      panel.classList.remove('hidden');
+      panel.classList.add('expanded');
+      document.getElementById('console-chevron').textContent = '▲';
+      document.getElementById('pill-console').classList.add('pill-active');
+    }
+  }
   window.addEventListener('message', function(e) { if (e.data && e.data.type === 'iframe-error') addConsoleMessage('⚠ ' + e.data.message, 'error'); });
 
   var STEP = 5;
@@ -344,7 +430,10 @@
   function switchTab(tab) { if (tab === activeTab) return; if (activeTab === 'html') htmlContent = editor.getValue(); else jsContent = editor.getValue(); activeTab = tab; editor.setOption('mode', tab === 'html' ? 'htmlmixed' : 'javascript'); editor.setValue(tab === 'html' ? htmlContent : jsContent); document.getElementById('tab-html').classList.toggle('active', tab === 'html'); document.getElementById('tab-js').classList.toggle('active', tab === 'js'); document.getElementById('status-lang').textContent = tab === 'html' ? 'HTML' : 'JS'; editor.focus(); }
 
   function buildSrcdoc() { var html = activeTab === 'html' ? editor.getValue() : htmlContent; var js = activeTab === 'js' ? editor.getValue() : jsContent; var onerr = '<script>window.onerror=function(m,s,l){window.parent.postMessage({type:\'iframe-error\',message:m+(s?\' (\'+s+\':\'+l+\')\':\'\')},"*");return false;};<\/script>'; var doc = html.replace(/(<head[^>]*>)/i, '$1\n  ' + onerr); if (js && js.trim()) doc = doc.replace('</body>', '<script>\n' + js + '\n<\/script>\n</body>'); return doc; }
-  function runPreview() { document.getElementById('preview-frame').srcdoc = buildSrcdoc(); }
+  function runPreview() {
+    document.getElementById('console-body').querySelectorAll('.console-msg.error').forEach(function(m) { m.remove(); });
+    document.getElementById('preview-frame').srcdoc = buildSrcdoc();
+  }
   window.addEventListener('load', function() { setTimeout(runPreview, 100); });
 
   function validateStep(step, code) {
@@ -367,6 +456,7 @@
   function runCheck() { var code = activeTab === 'html' ? editor.getValue() : htmlContent; var failures = validateStep(STEP, code); var result = document.getElementById('check-result'); if (failures.length === 0) { stepPassed = true; result.className = 'pass visible'; result.innerHTML = '✅ Landing page complete! <strong>Click Finish to celebrate.</strong>'; var btn = document.getElementById('finish-btn'); if (btn) { btn.classList.remove('ide-nav-btn-disabled'); btn.classList.add('ide-nav-btn-primary'); btn.disabled = false; } addConsoleMessage('✅ Step 5 passed! All steps complete.'); } else { result.className = 'fail visible'; result.innerHTML = '❌ Not quite. Fix these:<ul>' + failures.map(function(f){return '<li>'+f+'</li>';}).join('') + '</ul>'; addConsoleMessage('❌ Check failed: ' + failures.length + ' issue(s)', 'error'); } }
 
   function showCompletion() {
+    if (!stepPassed) return;
     document.getElementById('completion-overlay').classList.add('visible');
   }
 
@@ -376,6 +466,91 @@
       var btn = document.querySelector('#completion-overlay .comp-btn:not(.comp-btn-outline)');
       if (btn) { var orig = btn.textContent; btn.textContent = '✅ Copied!'; setTimeout(function(){btn.textContent=orig;}, 1500); }
     });
+  }
+
+  // ── Item 2: Drag-to-resize panels ──
+  (function initDragHandles() {
+    var dragging = null, startPos = 0, startSizeA = 0, startSizeB = 0, dragPanelA, dragPanelB;
+    document.querySelectorAll('.drag-handle').forEach(function(handle) {
+      handle.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        dragging = handle;
+        handle.classList.add('dragging');
+        var isV = currentLayout === 'split';
+        startPos = isV ? e.clientX : e.clientY;
+        dragPanelA = document.getElementById(handle.dataset.panelA);
+        dragPanelB = document.getElementById(handle.dataset.panelB);
+        if (!dragPanelA || !dragPanelB) return;
+        var rA = dragPanelA.getBoundingClientRect();
+        var rB = dragPanelB.getBoundingClientRect();
+        startSizeA = isV ? rA.width : rA.height;
+        startSizeB = isV ? rB.width : rB.height;
+        document.body.style.cursor = isV ? 'col-resize' : 'row-resize';
+        document.body.style.userSelect = 'none';
+      });
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!dragging || !dragPanelA || !dragPanelB) return;
+      var isV = currentLayout === 'split';
+      var delta = (isV ? e.clientX : e.clientY) - startPos;
+      var newA = Math.max(100, startSizeA + delta);
+      var newB = Math.max(100, startSizeB - delta);
+      dragPanelA.style.flex = '0 0 ' + newA + 'px';
+      dragPanelB.style.flex = '0 0 ' + newB + 'px';
+      if (editor) editor.refresh();
+    });
+    document.addEventListener('mouseup', function() {
+      if (!dragging) return;
+      dragging.classList.remove('dragging');
+      dragging = null;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      try {
+        var sizes = {};
+        ['panel-instructions','panel-editor-console','panel-preview'].forEach(function(id) {
+          var el = document.getElementById(id);
+          var m = (el.style.flex||'').match(/0 0 (\d+)px/);
+          if (m) sizes[id] = parseInt(m[1]);
+        });
+        if (Object.keys(sizes).length) localStorage.setItem('git-panel-sizes', JSON.stringify(sizes));
+      } catch(err) {}
+    });
+    // Restore saved sizes
+    try {
+      var saved = JSON.parse(localStorage.getItem('git-panel-sizes') || '{}');
+      Object.keys(saved).forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.flex = '0 0 ' + saved[id] + 'px';
+      });
+    } catch(err) {}
+  })();
+
+  // ── Item 7: Save/restore editor code ──
+  (function() {
+    var saved = localStorage.getItem('git-code-step-' + STEP);
+    if (saved && saved.trim()) { htmlContent = saved; editor.setValue(saved); }
+  })();
+  var _saveTimer;
+  editor.on('change', function() {
+    clearTimeout(_saveTimer);
+    _saveTimer = setTimeout(function() {
+      try { localStorage.setItem('git-code-step-' + STEP, activeTab === 'html' ? editor.getValue() : htmlContent); } catch(e) {}
+    }, 500);
+  });
+
+  // ── Item 9: Hints ──
+  function toggleHints(btn) {
+    var body = btn.nextElementSibling;
+    var open = body.classList.toggle('open');
+    btn.querySelector('span').textContent = open ? '▼' : '▶';
+  }
+  function revealNextHint(btn) {
+    var body = btn.closest('.hints-body');
+    var hidden = body.querySelectorAll('.hint-item:not(.revealed)');
+    if (hidden.length > 0) hidden[0].classList.add('revealed');
+    if (body.querySelectorAll('.hint-item:not(.revealed)').length === 0) {
+      btn.disabled = true; btn.textContent = 'All hints shown';
+    }
   }
 </script>
 </body>

@@ -83,6 +83,16 @@
 
       <p>The grid is built from three layers:</p>
 
+      <div class="callout callout-info">
+        <strong>How Bootstrap's grid works:</strong> The grid is based on 12 columns. You divide the row into columns that add up to 12. <code>col-lg-8</code> takes 8 columns (⅔ of the row) and <code>col-lg-4</code> takes 4 columns (⅓ of the row).
+      </div>
+      <div class="callout callout-tip">
+        <strong>Tip:</strong> Add <code>col-12</code> alongside your responsive class (e.g. <code>col-12 col-lg-8</code>) so columns stack full-width on mobile and sit side-by-side on large screens.
+      </div>
+      <div class="callout callout-warn">
+        <strong>Common mistake:</strong> Putting columns directly inside a <code>container</code> without a <code>row</code> in between. The order must always be: <code>container</code> → <code>row</code> → <code>col-*</code>.
+      </div>
+
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>

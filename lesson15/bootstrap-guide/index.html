@@ -6,6 +6,50 @@
   <title>Lesson 15 — Bootstrap · Grow in Tech</title>
   <link rel="stylesheet" href="./style.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    .before-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .before-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      gap: 8px;
+    }
+    .before-toggle:hover { background: var(--surface-2); }
+    .before-chevron {
+      font-style: normal;
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .before-card.open .before-chevron { transform: rotate(90deg); }
+    .before-body {
+      display: none;
+      padding: 4px 20px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .before-card.open .before-body { display: block; }
+    .before-body ul { margin: 8px 0 0; padding-left: 20px; }
+    .before-body li { margin-bottom: 6px; }
+  </style>
 </head>
 <body>
 <div class="page-wrap">
@@ -69,6 +113,21 @@
     <p class="lead">
       Learn to use Bootstrap to quickly style web pages — build a complete Net@ landing page step by step using components, utility classes, and the responsive grid.
     </p>
+  </div>
+
+  <div class="before-card" id="before-card">
+    <button class="before-toggle" onclick="toggleBefore()" aria-expanded="false" aria-controls="before-body">
+      <span>📋 Before you start</span>
+      <i class="before-chevron">▶</i>
+    </button>
+    <div class="before-body" id="before-body">
+      <ul>
+        <li><strong>Bootstrap is a CSS framework</strong> — it gives you pre-built components and utility classes you activate by adding class names to your HTML. No custom CSS required.</li>
+        <li><strong>You'll build a Net@ landing page</strong> step by step across 5 activities, adding a new section in each one.</li>
+        <li><strong>Keep the Preview panel open</strong> as you work — click <em>Run</em> to see your changes live inside the page.</li>
+        <li><strong>Bootstrap is already loaded inside the preview</strong> — you just write the HTML with Bootstrap class names.</li>
+      </ul>
+    </div>
   </div>
 
   <section>
@@ -148,5 +207,20 @@
 
 </div>
 <script src="./app.js"></script>
+<script>
+  (function() {
+    var card = document.getElementById('before-card');
+    if (localStorage.getItem('git-before-open') === 'true') {
+      card.classList.add('open');
+      card.querySelector('.before-toggle').setAttribute('aria-expanded', 'true');
+    }
+  })();
+  function toggleBefore() {
+    var card = document.getElementById('before-card');
+    var isOpen = card.classList.toggle('open');
+    card.querySelector('.before-toggle').setAttribute('aria-expanded', String(isOpen));
+    localStorage.setItem('git-before-open', String(isOpen));
+  }
+</script>
 </body>
 </html>

@@ -83,6 +83,16 @@
 
       <p>This approach — combining small, single-purpose utilities rather than relying on one monolithic component — is Bootstrap's <strong>composability philosophy</strong>. Once you know the utility classes, you can build almost any layout without writing a single line of custom CSS.</p>
 
+      <div class="callout callout-info">
+        <strong>Bootstrap footers:</strong> Unlike a navbar, Bootstrap has no dedicated footer component. You build it yourself using the semantic <code>&lt;footer&gt;</code> HTML element and utility classes for color, spacing, and text alignment.
+      </div>
+      <div class="callout callout-tip">
+        <strong>Tip:</strong> <code>mt-5</code> on the footer adds a top margin that separates it visually from the content above. <code>py-4</code> gives it vertical breathing room.
+      </div>
+      <div class="callout callout-warn">
+        <strong>Common mistake:</strong> Adding <code>bg-dark</code> to a wrapper <code>&lt;div&gt;</code> instead of the <code>&lt;footer&gt;</code> itself — the dark background won't extend to the page edges if it's inside a <code>container</code>.
+      </div>
+
       <h2>Key Classes for a Footer</h2>
 
       <div class="steps">
