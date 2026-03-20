@@ -49,7 +49,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 16px max(24px, calc(50vw - 390px));
   border-bottom: 1px solid var(--border);
   margin-bottom: 48px;
   position: sticky;
