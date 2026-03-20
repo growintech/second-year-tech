@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 5 IDE — Footer · Bootstrap · GIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --vsc-bg:#1e1e1e; --vsc-surface:#252526; --vsc-tab-inactive:#2d2d30; --vsc-border:#3c3c3c; --vsc-text:#cccccc; --vsc-muted:#969696; --grad-start:#00E1FF; --grad-end:#0061FF; --grad:linear-gradient(135deg,var(--grad-start),var(--grad-end)); --green:#22c55e; --red:#ef4444; }
+    html.light { --vsc-bg:#ffffff; --vsc-surface:#f3f3f3; --vsc-tab-inactive:#ececec; --vsc-border:#e8e8e8; --vsc-text:#333333; --vsc-muted:#717171; }
+    body { font-family:'DM Sans','Segoe UI',sans-serif; background:var(--vsc-bg); color:var(--vsc-text); height:100vh; overflow:hidden; display:flex; flex-direction:column; }
+    #topbar { display:flex; align-items:center; gap:12px; padding:0 16px; height:48px; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); flex-shrink:0; z-index:100; }
+    .topbar-logo { height:32px; display:flex; align-items:center; text-decoration:none; }
+    .topbar-logo svg { height:32px; width:auto; }
+    .topbar-label { font-size:13px; color:var(--vsc-muted); }
+    .topbar-spacer { flex:1; }
+    .topbar-btn { padding:4px 10px; border-radius:6px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-text); font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .topbar-btn:hover { background:var(--vsc-tab-inactive); }
+    .theme-btn { padding:4px 10px; border-radius:6px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-text); font-size:14px; cursor:pointer; }
+    #progress-bar { display:flex; align-items:center; justify-content:center; gap:10px; padding:8px 0; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); flex-shrink:0; }
+    .prog-dot { width:10px; height:10px; border-radius:50%; background:var(--vsc-border); transition:background 0.2s; }
+    .prog-dot.done { background:var(--grad-end); }
+    .prog-dot.active { background:var(--grad-start); box-shadow:0 0 0 3px rgba(0,225,255,0.2); }
+    #sub-row { display:flex; align-items:center; gap:6px; padding:6px 14px; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); flex-shrink:0; flex-wrap:wrap; }
+    .pill-btn { padding:3px 10px; border-radius:20px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-muted); font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+    .pill-btn.pill-active { background:var(--vsc-border); color:var(--vsc-text); border-color:transparent; }
+    .sub-step-label { margin-left:auto; font-size:12px; color:var(--vsc-muted); }
+    .sub-intro-link { font-size:12px; color:var(--grad-start); text-decoration:none; margin-left:8px; }
+    .sub-intro-link:hover { text-decoration:underline; }
+    #main { flex:1; display:flex; overflow:hidden; min-height:0; }
+    #shell.layout-split #main { flex-direction:row; }
+    #shell.layout-split #panel-instructions { flex:0 0 280px; border-right:1px solid var(--vsc-border); overflow-y:auto; }
+    #shell.layout-split #panel-editor-console { flex:1; min-width:0; }
+    #shell.layout-split #panel-preview { flex:1; min-width:0; border-left:1px solid var(--vsc-border); }
+    #shell.layout-topdown #main { flex-direction:column; }
+    #shell.layout-topdown #panel-instructions { flex:0 0 auto; max-height:200px; overflow-y:auto; border-bottom:1px solid var(--vsc-border); }
+    #shell.layout-topdown #panel-editor-console { flex:1; min-height:0; }
+    #shell.layout-topdown #panel-preview { flex:0 0 280px; border-top:1px solid var(--vsc-border); }
+    #panel-instructions { background:var(--vsc-surface); padding:16px; font-size:13px; line-height:1.6; }
+    #panel-instructions h2 { font-size:14px; font-weight:700; margin-bottom:10px; }
+    #panel-instructions p { color:var(--vsc-muted); margin-bottom:8px; }
+    #panel-instructions ul { color:var(--vsc-muted); padding-left:18px; margin-bottom:10px; }
+    #panel-instructions li { margin-bottom:4px; }
+    #panel-instructions code { background:var(--vsc-tab-inactive); color:var(--grad-start); border-radius:3px; padding:1px 5px; font-family:'DM Mono',monospace; font-size:12px; }
+    .instruction-badge { display:inline-block; padding:2px 10px; border-radius:20px; font-size:11px; font-weight:700; background:var(--grad); color:#fff; margin-bottom:10px; }
+    .hint-box { margin-top:12px; padding:10px 12px; background:rgba(0,225,255,0.07); border-left:3px solid var(--grad-start); border-radius:0 6px 6px 0; font-size:12px; color:var(--vsc-muted); }
+    .hint-box strong { color:var(--grad-start); }
+    #panel-editor-console { display:flex; flex-direction:column; background:var(--vsc-bg); min-height:0; overflow:hidden; }
+    #panel-editor { display:flex; flex-direction:column; flex:1; min-height:0; overflow:hidden; }
+    .editor-tabs { display:flex; align-items:stretch; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); min-height:36px; flex-shrink:0; }
+    .editor-tab { padding:0 16px; font-size:13px; background:var(--vsc-tab-inactive); color:var(--vsc-muted); border:none; border-top:2px solid transparent; border-right:1px solid var(--vsc-border); cursor:pointer; display:flex; align-items:center; gap:6px; font-family:'DM Sans',sans-serif; transition:background 0.1s; }
+    .editor-tab.active { background:var(--vsc-bg); color:var(--vsc-text); border-top-color:#007acc; }
+    .editor-actions { display:flex; align-items:center; gap:6px; margin-left:auto; padding:0 10px; }
+    .btn-run-ide { padding:4px 14px; border-radius:5px; border:none; background:var(--grad); color:#fff; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .btn-run-ide:hover { opacity:0.88; }
+    .btn-check { padding:4px 14px; border-radius:5px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-text); font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .btn-check:hover { background:var(--vsc-tab-inactive); }
+    .editor-wrap { flex:1; overflow:hidden; position:relative; min-height:0; }
+    #shell.layout-topdown .editor-wrap .CodeMirror { min-height:220px; height:auto; }
+    #shell.layout-split .editor-wrap .CodeMirror { height:100%; }
+    .editor-wrap .CodeMirror { font-family:'DM Mono','Fira Code',monospace; font-size:13px; line-height:1.5; height:100%; width:100%; }
+    #check-result { flex-shrink:0; padding:0; overflow:hidden; max-height:0; transition:max-height 0.2s,padding 0.2s; font-size:13px; }
+    #check-result.visible { padding:10px 14px; max-height:150px; overflow-y:auto; }
+    #check-result.pass { background:rgba(34,197,94,0.12); border-top:1px solid var(--green); color:var(--green); }
+    #check-result.fail { background:rgba(239,68,68,0.10); border-top:1px solid var(--red); color:var(--red); }
+    #check-result ul { margin:4px 0 0 16px; }
+    #panel-console { flex-shrink:0; background:var(--vsc-surface); border-top:1px solid var(--vsc-border); max-height:36px; overflow:hidden; transition:max-height 0.25s; }
+    #panel-console.expanded { max-height:150px; }
+    .console-header { display:flex; align-items:center; padding:0 14px; height:36px; cursor:pointer; font-size:12px; color:var(--vsc-muted); user-select:none; }
+    .console-chevron { margin-left:auto; }
+    .console-body { padding:6px 14px; font-family:'DM Mono',monospace; font-size:12px; max-height:114px; overflow-y:auto; color:var(--vsc-muted); }
+    .console-msg { margin-bottom:4px; }
+    .console-msg.error { color:var(--red); }
+    #panel-preview { background:#fff; display:flex; flex-direction:column; overflow:hidden; }
+    #panel-preview iframe { flex:1; border:none; width:100%; height:100%; background:#fff; }
+    .preview-header { padding:0 10px; height:32px; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); display:flex; align-items:center; font-size:12px; color:var(--vsc-muted); flex-shrink:0; }
+    #ide-nav { display:flex; align-items:center; justify-content:space-between; padding:8px 16px; background:var(--vsc-surface); border-top:1px solid var(--vsc-border); flex-shrink:0; }
+    .ide-nav-btn { padding:7px 18px; border-radius:7px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-text); font-size:13px; font-weight:600; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-family:'DM Sans',sans-serif; transition:background 0.15s; }
+    .ide-nav-btn:hover { background:var(--vsc-tab-inactive); }
+    .ide-nav-btn-primary { background:var(--grad); color:#fff; border-color:transparent; }
+    .ide-nav-btn-primary:hover { opacity:0.88; background:var(--grad); }
+    .ide-nav-btn-disabled { opacity:0.4; cursor:not-allowed; pointer-events:none; }
+    #status-bar { height:24px; background:#007acc; display:flex; align-items:center; padding:0 12px; gap:14px; font-size:11px; color:rgba(255,255,255,0.9); flex-shrink:0; font-family:'DM Mono',monospace; }
+    .hidden { display:none !important; }
+    /* COMPLETION OVERLAY */
+    #completion-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:999; align-items:center; justify-content:center; }
+    #completion-overlay.visible { display:flex; }
+    .completion-card { background:var(--vsc-surface); border:1px solid var(--vsc-border); border-radius:14px; padding:36px 40px; max-width:520px; width:90%; color:var(--vsc-text); }
+    .completion-card h2 { font-size:22px; margin-bottom:16px; }
+    .completion-card p { font-size:14px; color:var(--vsc-muted); margin-bottom:16px; line-height:1.6; }
+    .completion-card ul { list-style:none; padding:0; margin:0 0 20px; }
+    .completion-card li { padding:5px 0; font-size:14px; color:var(--vsc-muted); }
+    .completion-card li::before { content:'✅ '; }
+    .completion-btns { display:flex; gap:10px; flex-wrap:wrap; }
+    .comp-btn { padding:8px 18px; border-radius:7px; border:none; font-size:14px; font-weight:600; cursor:pointer; background:var(--grad); color:#fff; font-family:'DM Sans',sans-serif; }
+    .comp-btn-outline { background:transparent; border:1px solid var(--vsc-border); color:var(--vsc-text); }
+    /* VS CODE DARK */
+    .cm-s-vscode-dark.CodeMirror { background:#1e1e1e; color:#d4d4d4; }
+    .cm-s-vscode-dark .CodeMirror-gutters { background:#1e1e1e; border-right:1px solid #3c3c3c; }
+    .cm-s-vscode-dark .CodeMirror-linenumber { color:#858585; }
+    .cm-s-vscode-dark .CodeMirror-cursor { border-left:2px solid #aeafad; }
+    .cm-s-vscode-dark .CodeMirror-selected { background:#264f78; }
+    .cm-s-vscode-dark .CodeMirror-activeline-background { background:#2a2a2a; }
+    .cm-s-vscode-dark .cm-keyword { color:#569cd6; }
+    .cm-s-vscode-dark .cm-tag { color:#569cd6; }
+    .cm-s-vscode-dark .cm-attribute { color:#9cdcfe; }
+    .cm-s-vscode-dark .cm-string { color:#ce9178; }
+    .cm-s-vscode-dark .cm-comment { color:#6a9955; font-style:italic; }
+    .cm-s-vscode-dark .cm-number { color:#b5cea8; }
+    .cm-s-vscode-dark .cm-def { color:#dcdcaa; }
+    .cm-s-vscode-dark .cm-variable { color:#9cdcfe; }
+    .cm-s-vscode-dark .cm-property { color:#9cdcfe; }
+    .cm-s-vscode-dark .cm-builtin { color:#4ec9b0; }
+    .cm-s-vscode-dark .cm-atom { color:#569cd6; }
+    .cm-s-vscode-dark .cm-error { color:#f44747; }
+    /* VS CODE LIGHT */
+    .cm-s-vscode-light.CodeMirror { background:#ffffff; color:#000000; }
+    .cm-s-vscode-light .CodeMirror-gutters { background:#f8f8f8; border-right:1px solid #e8e8e8; }
+    .cm-s-vscode-light .CodeMirror-linenumber { color:#237893; }
+    .cm-s-vscode-light .CodeMirror-cursor { border-left:2px solid #000; }
+    .cm-s-vscode-light .CodeMirror-selected { background:#add6ff; }
+    .cm-s-vscode-light .CodeMirror-activeline-background { background:#eaf2fb; }
+    .cm-s-vscode-light .cm-keyword { color:#0000ff; }
+    .cm-s-vscode-light .cm-tag { color:#800000; }
+    .cm-s-vscode-light .cm-attribute { color:#ff0000; }
+    .cm-s-vscode-light .cm-string { color:#a31515; }
+    .cm-s-vscode-light .cm-comment { color:#008000; font-style:italic; }
+    .cm-s-vscode-light .cm-number { color:#098658; }
+    .cm-s-vscode-light .cm-variable { color:#001080; }
+    .cm-s-vscode-light .cm-property { color:#001080; }
+    .cm-s-vscode-light .cm-builtin { color:#267f99; }
+    .cm-s-vscode-light .cm-def { color:#795e26; }
+  </style>
+</head>
+<body>
+
+<script type="text/html" id="starter-code"><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Net@ Landing Page</title>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Net@</a>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="py-5 text-center bg-primary text-white">
+    <div class="container">
+      <h1 class="display-4 fw-bold">Welcome to Net@</h1>
+      <p class="lead">Learn web development from the ground up — HTML, CSS, JavaScript, and more.</p>
+      <a href="#" class="btn btn-light btn-lg mt-3">Explore the program</a>
+    </div>
+  </section>
+
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h2>What you'll learn</h2>
+        <p>Net@ is a two-year web development program covering HTML, CSS, JavaScript, and modern frameworks. By the end, you'll be able to build complete, responsive websites from scratch.</p>
+      </div>
+      <div class="col-12 col-lg-4">
+        <div class="card p-3">
+          <h5>Next lesson</h5>
+          <p class="text-muted mb-0">Lesson 16: JavaScript DOM — Thursday 14:00</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-4 text-center">
+    <h2 class="mb-4">Join Us</h2>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="#" class="btn btn-primary btn-lg">Enroll Now</a>
+      <a href="#" class="btn btn-outline-secondary">Learn More</a>
+      <a href="#" class="btn btn-danger btn-sm">Limited spots!</a>
+    </div>
+  </div>
+
+  <!-- Step 5: Add a Footer here -->
+  <!-- Use: <footer class="bg-dark text-white py-4 mt-5"> -->
+  <!-- Include "Net@", the year 2025, and a copyright notice (©) -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"><\/script>
+</body>
+</html>
+</script>
+
+<!-- COMPLETION OVERLAY -->
+<div id="completion-overlay">
+  <div class="completion-card">
+    <h2>You built a Bootstrap landing page!</h2>
+    <p>You completed all 5 steps. Here's what you learned in this lesson:</p>
+    <ul>
+      <li>Navbar — responsive navigation with Bootstrap classes</li>
+      <li>Hero section — composing utility classes for a bold intro</li>
+      <li>Grid layout — Bootstrap's 12-column responsive grid</li>
+      <li>Buttons — semantic color variants and size modifiers</li>
+      <li>Footer — composing utility classes without a component</li>
+    </ul>
+    <p>Your Net@ landing page has all the key sections a real website needs. Now open VSCode and try building your own from scratch!</p>
+    <div class="completion-btns">
+      <button class="comp-btn" onclick="copyFullHTML()">Copy HTML</button>
+      <a href="./index.html" class="comp-btn comp-btn-outline">Back to Lesson Hub</a>
+    </div>
+  </div>
+</div>
+
+<div id="shell">
+  <div id="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M87.3507 153.566C83.2196 153.566 79.6539 152.897 76.6535 151.561C73.6966 150.181 71.3919 148.198 69.7395 145.611C68.1306 142.981 67.2392 139.79 67.0652 136.039C67.0217 134.185 67 132.223 67 130.153C67 128.041 67.0217 126.036 67.0652 124.139C67.2392 120.474 68.1523 117.369 69.8047 114.826C71.4571 112.282 73.7836 110.342 76.784 109.005C79.7844 107.668 83.3066 107 87.3507 107C90.612 107 93.5037 107.41 96.0258 108.229C98.5479 109.005 100.657 110.061 102.353 111.398C104.092 112.734 105.397 114.2 106.266 115.796C107.179 117.391 107.658 118.965 107.701 120.517C107.745 120.905 107.614 121.228 107.31 121.487C107.049 121.746 106.723 121.875 106.332 121.875H96.8085C96.3302 121.875 95.9605 121.81 95.6996 121.681C95.4822 121.509 95.2865 121.271 95.1126 120.97C94.8082 120.323 94.3516 119.655 93.7428 118.965C93.1776 118.232 92.3731 117.607 91.3295 117.089C90.3293 116.572 89.0031 116.313 87.3507 116.313C84.872 116.313 82.9153 116.96 81.4803 118.253C80.0888 119.547 79.3278 121.616 79.1973 124.462C79.0669 128.17 79.0669 131.921 79.1973 135.715C79.3278 138.734 80.1323 140.911 81.6107 142.248C83.0892 143.584 85.046 144.252 87.4811 144.252C89.1335 144.252 90.5902 143.972 91.8513 143.412C93.1558 142.851 94.1777 141.989 94.9169 140.825C95.6562 139.617 96.0258 138.087 96.0258 136.233V135.004H89.8945C89.4162 135.004 89.0031 134.853 88.6552 134.551C88.3508 134.206 88.1986 133.797 88.1986 133.322V128.537C88.1986 128.062 88.3508 127.674 88.6552 127.372C89.0031 127.028 89.4162 126.855 89.8945 126.855H106.332C106.81 126.855 107.201 127.028 107.506 127.372C107.81 127.674 107.962 128.062 107.962 128.537V135.909C107.962 139.617 107.114 142.787 105.418 145.417C103.722 148.047 101.309 150.073 98.1782 151.496C95.0909 152.876 91.4817 153.566 87.3507 153.566Z" fill="url(#ide5_p0)"/>
+<defs><linearGradient id="ide5_p0" x1="67" y1="107" x2="232" y2="194" gradientUnits="userSpaceOnUse"><stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/></linearGradient></defs>
+      </svg>
+    </a>
+    <span class="topbar-label">JS · Year 2 · Lesson 15</span>
+    <div class="topbar-spacer"></div>
+    <button class="topbar-btn" onclick="toggleLayout()" id="layout-btn">⊞ Split</button>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <div id="progress-bar">
+    <div class="prog-dot done"></div>
+    <div class="prog-dot done"></div>
+    <div class="prog-dot done"></div>
+    <div class="prog-dot done"></div>
+    <div class="prog-dot active"></div>
+  </div>
+
+  <div id="sub-row">
+    <button class="pill-btn pill-active" id="pill-instructions" onclick="togglePanel('instructions')">Instructions</button>
+    <button class="pill-btn pill-active" id="pill-editor" onclick="togglePanel('editor')">Editor</button>
+    <button class="pill-btn" id="pill-console" onclick="toggleConsolePanel()">Console</button>
+    <button class="pill-btn pill-active" id="pill-preview" onclick="togglePanel('preview')">Preview</button>
+    <span class="sub-step-label">Step 5 of 5</span>
+    <a href="./05-intro.html" class="sub-intro-link">← Back to theory</a>
+  </div>
+
+  <div id="main">
+    <div id="panel-instructions">
+      <div class="instruction-badge">Step 5 — Footer</div>
+      <h2>Add a Footer</h2>
+      <p>Complete your landing page with a footer. Bootstrap has no footer component — compose utility classes on a <code>&lt;footer&gt;</code> element.</p>
+      <ul>
+        <li>Add a <code>&lt;footer&gt;</code> element</li>
+        <li>Give it a dark background using <code>bg-dark</code> directly on the <code>&lt;footer&gt;</code> tag</li>
+        <li>Add <code>text-white</code>, <code>py-4</code>, and <code>mt-5</code></li>
+        <li>Inside, add a <code>container text-center</code> div</li>
+        <li>Include the text <strong>Net@</strong> in the footer</li>
+        <li>Include a copyright notice with the year <strong>2025</strong> and the © symbol</li>
+      </ul>
+      <div class="hint-box">
+        <strong>Hint:</strong> The © symbol in HTML is <code>&amp;copy;</code> or the character © pasted directly. <code>text-muted</code> on the paragraph gives it a softer grey color.
+      </div>
+    </div>
+
+    <div id="panel-editor-console">
+      <div id="panel-editor">
+        <div class="editor-tabs">
+          <button class="editor-tab active" id="tab-html" onclick="switchTab('html')"><span>index.html</span></button>
+          <button class="editor-tab" id="tab-js" onclick="switchTab('js')"><span>script.js</span></button>
+          <div class="editor-actions">
+            <button class="btn-check" onclick="runCheck()">✓ Check</button>
+            <button class="btn-run-ide" onclick="runPreview()">▶ Run</button>
+          </div>
+        </div>
+        <div class="editor-wrap"><textarea id="code-editor"></textarea></div>
+        <div id="check-result"></div>
+      </div>
+      <div id="panel-console" class="hidden">
+        <div class="console-header" onclick="toggleConsoleExpand()"><span>Console</span><span class="console-chevron" id="console-chevron">▼</span></div>
+        <div class="console-body" id="console-body"><div class="console-msg" data-default>No output yet.</div></div>
+      </div>
+    </div>
+
+    <div id="panel-preview">
+      <div class="preview-header">Preview</div>
+      <iframe id="preview-frame" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+  </div>
+
+  <div id="ide-nav">
+    <a href="./05-intro.html" class="ide-nav-btn">← Theory</a>
+    <button id="finish-btn" class="ide-nav-btn ide-nav-btn-disabled" disabled onclick="showCompletion()">Finish ✓</button>
+  </div>
+
+  <div id="status-bar">
+    <span>Bootstrap Guide</span>
+    <span id="status-lang">HTML</span>
+    <span>Step 5 — Footer</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/html-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/javascript-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closetag.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+<script>
+  (function() { if (localStorage.getItem('git-theme') === 'light') { document.documentElement.classList.add('light'); document.getElementById('theme-btn').textContent = '☀️'; } })();
+  function toggleTheme() { var isLight = document.documentElement.classList.toggle('light'); localStorage.setItem('git-theme', isLight ? 'light' : 'dark'); document.getElementById('theme-btn').textContent = isLight ? '☀️' : '🌙'; if (editor) editor.setOption('theme', isLight ? 'vscode-light' : 'vscode-dark'); }
+  var currentLayout = localStorage.getItem('git-layout') || 'split';
+  var shell = document.getElementById('shell');
+  function applyLayout(layout) { currentLayout = layout; shell.className = 'layout-' + layout; document.getElementById('layout-btn').textContent = layout === 'split' ? '⊞ Split' : '☰ Top-down'; localStorage.setItem('git-layout', layout); updatePanelFlex(); setTimeout(function() { if (editor) editor.refresh(); }, 80); }
+  function toggleLayout() { applyLayout(currentLayout === 'split' ? 'topdown' : 'split'); }
+  applyLayout(currentLayout);
+  function togglePanel(name) { var ids = { instructions:'panel-instructions', editor:'panel-editor-console', preview:'panel-preview' }; var pillIds = { instructions:'pill-instructions', editor:'pill-editor', preview:'pill-preview' }; var panel = document.getElementById(ids[name]); var pill = document.getElementById(pillIds[name]); if (!panel) return; panel.classList.toggle('hidden'); pill.classList.toggle('pill-active'); updatePanelFlex(); setTimeout(function() { if (editor) editor.refresh(); }, 80); }
+  function updatePanelFlex() { if (currentLayout !== 'split') return; var i = !document.getElementById('panel-instructions').classList.contains('hidden'); var e = !document.getElementById('panel-editor-console').classList.contains('hidden'); var p = !document.getElementById('panel-preview').classList.contains('hidden'); document.getElementById('panel-instructions').style.flex = i ? '0 0 280px' : ''; document.getElementById('panel-editor-console').style.flex = e ? '1' : ''; document.getElementById('panel-preview').style.flex = p ? '1' : ''; setTimeout(function() { if (editor) editor.refresh(); }, 80); }
+  function toggleConsolePanel() { var pill = document.getElementById('pill-console'); var con = document.getElementById('panel-console'); con.classList.toggle('hidden'); pill.classList.toggle('pill-active'); }
+  function toggleConsoleExpand() { var con = document.getElementById('panel-console'); con.classList.toggle('expanded'); document.getElementById('console-chevron').textContent = con.classList.contains('expanded') ? '▲' : '▼'; }
+  function addConsoleMessage(msg, type) { var body = document.getElementById('console-body'); var def = body.querySelector('[data-default]'); if (def) def.remove(); var div = document.createElement('div'); div.className = 'console-msg' + (type === 'error' ? ' error' : ''); div.textContent = msg; body.appendChild(div); if (type === 'error') { document.getElementById('panel-console').classList.remove('hidden'); document.getElementById('panel-console').classList.add('expanded'); document.getElementById('console-chevron').textContent = '▲'; } }
+  window.addEventListener('message', function(e) { if (e.data && e.data.type === 'iframe-error') addConsoleMessage('⚠ ' + e.data.message, 'error'); });
+
+  var STEP = 5;
+  var STARTER_HTML = document.getElementById('starter-code').textContent;
+  var htmlContent = STARTER_HTML;
+  var jsContent = '';
+  var activeTab = 'html';
+  var isLight = document.documentElement.classList.contains('light');
+  var editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), { mode:'htmlmixed', theme: isLight ? 'vscode-light' : 'vscode-dark', lineNumbers:true, lineWrapping:true, viewportMargin:Infinity, extraKeys:{'Ctrl-Space':'autocomplete','Tab':function(cm){cm.replaceSelection('  ');}}, hintOptions:{completeSingle:false}, autoCloseTags:true, matchBrackets:true, styleActiveLine:true });
+  editor.setValue(STARTER_HTML);
+
+  function switchTab(tab) { if (tab === activeTab) return; if (activeTab === 'html') htmlContent = editor.getValue(); else jsContent = editor.getValue(); activeTab = tab; editor.setOption('mode', tab === 'html' ? 'htmlmixed' : 'javascript'); editor.setValue(tab === 'html' ? htmlContent : jsContent); document.getElementById('tab-html').classList.toggle('active', tab === 'html'); document.getElementById('tab-js').classList.toggle('active', tab === 'js'); document.getElementById('status-lang').textContent = tab === 'html' ? 'HTML' : 'JS'; editor.focus(); }
+
+  function buildSrcdoc() { var html = activeTab === 'html' ? editor.getValue() : htmlContent; var js = activeTab === 'js' ? editor.getValue() : jsContent; var onerr = '<script>window.onerror=function(m,s,l){window.parent.postMessage({type:\'iframe-error\',message:m+(s?\' (\'+s+\':\'+l+\')\':\'\')},"*");return false;};<\/script>'; var doc = html.replace(/(<head[^>]*>)/i, '$1\n  ' + onerr); if (js && js.trim()) doc = doc.replace('</body>', '<script>\n' + js + '\n<\/script>\n</body>'); return doc; }
+  function runPreview() { document.getElementById('preview-frame').srcdoc = buildSrcdoc(); }
+  window.addEventListener('load', function() { setTimeout(runPreview, 100); });
+
+  function validateStep(step, code) {
+    var failures = [];
+    function check(cond, msg) { if (!cond) failures.push(msg); }
+    if (step === 5) {
+      check(code.includes('navbar'), 'The navbar from Step 1 is missing.');
+      check(code.includes('row'), 'The grid layout from Step 3 is missing.');
+      check((code.match(/\bbtn\b/g)||[]).length >= 3, 'The buttons section from Step 4 is missing.');
+      check(code.includes('<footer'), 'Add a `<footer>` element.');
+      var footerTag = (code.match(/<footer[^>]*>/)||[''])[0];
+      check(/bg-[a-z]/.test(footerTag), 'Add a background color class (e.g. `bg-dark`) to the footer element.');
+      check(code.includes('Net@'), 'Include "Net@" in the footer.');
+      check(code.includes('\u00A9')||code.includes('&copy;')||code.includes('2025')||code.toLowerCase().includes('rights'), 'Add a copyright notice to the footer.');
+    }
+    return failures;
+  }
+
+  var stepPassed = false;
+  function runCheck() { var code = activeTab === 'html' ? editor.getValue() : htmlContent; var failures = validateStep(STEP, code); var result = document.getElementById('check-result'); if (failures.length === 0) { stepPassed = true; result.className = 'pass visible'; result.innerHTML = '✅ Landing page complete! <strong>Click Finish to celebrate.</strong>'; var btn = document.getElementById('finish-btn'); if (btn) { btn.classList.remove('ide-nav-btn-disabled'); btn.classList.add('ide-nav-btn-primary'); btn.disabled = false; } addConsoleMessage('✅ Step 5 passed! All steps complete.'); } else { result.className = 'fail visible'; result.innerHTML = '❌ Not quite. Fix these:<ul>' + failures.map(function(f){return '<li>'+f+'</li>';}).join('') + '</ul>'; addConsoleMessage('❌ Check failed: ' + failures.length + ' issue(s)', 'error'); } }
+
+  function showCompletion() {
+    document.getElementById('completion-overlay').classList.add('visible');
+  }
+
+  function copyFullHTML() {
+    var code = activeTab === 'html' ? editor.getValue() : htmlContent;
+    navigator.clipboard.writeText(code).then(function() {
+      var btn = document.querySelector('#completion-overlay .comp-btn:not(.comp-btn-outline)');
+      if (btn) { var orig = btn.textContent; btn.textContent = '✅ Copied!'; setTimeout(function(){btn.textContent=orig;}, 1500); }
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 1 IDE — Navbar · Bootstrap · GIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --vsc-bg: #1e1e1e;
+      --vsc-surface: #252526;
+      --vsc-tab-inactive: #2d2d30;
+      --vsc-border: #3c3c3c;
+      --vsc-text: #cccccc;
+      --vsc-muted: #969696;
+      --grad-start: #00E1FF;
+      --grad-end: #0061FF;
+      --grad: linear-gradient(135deg, var(--grad-start), var(--grad-end));
+      --green: #22c55e;
+      --red: #ef4444;
+    }
+    html.light {
+      --vsc-bg: #ffffff;
+      --vsc-surface: #f3f3f3;
+      --vsc-tab-inactive: #ececec;
+      --vsc-border: #e8e8e8;
+      --vsc-text: #333333;
+      --vsc-muted: #717171;
+    }
+    body { font-family: 'DM Sans', 'Segoe UI', sans-serif; background: var(--vsc-bg); color: var(--vsc-text); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+    /* TOPBAR */
+    #topbar { display:flex; align-items:center; gap:12px; padding:0 16px; height:48px; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); flex-shrink:0; z-index:100; }
+    .topbar-logo { height:32px; display:flex; align-items:center; text-decoration:none; }
+    .topbar-logo svg { height:32px; width:auto; }
+    .topbar-label { font-size:13px; color:var(--vsc-muted); }
+    .topbar-spacer { flex:1; }
+    .topbar-btn { padding:4px 10px; border-radius:6px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-text); font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .topbar-btn:hover { background:var(--vsc-tab-inactive); }
+    .theme-btn { padding:4px 10px; border-radius:6px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-text); font-size:14px; cursor:pointer; }
+
+    /* PROGRESS */
+    #progress-bar { display:flex; align-items:center; justify-content:center; gap:10px; padding:8px 0; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); flex-shrink:0; }
+    .prog-dot { width:10px; height:10px; border-radius:50%; background:var(--vsc-border); transition:background 0.2s; }
+    .prog-dot.done { background:var(--grad-end); }
+    .prog-dot.active { background:var(--grad-start); box-shadow:0 0 0 3px rgba(0,225,255,0.2); }
+
+    /* SUB ROW */
+    #sub-row { display:flex; align-items:center; gap:6px; padding:6px 14px; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); flex-shrink:0; flex-wrap:wrap; }
+    .pill-btn { padding:3px 10px; border-radius:20px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-muted); font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+    .pill-btn.pill-active { background:var(--vsc-border); color:var(--vsc-text); border-color:transparent; }
+    .sub-step-label { margin-left:auto; font-size:12px; color:var(--vsc-muted); }
+    .sub-intro-link { font-size:12px; color:var(--grad-start); text-decoration:none; margin-left:8px; }
+    .sub-intro-link:hover { text-decoration:underline; }
+
+    /* MAIN */
+    #main { flex:1; display:flex; overflow:hidden; min-height:0; }
+
+    /* SPLIT layout */
+    #shell.layout-split #main { flex-direction:row; }
+    #shell.layout-split #panel-instructions { flex:0 0 280px; border-right:1px solid var(--vsc-border); overflow-y:auto; }
+    #shell.layout-split #panel-editor-console { flex:1; min-width:0; }
+    #shell.layout-split #panel-preview { flex:1; min-width:0; border-left:1px solid var(--vsc-border); }
+
+    /* TOPDOWN layout */
+    #shell.layout-topdown #main { flex-direction:column; }
+    #shell.layout-topdown #panel-instructions { flex:0 0 auto; max-height:200px; overflow-y:auto; border-bottom:1px solid var(--vsc-border); }
+    #shell.layout-topdown #panel-editor-console { flex:1; min-height:0; }
+    #shell.layout-topdown #panel-preview { flex:0 0 280px; border-top:1px solid var(--vsc-border); }
+
+    /* INSTRUCTIONS */
+    #panel-instructions { background:var(--vsc-surface); padding:16px; font-size:13px; line-height:1.6; }
+    #panel-instructions h2 { font-size:14px; font-weight:700; margin-bottom:10px; }
+    #panel-instructions p { color:var(--vsc-muted); margin-bottom:8px; }
+    #panel-instructions ul { color:var(--vsc-muted); padding-left:18px; margin-bottom:10px; }
+    #panel-instructions li { margin-bottom:4px; }
+    #panel-instructions code { background:var(--vsc-tab-inactive); color:var(--grad-start); border-radius:3px; padding:1px 5px; font-family:'DM Mono',monospace; font-size:12px; }
+    .instruction-badge { display:inline-block; padding:2px 10px; border-radius:20px; font-size:11px; font-weight:700; background:var(--grad); color:#fff; margin-bottom:10px; }
+    .hint-box { margin-top:12px; padding:10px 12px; background:rgba(0,225,255,0.07); border-left:3px solid var(--grad-start); border-radius:0 6px 6px 0; font-size:12px; color:var(--vsc-muted); }
+    .hint-box strong { color:var(--grad-start); }
+
+    /* EDITOR+CONSOLE wrapper */
+    #panel-editor-console { display:flex; flex-direction:column; background:var(--vsc-bg); min-height:0; overflow:hidden; }
+
+    /* EDITOR PANEL */
+    #panel-editor { display:flex; flex-direction:column; flex:1; min-height:0; overflow:hidden; }
+
+    /* TABS */
+    .editor-tabs { display:flex; align-items:stretch; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); min-height:36px; flex-shrink:0; }
+    .editor-tab { padding:0 16px; font-size:13px; background:var(--vsc-tab-inactive); color:var(--vsc-muted); border:none; border-top:2px solid transparent; border-right:1px solid var(--vsc-border); cursor:pointer; display:flex; align-items:center; gap:6px; font-family:'DM Sans',sans-serif; transition:background 0.1s; }
+    .editor-tab.active { background:var(--vsc-bg); color:var(--vsc-text); border-top-color:#007acc; }
+    .editor-actions { display:flex; align-items:center; gap:6px; margin-left:auto; padding:0 10px; }
+    .btn-run-ide { padding:4px 14px; border-radius:5px; border:none; background:var(--grad); color:#fff; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .btn-run-ide:hover { opacity:0.88; }
+    .btn-check { padding:4px 14px; border-radius:5px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-text); font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .btn-check:hover { background:var(--vsc-tab-inactive); }
+
+    /* EDITOR WRAP */
+    .editor-wrap { flex:1; overflow:hidden; position:relative; min-height:0; }
+    #shell.layout-topdown .editor-wrap .CodeMirror { min-height:220px; height:auto; }
+    #shell.layout-split .editor-wrap .CodeMirror { height:100%; }
+    .editor-wrap .CodeMirror { font-family:'DM Mono','Fira Code',monospace; font-size:13px; line-height:1.5; height:100%; width:100%; }
+
+    /* CHECK RESULT */
+    #check-result { flex-shrink:0; padding:0; overflow:hidden; max-height:0; transition:max-height 0.2s, padding 0.2s; font-size:13px; }
+    #check-result.visible { padding:10px 14px; max-height:150px; overflow-y:auto; }
+    #check-result.pass { background:rgba(34,197,94,0.12); border-top:1px solid var(--green); color:var(--green); }
+    #check-result.fail { background:rgba(239,68,68,0.10); border-top:1px solid var(--red); color:var(--red); }
+    #check-result ul { margin:4px 0 0 16px; }
+
+    /* CONSOLE */
+    #panel-console { flex-shrink:0; background:var(--vsc-surface); border-top:1px solid var(--vsc-border); max-height:36px; overflow:hidden; transition:max-height 0.25s; }
+    #panel-console.expanded { max-height:150px; }
+    .console-header { display:flex; align-items:center; padding:0 14px; height:36px; cursor:pointer; font-size:12px; color:var(--vsc-muted); user-select:none; }
+    .console-chevron { margin-left:auto; }
+    .console-body { padding:6px 14px; font-family:'DM Mono',monospace; font-size:12px; max-height:114px; overflow-y:auto; color:var(--vsc-muted); }
+    .console-msg { margin-bottom:4px; }
+    .console-msg.error { color:var(--red); }
+
+    /* PREVIEW */
+    #panel-preview { background:#fff; display:flex; flex-direction:column; overflow:hidden; }
+    #panel-preview iframe { flex:1; border:none; width:100%; height:100%; background:#fff; }
+    .preview-header { padding:0 10px; height:32px; background:var(--vsc-surface); border-bottom:1px solid var(--vsc-border); display:flex; align-items:center; font-size:12px; color:var(--vsc-muted); flex-shrink:0; }
+
+    /* IDE NAV */
+    #ide-nav { display:flex; align-items:center; justify-content:space-between; padding:8px 16px; background:var(--vsc-surface); border-top:1px solid var(--vsc-border); flex-shrink:0; }
+    .ide-nav-btn { padding:7px 18px; border-radius:7px; border:1px solid var(--vsc-border); background:transparent; color:var(--vsc-text); font-size:13px; font-weight:600; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-family:'DM Sans',sans-serif; transition:background 0.15s; }
+    .ide-nav-btn:hover { background:var(--vsc-tab-inactive); }
+    .ide-nav-btn-primary { background:var(--grad); color:#fff; border-color:transparent; }
+    .ide-nav-btn-primary:hover { opacity:0.88; background:var(--grad); }
+    .ide-nav-btn-disabled { opacity:0.4; cursor:not-allowed; pointer-events:none; }
+
+    /* STATUS BAR */
+    #status-bar { height:24px; background:#007acc; display:flex; align-items:center; padding:0 12px; gap:14px; font-size:11px; color:rgba(255,255,255,0.9); flex-shrink:0; font-family:'DM Mono',monospace; }
+
+    /* HIDDEN */
+    .hidden { display:none !important; }
+
+    /* VS CODE DARK */
+    .cm-s-vscode-dark.CodeMirror { background:#1e1e1e; color:#d4d4d4; }
+    .cm-s-vscode-dark .CodeMirror-gutters { background:#1e1e1e; border-right:1px solid #3c3c3c; }
+    .cm-s-vscode-dark .CodeMirror-linenumber { color:#858585; }
+    .cm-s-vscode-dark .CodeMirror-cursor { border-left:2px solid #aeafad; }
+    .cm-s-vscode-dark .CodeMirror-selected { background:#264f78; }
+    .cm-s-vscode-dark .CodeMirror-activeline-background { background:#2a2a2a; }
+    .cm-s-vscode-dark .cm-keyword { color:#569cd6; }
+    .cm-s-vscode-dark .cm-tag { color:#569cd6; }
+    .cm-s-vscode-dark .cm-attribute { color:#9cdcfe; }
+    .cm-s-vscode-dark .cm-string { color:#ce9178; }
+    .cm-s-vscode-dark .cm-comment { color:#6a9955; font-style:italic; }
+    .cm-s-vscode-dark .cm-number { color:#b5cea8; }
+    .cm-s-vscode-dark .cm-def { color:#dcdcaa; }
+    .cm-s-vscode-dark .cm-variable { color:#9cdcfe; }
+    .cm-s-vscode-dark .cm-property { color:#9cdcfe; }
+    .cm-s-vscode-dark .cm-builtin { color:#4ec9b0; }
+    .cm-s-vscode-dark .cm-atom { color:#569cd6; }
+    .cm-s-vscode-dark .cm-error { color:#f44747; }
+
+    /* VS CODE LIGHT */
+    .cm-s-vscode-light.CodeMirror { background:#ffffff; color:#000000; }
+    .cm-s-vscode-light .CodeMirror-gutters { background:#f8f8f8; border-right:1px solid #e8e8e8; }
+    .cm-s-vscode-light .CodeMirror-linenumber { color:#237893; }
+    .cm-s-vscode-light .CodeMirror-cursor { border-left:2px solid #000; }
+    .cm-s-vscode-light .CodeMirror-selected { background:#add6ff; }
+    .cm-s-vscode-light .CodeMirror-activeline-background { background:#eaf2fb; }
+    .cm-s-vscode-light .cm-keyword { color:#0000ff; }
+    .cm-s-vscode-light .cm-tag { color:#800000; }
+    .cm-s-vscode-light .cm-attribute { color:#ff0000; }
+    .cm-s-vscode-light .cm-string { color:#a31515; }
+    .cm-s-vscode-light .cm-comment { color:#008000; font-style:italic; }
+    .cm-s-vscode-light .cm-number { color:#098658; }
+    .cm-s-vscode-light .cm-variable { color:#001080; }
+    .cm-s-vscode-light .cm-property { color:#001080; }
+    .cm-s-vscode-light .cm-builtin { color:#267f99; }
+    .cm-s-vscode-light .cm-def { color:#795e26; }
+  </style>
+</head>
+<body>
+
+<!-- Starter code stored safely in a script tag to avoid template literal issues -->
+<script type="text/html" id="starter-code"><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Net@ Landing Page</title>
+</head>
+<body>
+
+  <!-- Step 1: Add your Navbar here -->
+  <!-- Use these classes: navbar navbar-expand-lg navbar-dark bg-dark -->
+  <!-- Add a navbar-brand with "Net@" and at least two nav-link items -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"><\/script>
+</body>
+</html>
+</script>
+
+<div id="shell">
+
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M115.463 180.713C115.463 180.998 115.372 181.23 115.189 181.412C115.007 181.593 114.772 181.683 114.485 181.683H96.091C95.804 181.683 95.5692 181.593 95.3866 181.412C95.2039 181.23 95.1126 180.998 95.1126 180.713V176.251C95.1126 175.966 95.2039 175.733 95.3866 175.552C95.5692 175.371 95.804 175.28 96.091 175.28H97.5782C96.7694 174.608 96.091 173.728 95.5431 172.642C94.9952 171.555 94.7212 170.275 94.7212 168.8C94.7212 167.3 95.0604 165.98 95.7388 164.842C96.4171 163.678 97.4216 162.772 98.7522 162.126C100.057 161.453 101.661 161.117 103.566 161.117H114.485C114.772 161.117 115.007 161.22 115.189 161.427C115.372 161.608 115.463 161.828 115.463 162.087V166.976C115.463 167.235 115.372 167.468 115.189 167.675C115.007 167.856 114.772 167.946 114.485 167.946H103.801C102.575 167.946 101.635 168.244 100.983 168.839C100.305 169.408 99.9655 170.262 99.9655 171.4C99.9655 172.461 100.305 173.314 100.983 173.961C101.635 174.582 102.575 174.892 103.801 174.892H114.485C114.772 174.892 115.007 174.996 115.189 175.203C115.372 175.384 115.463 175.604 115.463 175.862V180.713Z" fill="url(#ide1_p0)"/>
+<path d="M115.463 192.991C115.463 193.276 115.372 193.508 115.189 193.69C115.007 193.871 114.772 193.961 114.485 193.961H96.091C95.804 193.961 95.5692 193.871 95.3866 193.69C95.2039 193.508 95.1126 193.276 95.1126 192.991V188.412C95.1126 188.153 95.2039 187.934 95.3866 187.752C95.5692 187.545 95.804 187.442 96.091 187.442H114.485C114.772 187.442 115.007 187.545 115.189 187.752C115.372 187.934 115.463 188.153 115.463 188.412V192.991ZM92.1774 193.03C92.1774 193.314 92.0861 193.547 91.9035 193.728C91.7208 193.909 91.486 194 91.199 194H87.7159C87.4289 194 87.1941 193.909 87.0115 193.728C86.8028 193.547 86.6984 193.314 86.6984 193.03V188.412C86.6984 188.128 86.8028 187.895 87.0115 187.714C87.1941 187.507 87.4289 187.403 87.7159 187.403H91.199C91.486 187.403 91.7208 187.507 91.9035 187.714C92.0861 187.895 92.1774 188.128 92.1774 188.412V193.03Z" fill="url(#ide1_p0)"/>
+<path d="M87.3507 153.566C83.2196 153.566 79.6539 152.897 76.6535 151.561C73.6966 150.181 71.3919 148.198 69.7395 145.611C68.1306 142.981 67.2392 139.79 67.0652 136.039C67.0217 134.185 67 132.223 67 130.153C67 128.041 67.0217 126.036 67.0652 124.139C67.2392 120.474 68.1523 117.369 69.8047 114.826C71.4571 112.282 73.7836 110.342 76.784 109.005C79.7844 107.668 83.3066 107 87.3507 107C90.612 107 93.5037 107.41 96.0258 108.229C98.5479 109.005 100.657 110.061 102.353 111.398C104.092 112.734 105.397 114.2 106.266 115.796C107.179 117.391 107.658 118.965 107.701 120.517C107.745 120.905 107.614 121.228 107.31 121.487C107.049 121.746 106.723 121.875 106.332 121.875H96.8085C96.3302 121.875 95.9605 121.81 95.6996 121.681C95.4822 121.509 95.2865 121.271 95.1126 120.97C94.8082 120.323 94.3516 119.655 93.7428 118.965C93.1776 118.232 92.3731 117.607 91.3295 117.089C90.3293 116.572 89.0031 116.313 87.3507 116.313C84.872 116.313 82.9153 116.96 81.4803 118.253C80.0888 119.547 79.3278 121.616 79.1973 124.462C79.0669 128.17 79.0669 131.921 79.1973 135.715C79.3278 138.734 80.1323 140.911 81.6107 142.248C83.0892 143.584 85.046 144.252 87.4811 144.252C89.1335 144.252 90.5902 143.972 91.8513 143.412C93.1558 142.851 94.1777 141.989 94.9169 140.825C95.6562 139.617 96.0258 138.087 96.0258 136.233V135.004H89.8945C89.4162 135.004 89.0031 134.853 88.6552 134.551C88.3508 134.206 88.1986 133.797 88.1986 133.322V128.537C88.1986 128.062 88.3508 127.674 88.6552 127.372C89.0031 127.028 89.4162 126.855 89.8945 126.855H106.332C106.81 126.855 107.201 127.028 107.506 127.372C107.81 127.674 107.962 128.062 107.962 128.537V135.909C107.962 139.617 107.114 142.787 105.418 145.417C103.722 148.047 101.309 150.073 98.1782 151.496C95.0909 152.876 91.4817 153.566 87.3507 153.566Z" fill="url(#ide1_p0)"/>
+<defs>
+<linearGradient id="ide1_p0" x1="67" y1="107" x2="232" y2="194" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+</defs>
+      </svg>
+    </a>
+    <span class="topbar-label">JS · Year 2 · Lesson 15</span>
+    <div class="topbar-spacer"></div>
+    <button class="topbar-btn" onclick="toggleLayout()" id="layout-btn">⊞ Split</button>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div id="progress-bar">
+    <div class="prog-dot active"></div>
+    <div class="prog-dot"></div>
+    <div class="prog-dot"></div>
+    <div class="prog-dot"></div>
+    <div class="prog-dot"></div>
+  </div>
+
+  <!-- SUB ROW -->
+  <div id="sub-row">
+    <button class="pill-btn pill-active" id="pill-instructions" onclick="togglePanel('instructions')">Instructions</button>
+    <button class="pill-btn pill-active" id="pill-editor" onclick="togglePanel('editor')">Editor</button>
+    <button class="pill-btn" id="pill-console" onclick="toggleConsolePanel()">Console</button>
+    <button class="pill-btn pill-active" id="pill-preview" onclick="togglePanel('preview')">Preview</button>
+    <span class="sub-step-label">Step 1 of 5</span>
+    <a href="./01-intro.html" class="sub-intro-link">← Back to theory</a>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+
+    <!-- INSTRUCTIONS -->
+    <div id="panel-instructions">
+      <div class="instruction-badge">Step 1 — Navbar</div>
+      <h2>Build a Bootstrap Navbar</h2>
+      <p>Add a responsive navigation bar to the top of the page using Bootstrap classes.</p>
+      <ul>
+        <li>Add a <code>&lt;nav&gt;</code> with classes <code>navbar navbar-expand-lg navbar-dark bg-dark</code></li>
+        <li>Inside, add a <code>&lt;div class="container"&gt;</code></li>
+        <li>Add a brand link: <code>&lt;a class="navbar-brand" href="#"&gt;Net@&lt;/a&gt;</code></li>
+        <li>Add a <code>&lt;ul class="navbar-nav ms-auto"&gt;</code> with at least <strong>two</strong> <code>nav-link</code> items</li>
+        <li>Include the text <strong>Net@</strong> as the brand name</li>
+      </ul>
+      <div class="hint-box">
+        <strong>Hint:</strong> Each link needs two classes: <code>nav-item</code> on the <code>&lt;li&gt;</code> and <code>nav-link</code> on the <code>&lt;a&gt;</code>.
+      </div>
+    </div>
+
+    <!-- EDITOR + CONSOLE -->
+    <div id="panel-editor-console">
+      <div id="panel-editor">
+        <div class="editor-tabs">
+          <button class="editor-tab active" id="tab-html" onclick="switchTab('html')">
+            <span>index.html</span>
+          </button>
+          <button class="editor-tab" id="tab-js" onclick="switchTab('js')">
+            <span>script.js</span>
+          </button>
+          <div class="editor-actions">
+            <button class="btn-check" onclick="runCheck()">✓ Check</button>
+            <button class="btn-run-ide" onclick="runPreview()">▶ Run</button>
+          </div>
+        </div>
+        <div class="editor-wrap">
+          <textarea id="code-editor"></textarea>
+        </div>
+        <div id="check-result"></div>
+      </div>
+      <div id="panel-console" class="hidden">
+        <div class="console-header" onclick="toggleConsoleExpand()">
+          <span>Console</span>
+          <span class="console-chevron" id="console-chevron">▼</span>
+        </div>
+        <div class="console-body" id="console-body">
+          <div class="console-msg" data-default>No output yet.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREVIEW -->
+    <div id="panel-preview">
+      <div class="preview-header">Preview</div>
+      <iframe id="preview-frame" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+
+  </div><!-- end main -->
+
+  <!-- IDE NAV -->
+  <div id="ide-nav">
+    <a href="./01-intro.html" class="ide-nav-btn">← Theory</a>
+    <button id="next-btn" class="ide-nav-btn ide-nav-btn-disabled" disabled onclick="goNext()">Next Step →</button>
+  </div>
+
+  <!-- STATUS BAR -->
+  <div id="status-bar">
+    <span>Bootstrap Guide</span>
+    <span id="status-lang">HTML</span>
+    <span>Step 1 — Navbar</span>
+  </div>
+
+</div><!-- end shell -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/html-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/javascript-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closetag.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+<script>
+  // ── Theme ──
+  (function() {
+    if (localStorage.getItem('git-theme') === 'light') {
+      document.documentElement.classList.add('light');
+      document.getElementById('theme-btn').textContent = '☀️';
+    }
+  })();
+
+  function toggleTheme() {
+    var isLight = document.documentElement.classList.toggle('light');
+    localStorage.setItem('git-theme', isLight ? 'light' : 'dark');
+    document.getElementById('theme-btn').textContent = isLight ? '☀️' : '🌙';
+    if (editor) editor.setOption('theme', isLight ? 'vscode-light' : 'vscode-dark');
+  }
+
+  // ── Layout ──
+  var currentLayout = localStorage.getItem('git-layout') || 'split';
+  var shell = document.getElementById('shell');
+
+  function applyLayout(layout) {
+    currentLayout = layout;
+    shell.className = 'layout-' + layout;
+    document.getElementById('layout-btn').textContent = layout === 'split' ? '⊞ Split' : '☰ Top-down';
+    localStorage.setItem('git-layout', layout);
+    updatePanelFlex();
+    setTimeout(function() { if (editor) editor.refresh(); }, 80);
+  }
+  function toggleLayout() { applyLayout(currentLayout === 'split' ? 'topdown' : 'split'); }
+  applyLayout(currentLayout);
+
+  // ── Panel toggles ──
+  function togglePanel(name) {
+    var ids = { instructions: 'panel-instructions', editor: 'panel-editor-console', preview: 'panel-preview' };
+    var pillIds = { instructions: 'pill-instructions', editor: 'pill-editor', preview: 'pill-preview' };
+    var panel = document.getElementById(ids[name]);
+    var pill = document.getElementById(pillIds[name]);
+    if (!panel) return;
+    panel.classList.toggle('hidden');
+    pill.classList.toggle('pill-active');
+    updatePanelFlex();
+    setTimeout(function() { if (editor) editor.refresh(); }, 80);
+  }
+
+  function updatePanelFlex() {
+    if (currentLayout !== 'split') return;
+    var i = !document.getElementById('panel-instructions').classList.contains('hidden');
+    var e = !document.getElementById('panel-editor-console').classList.contains('hidden');
+    var p = !document.getElementById('panel-preview').classList.contains('hidden');
+    document.getElementById('panel-instructions').style.flex = i ? '0 0 280px' : '';
+    document.getElementById('panel-editor-console').style.flex = e ? '1' : '';
+    document.getElementById('panel-preview').style.flex = p ? '1' : '';
+    setTimeout(function() { if (editor) editor.refresh(); }, 80);
+  }
+
+  // ── Console ──
+  function toggleConsolePanel() {
+    var pill = document.getElementById('pill-console');
+    var con = document.getElementById('panel-console');
+    con.classList.toggle('hidden');
+    pill.classList.toggle('pill-active');
+  }
+  function toggleConsoleExpand() {
+    var con = document.getElementById('panel-console');
+    con.classList.toggle('expanded');
+    document.getElementById('console-chevron').textContent = con.classList.contains('expanded') ? '▲' : '▼';
+  }
+  function addConsoleMessage(msg, type) {
+    var body = document.getElementById('console-body');
+    var def = body.querySelector('[data-default]');
+    if (def) def.remove();
+    var div = document.createElement('div');
+    div.className = 'console-msg' + (type === 'error' ? ' error' : '');
+    div.textContent = msg;
+    body.appendChild(div);
+    if (type === 'error') {
+      document.getElementById('panel-console').classList.remove('hidden');
+      document.getElementById('panel-console').classList.add('expanded');
+      document.getElementById('console-chevron').textContent = '▲';
+    }
+  }
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'iframe-error') addConsoleMessage('⚠ ' + e.data.message, 'error');
+  });
+
+  // ── Editor ──
+  var STEP = 1;
+  var STARTER_HTML = document.getElementById('starter-code').textContent;
+
+  var htmlContent = STARTER_HTML;
+  var jsContent = '';
+  var activeTab = 'html';
+
+  var isLight = document.documentElement.classList.contains('light');
+  var editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+    mode: 'htmlmixed',
+    theme: isLight ? 'vscode-light' : 'vscode-dark',
+    lineNumbers: true,
+    lineWrapping: true,
+    viewportMargin: Infinity,
+    extraKeys: { 'Ctrl-Space': 'autocomplete', 'Tab': function(cm) { cm.replaceSelection('  '); } },
+    hintOptions: { completeSingle: false },
+    autoCloseTags: true,
+    matchBrackets: true,
+    styleActiveLine: true
+  });
+  editor.setValue(STARTER_HTML);
+
+  function switchTab(tab) {
+    if (tab === activeTab) return;
+    if (activeTab === 'html') htmlContent = editor.getValue();
+    else jsContent = editor.getValue();
+    activeTab = tab;
+    editor.setOption('mode', tab === 'html' ? 'htmlmixed' : 'javascript');
+    editor.setValue(tab === 'html' ? htmlContent : jsContent);
+    document.getElementById('tab-html').classList.toggle('active', tab === 'html');
+    document.getElementById('tab-js').classList.toggle('active', tab === 'js');
+    document.getElementById('status-lang').textContent = tab === 'html' ? 'HTML' : 'JS';
+    editor.focus();
+  }
+
+  // ── Run ──
+  function buildSrcdoc() {
+    var html = activeTab === 'html' ? editor.getValue() : htmlContent;
+    var js = activeTab === 'js' ? editor.getValue() : jsContent;
+    var onerr = '<script>window.onerror=function(m,s,l){window.parent.postMessage({type:\'iframe-error\',message:m+(s?\' (\'+s+\':\'+l+\')\':\'\')},"*");return false;};<\/script>';
+    var doc = html.replace(/(<head[^>]*>)/i, '$1\n  ' + onerr);
+    if (js && js.trim()) doc = doc.replace('</body>', '<script>\n' + js + '\n<\/script>\n</body>');
+    return doc;
+  }
+  function runPreview() {
+    document.getElementById('preview-frame').srcdoc = buildSrcdoc();
+  }
+  window.addEventListener('load', function() { setTimeout(runPreview, 100); });
+
+  // ── Validate ──
+  function validateStep(step, code) {
+    var failures = [];
+    function check(cond, msg) { if (!cond) failures.push(msg); }
+    if (step === 1) {
+      check(code.includes('navbar'), 'Add a <nav> with the `navbar` class.');
+      check(code.includes('navbar-brand'), 'Add your brand name with the `navbar-brand` class.');
+      check((code.match(/nav-link/g)||[]).length >= 2, 'Add at least two navigation links with the `nav-link` class.');
+      check(code.includes('Net@'), 'Include "Net@" as the brand name.');
+    }
+    return failures;
+  }
+
+  // ── Check ──
+  var stepPassed = false;
+  function runCheck() {
+    var code = activeTab === 'html' ? editor.getValue() : htmlContent;
+    var failures = validateStep(STEP, code);
+    var result = document.getElementById('check-result');
+    if (failures.length === 0) {
+      stepPassed = true;
+      result.className = 'pass visible';
+      result.innerHTML = '✅ Great work! Step ' + STEP + ' complete. <strong>Next is now unlocked.</strong>';
+      var btn = document.getElementById('next-btn');
+      if (btn) { btn.classList.remove('ide-nav-btn-disabled'); btn.classList.add('ide-nav-btn-primary'); btn.disabled = false; }
+      addConsoleMessage('✅ Step ' + STEP + ' passed!');
+    } else {
+      result.className = 'fail visible';
+      result.innerHTML = '❌ Not quite. Fix these:<ul>' + failures.map(function(f){return '<li>'+f+'</li>';}).join('') + '</ul>';
+      addConsoleMessage('❌ Check failed: ' + failures.length + ' issue(s)', 'error');
+    }
+  }
+
+  function goNext() {
+    window.location = '02-intro.html';
+  }
+</script>
+</body>
+</html>

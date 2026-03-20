@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 1 — Navbar · Bootstrap · GIT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="./style.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:48px;width:auto;">
+<path d="M115.463 180.713C115.463 180.998 115.372 181.23 115.189 181.412C115.007 181.593 114.772 181.683 114.485 181.683H96.091C95.804 181.683 95.5692 181.593 95.3866 181.412C95.2039 181.23 95.1126 180.998 95.1126 180.713V176.251C95.1126 175.966 95.2039 175.733 95.3866 175.552C95.5692 175.371 95.804 175.28 96.091 175.28H97.5782C96.7694 174.608 96.091 173.728 95.5431 172.642C94.9952 171.555 94.7212 170.275 94.7212 168.8C94.7212 167.3 95.0604 165.98 95.7388 164.842C96.4171 163.678 97.4216 162.772 98.7522 162.126C100.057 161.453 101.661 161.117 103.566 161.117H114.485C114.772 161.117 115.007 161.22 115.189 161.427C115.372 161.608 115.463 161.828 115.463 162.087V166.976C115.463 167.235 115.372 167.468 115.189 167.675C115.007 167.856 114.772 167.946 114.485 167.946H103.801C102.575 167.946 101.635 168.244 100.983 168.839C100.305 169.408 99.9655 170.262 99.9655 171.4C99.9655 172.461 100.305 173.314 100.983 173.961C101.635 174.582 102.575 174.892 103.801 174.892H114.485C114.772 174.892 115.007 174.996 115.189 175.203C115.372 175.384 115.463 175.604 115.463 175.862V180.713Z" fill="url(#l15_paint0)"/>
+<path d="M115.463 192.991C115.463 193.276 115.372 193.508 115.189 193.69C115.007 193.871 114.772 193.961 114.485 193.961H96.091C95.804 193.961 95.5692 193.871 95.3866 193.69C95.2039 193.508 95.1126 193.276 95.1126 192.991V188.412C95.1126 188.153 95.2039 187.934 95.3866 187.752C95.5692 187.545 95.804 187.442 96.091 187.442H114.485C114.772 187.442 115.007 187.545 115.189 187.752C115.372 187.934 115.463 188.153 115.463 188.412V192.991ZM92.1774 193.03C92.1774 193.314 92.0861 193.547 91.9035 193.728C91.7208 193.909 91.486 194 91.199 194H87.7159C87.4289 194 87.1941 193.909 87.0115 193.728C86.8028 193.547 86.6984 193.314 86.6984 193.03V188.412C86.6984 188.128 86.8028 187.895 87.0115 187.714C87.1941 187.507 87.4289 187.403 87.7159 187.403H91.199C91.486 187.403 91.7208 187.507 91.9035 187.714C92.0861 187.895 92.1774 188.128 92.1774 188.412V193.03Z" fill="url(#l15_paint1)"/>
+<path d="M192.342 152.919C191.69 152.919 191.212 152.768 190.907 152.466C190.603 152.164 190.364 151.776 190.19 151.302L180.797 121.358C180.71 121.142 180.667 120.927 180.667 120.711C180.667 120.323 180.819 120 181.123 119.741C181.428 119.439 181.776 119.288 182.167 119.288H188.885C189.451 119.288 189.885 119.439 190.19 119.741C190.538 120.043 190.755 120.344 190.842 120.646L196.321 139.143L202.192 120.711C202.278 120.409 202.474 120.107 202.779 119.806C203.126 119.461 203.605 119.288 204.214 119.288H208.518C209.127 119.288 209.584 119.461 209.888 119.806C210.236 120.107 210.454 120.409 210.54 120.711L216.411 139.143L221.89 120.646C221.977 120.344 222.173 120.043 222.477 119.741C222.825 119.439 223.281 119.288 223.847 119.288H230.565C230.956 119.288 231.283 119.439 231.543 119.741C231.848 120 232 120.323 232 120.711C232 120.927 231.978 121.142 231.935 121.358L222.542 151.302C222.412 151.776 222.173 152.164 221.825 152.466C221.52 152.768 221.042 152.919 220.39 152.919H214.519C213.911 152.919 213.432 152.768 213.084 152.466C212.736 152.164 212.497 151.776 212.367 151.302L206.366 133.581L200.365 151.302C200.235 151.776 199.996 152.164 199.648 152.466C199.3 152.768 198.821 152.919 198.213 152.919H192.342Z" fill="url(#l15_paint2)"/>
+<path d="M160.138 153.566C156.486 153.566 153.398 152.983 150.876 151.819C148.398 150.655 146.484 148.995 145.136 146.839C143.832 144.641 143.092 142.032 142.918 139.014C142.875 138.152 142.853 137.181 142.853 136.103C142.853 134.982 142.875 134.012 142.918 133.193C143.092 130.132 143.875 127.523 145.267 125.368C146.658 123.212 148.593 121.552 151.072 120.388C153.594 119.223 156.616 118.641 160.138 118.641C163.704 118.641 166.726 119.223 169.205 120.388C171.727 121.552 173.684 123.212 175.075 125.368C176.467 127.523 177.249 130.132 177.423 133.193C177.467 134.012 177.489 134.982 177.489 136.103C177.489 137.181 177.467 138.152 177.423 139.014C177.249 142.032 176.488 144.641 175.14 146.839C173.836 148.995 171.923 150.655 169.4 151.819C166.922 152.983 163.834 153.566 160.138 153.566ZM160.138 145.675C162.095 145.675 163.508 145.093 164.378 143.929C165.291 142.765 165.813 141.019 165.943 138.69C165.987 138.044 166.009 137.181 166.009 136.103C166.009 135.026 165.987 134.163 165.943 133.517C165.813 131.231 165.291 129.507 164.378 128.343C163.508 127.135 162.095 126.532 160.138 126.532C158.225 126.532 156.812 127.135 155.899 128.343C154.985 129.507 154.485 131.231 154.398 133.517C154.355 134.163 154.333 135.026 154.333 136.103C154.333 137.181 154.355 138.044 154.398 138.69C154.485 141.019 154.985 142.765 155.899 143.929C156.812 145.093 158.225 145.675 160.138 145.675Z" fill="url(#l15_paint3)"/>
+<path d="M116.359 152.919C115.88 152.919 115.489 152.768 115.185 152.466C114.88 152.164 114.728 151.776 114.728 151.302V120.905C114.728 120.474 114.88 120.107 115.185 119.806C115.489 119.461 115.88 119.288 116.359 119.288H123.86C124.338 119.288 124.729 119.461 125.034 119.806C125.338 120.107 125.49 120.474 125.49 120.905V123.492C126.664 122.155 128.056 121.121 129.665 120.388C131.317 119.655 133.165 119.288 135.209 119.288H138.079C138.514 119.288 138.883 119.439 139.188 119.741C139.536 120.043 139.71 120.431 139.71 120.905V127.566C139.71 127.998 139.536 128.386 139.188 128.731C138.883 129.032 138.514 129.183 138.079 129.183H131.752C129.969 129.183 128.578 129.679 127.578 130.671C126.621 131.619 126.143 132.978 126.143 134.745V151.302C126.143 151.776 125.969 152.164 125.621 152.466C125.316 152.768 124.925 152.919 124.447 152.919H116.359Z" fill="url(#l15_paint4)"/>
+<path d="M87.3507 153.566C83.2196 153.566 79.6539 152.897 76.6535 151.561C73.6966 150.181 71.3919 148.198 69.7395 145.611C68.1306 142.981 67.2392 139.79 67.0652 136.039C67.0217 134.185 67 132.223 67 130.153C67 128.041 67.0217 126.036 67.0652 124.139C67.2392 120.474 68.1523 117.369 69.8047 114.826C71.4571 112.282 73.7836 110.342 76.784 109.005C79.7844 107.668 83.3066 107 87.3507 107C90.612 107 93.5037 107.41 96.0258 108.229C98.5479 109.005 100.657 110.061 102.353 111.398C104.092 112.734 105.397 114.2 106.266 115.796C107.179 117.391 107.658 118.965 107.701 120.517C107.745 120.905 107.614 121.228 107.31 121.487C107.049 121.746 106.723 121.875 106.332 121.875H96.8085C96.3302 121.875 95.9605 121.81 95.6996 121.681C95.4822 121.509 95.2865 121.271 95.1126 120.97C94.8082 120.323 94.3516 119.655 93.7428 118.965C93.1776 118.232 92.3731 117.607 91.3295 117.089C90.3293 116.572 89.0031 116.313 87.3507 116.313C84.872 116.313 82.9153 116.96 81.4803 118.253C80.0888 119.547 79.3278 121.616 79.1973 124.462C79.0669 128.17 79.0669 131.921 79.1973 135.715C79.3278 138.734 80.1323 140.911 81.6107 142.248C83.0892 143.584 85.046 144.252 87.4811 144.252C89.1335 144.252 90.5902 143.972 91.8513 143.412C93.1558 142.851 94.1777 141.989 94.9169 140.825C95.6562 139.617 96.0258 138.087 96.0258 136.233V135.004H89.8945C89.4162 135.004 89.0031 134.853 88.6552 134.551C88.3508 134.206 88.1986 133.797 88.1986 133.322V128.537C88.1986 128.062 88.3508 127.674 88.6552 127.372C89.0031 127.028 89.4162 126.855 89.8945 126.855H106.332C106.81 126.855 107.201 127.028 107.506 127.372C107.81 127.674 107.962 128.062 107.962 128.537V135.909C107.962 139.617 107.114 142.787 105.418 145.417C103.722 148.047 101.309 150.073 98.1782 151.496C95.0909 152.876 91.4817 153.566 87.3507 153.566Z" fill="url(#l15_paint5)"/>
+<path d="M207.87 193.017C207.535 193.017 207.261 192.911 207.048 192.7C206.835 192.489 206.729 192.217 206.729 191.885V162.006C206.729 161.674 206.835 161.402 207.048 161.191C207.261 160.979 207.535 160.874 207.87 160.874H213.715C214.049 160.874 214.323 160.979 214.536 161.191C214.749 161.402 214.856 161.674 214.856 162.006V172.101C215.678 171.166 216.682 170.426 217.869 169.883C219.087 169.309 220.487 169.023 222.07 169.023C223.836 169.023 225.403 169.415 226.773 170.2C228.173 170.985 229.269 172.147 230.06 173.686C230.852 175.195 231.247 177.051 231.247 179.254V191.885C231.247 192.217 231.141 192.489 230.928 192.7C230.715 192.911 230.441 193.017 230.106 193.017H224.216C223.912 193.017 223.638 192.911 223.394 192.7C223.181 192.489 223.075 192.217 223.075 191.885V179.526C223.075 178.107 222.724 177.021 222.024 176.266C221.355 175.482 220.35 175.089 219.011 175.089C217.763 175.089 216.758 175.482 215.997 176.266C215.236 177.021 214.856 178.107 214.856 179.526V191.885C214.856 192.217 214.749 192.489 214.536 192.7C214.323 192.911 214.049 193.017 213.715 193.017H207.87Z" fill="url(#l15_paint6)"/>
+<path d="M190.71 193.47C188.457 193.47 186.464 193.062 184.729 192.247C182.993 191.432 181.609 190.255 180.574 188.716C179.569 187.147 179.021 185.275 178.93 183.102C178.899 182.619 178.884 182.016 178.884 181.291C178.884 180.537 178.899 179.918 178.93 179.435C179.021 177.232 179.569 175.361 180.574 173.822C181.578 172.252 182.948 171.06 184.683 170.245C186.448 169.43 188.457 169.023 190.71 169.023C192.81 169.023 194.606 169.325 196.097 169.928C197.589 170.502 198.807 171.226 199.75 172.101C200.694 172.977 201.394 173.882 201.85 174.818C202.337 175.723 202.596 176.523 202.627 177.217C202.657 177.519 202.551 177.79 202.307 178.032C202.064 178.243 201.79 178.349 201.485 178.349H195.687C195.352 178.349 195.093 178.273 194.91 178.122C194.728 177.972 194.56 177.745 194.408 177.443C194.043 176.508 193.571 175.844 192.993 175.451C192.445 175.059 191.729 174.863 190.847 174.863C189.629 174.863 188.686 175.255 188.016 176.04C187.377 176.825 187.027 178.032 186.966 179.662C186.935 180.869 186.935 181.94 186.966 182.876C187.027 184.536 187.377 185.743 188.016 186.498C188.686 187.252 189.629 187.63 190.847 187.63C191.79 187.63 192.536 187.433 193.084 187.041C193.632 186.649 194.073 185.985 194.408 185.049C194.56 184.747 194.728 184.521 194.91 184.37C195.093 184.219 195.352 184.144 195.687 184.144H201.485C201.79 184.144 202.064 184.264 202.307 184.506C202.551 184.717 202.657 184.974 202.627 185.275C202.596 185.789 202.444 186.392 202.17 187.086C201.896 187.75 201.47 188.46 200.892 189.214C200.313 189.969 199.552 190.678 198.609 191.342C197.696 191.976 196.584 192.489 195.276 192.881C193.967 193.273 192.445 193.47 190.71 193.47Z" fill="url(#l15_paint7)"/>
+<path d="M163.646 193.47C160.054 193.47 157.193 192.504 155.062 190.572C152.931 188.641 151.82 185.773 151.729 181.971C151.729 181.759 151.729 181.488 151.729 181.156C151.729 180.824 151.729 180.567 151.729 180.386C151.82 178.002 152.353 175.964 153.327 174.274C154.331 172.554 155.701 171.256 157.436 170.381C159.202 169.475 161.256 169.023 163.6 169.023C166.279 169.023 168.485 169.551 170.221 170.607C171.986 171.664 173.31 173.097 174.193 174.908C175.076 176.719 175.517 178.786 175.517 181.11V182.197C175.517 182.529 175.395 182.801 175.152 183.012C174.939 183.223 174.68 183.329 174.375 183.329H159.765C159.765 183.359 159.765 183.404 159.765 183.465C159.765 183.525 159.765 183.585 159.765 183.646C159.795 184.521 159.947 185.321 160.221 186.045C160.495 186.769 160.921 187.343 161.5 187.765C162.078 188.188 162.778 188.399 163.6 188.399C164.209 188.399 164.711 188.309 165.107 188.128C165.533 187.916 165.883 187.69 166.157 187.448C166.431 187.177 166.644 186.95 166.796 186.769C167.07 186.468 167.283 186.286 167.435 186.226C167.618 186.136 167.892 186.09 168.257 186.09H173.919C174.223 186.09 174.467 186.181 174.649 186.362C174.862 186.513 174.954 186.739 174.923 187.041C174.893 187.554 174.634 188.173 174.147 188.897C173.66 189.622 172.945 190.346 172.001 191.07C171.088 191.764 169.931 192.338 168.531 192.791C167.131 193.243 165.502 193.47 163.646 193.47ZM159.765 178.847H167.481V178.756C167.481 177.79 167.329 176.945 167.024 176.221C166.75 175.497 166.309 174.938 165.7 174.546C165.122 174.154 164.422 173.957 163.6 173.957C162.778 173.957 162.078 174.154 161.5 174.546C160.952 174.938 160.526 175.497 160.221 176.221C159.917 176.945 159.765 177.79 159.765 178.756V178.847Z" fill="url(#l15_paint8)"/>
+<path d="M136.616 193.017C136.281 193.017 136.007 192.911 135.794 192.7C135.581 192.489 135.475 192.217 135.475 191.885V168.434H127.348C127.013 168.434 126.739 168.329 126.526 168.117C126.313 167.876 126.206 167.604 126.206 167.302V162.458C126.206 162.126 126.313 161.855 126.526 161.643C126.739 161.432 127.013 161.326 127.348 161.326H151.912C152.247 161.326 152.521 161.432 152.734 161.643C152.947 161.855 153.053 162.126 153.053 162.458V167.302C153.053 167.604 152.947 167.876 152.734 168.117C152.521 168.329 152.247 168.434 151.912 168.434H143.785V191.885C143.785 192.217 143.678 192.489 143.465 192.7C143.252 192.911 142.978 193.017 142.643 193.017H136.616Z" fill="url(#l15_paint9)"/>
+<defs>
+<linearGradient id="l15_paint0" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+<linearGradient id="l15_paint1" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+<linearGradient id="l15_paint2" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+<linearGradient id="l15_paint3" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+<linearGradient id="l15_paint4" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+<linearGradient id="l15_paint5" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+<linearGradient id="l15_paint6" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+<linearGradient id="l15_paint7" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+<linearGradient id="l15_paint8" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+<linearGradient id="l15_paint9" x1="79.0669" y1="114.761" x2="231.459" y2="195.376" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/>
+</linearGradient>
+</defs>
+      </svg>
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">JS · Year 2 · Lesson 15</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-dot active"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="activity-badge badge-explore">Step 1 · Bootstrap</div>
+    <h1 class="hero-title">The <span class="grad">Navbar</span> Component</h1>
+    <p class="hero-sub">Learn what a CSS framework is and how Bootstrap's navbar works.</p>
+
+    <!-- THEORY SECTION -->
+    <section>
+      <p>A <strong>CSS framework</strong> is a collection of pre-written CSS rules that you activate simply by adding class names to your HTML elements — no custom CSS required to get a polished result.</p>
+
+      <p><strong>Bootstrap</strong> is the most widely used CSS framework in the world. It gives you a responsive grid system, a library of ready-made UI components (navbars, cards, modals, buttons…), and dozens of utility classes for spacing, color, and typography. You load it with a single <code>&lt;link&gt;</code> tag and start writing class names.</p>
+
+      <p>The <strong>Navbar</strong> is the top navigation bar of a page. Bootstrap's navbar is <em>responsive by default</em>: on small screens it collapses into a hamburger button; on large screens it expands to show all links in a row.</p>
+
+      <h2>Key Classes</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4><code>navbar</code></h4>
+            <p>Base class, required on the <code>&lt;nav&gt;</code> element. Enables flexbox layout and sets up the navbar structure.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4><code>navbar-expand-lg</code></h4>
+            <p>Collapses the nav on screens smaller than "lg" (≥ 992 px) and expands to a full horizontal row on large screens.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4><code>navbar-dark</code> + <code>bg-dark</code></h4>
+            <p><code>navbar-dark</code> sets link and icon colors to light — use this on dark backgrounds. <code>bg-dark</code> is a utility that applies the dark background color itself.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4><code>navbar-brand</code></h4>
+            <p>Styles the logo or site-name link. Apply it to the <code>&lt;a&gt;</code> tag that holds your brand name or logo image.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h4><code>nav-item</code> / <code>nav-link</code></h4>
+            <p><code>nav-item</code> goes on each <code>&lt;li&gt;</code> inside the nav list. <code>nav-link</code> goes on the <code>&lt;a&gt;</code> inside each list item.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <h4><code>container</code> + <code>ms-auto</code></h4>
+            <p><code>container</code> centers and constrains content to a readable max-width. <code>ms-auto</code> (margin-start: auto) pushes the nav links all the way to the right.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body">
+          <strong>data-bs-* attributes</strong><br>
+          The collapse behaviour is wired up entirely via HTML attributes — <code>data-bs-toggle="collapse"</code> and <code>data-bs-target="#navMenu"</code>. Bootstrap's JavaScript reads these automatically; you don't write any JS yourself.
+        </div>
+      </div>
+
+      <h2>Reference Snippet</h2>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre>&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+  &lt;div class="container"&gt;
+    &lt;a class="navbar-brand" href="#"&gt;My Site&lt;/a&gt;
+    &lt;button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navMenu"&gt;
+      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse navbar-collapse" id="navMenu"&gt;
+      &lt;ul class="navbar-nav ms-auto"&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</pre>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Tip — always wrap in a container</strong><br>
+          Placing a <code>&lt;div class="container"&gt;</code> inside the navbar keeps your brand and links aligned with the rest of your page content. Without it, content stretches edge-to-edge.
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MINI-IDE SECTION -->
+    <div class="mini-ide-wrap">
+      <h3>▶ Try it yourself</h3>
+      <div class="mini-ide-actions">
+        <button id="run-btn" class="btn-run">▶ Run</button>
+        <span style="font-size:13px;color:var(--text-muted)">Edit the code and click Run to see Bootstrap in action.</span>
+      </div>
+      <div class="mini-editor-wrap">
+        <textarea id="mini-editor"></textarea>
+      </div>
+      <iframe id="mini-preview" class="mini-preview" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- QUIZ SECTION -->
+    <div class="quiz-section">
+      <h2>Quick Check</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Answer all questions correctly to unlock the IDE.</p>
+      <div id="quiz-container"></div>
+      <button class="quiz-check-btn" onclick="checkQuiz(1, QUIZZES_1, 'go-ide-btn', 'quiz-result')">Check Answers</button>
+      <div id="quiz-result" class="quiz-result"></div>
+    </div>
+
+    <!-- NAV FOOTER -->
+    <div class="nav-footer">
+      <a href="./index.html" class="nav-btn nav-btn-outline">← Back</a>
+      <button id="go-ide-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='01-ide.html'">Enter IDE →</button>
+    </div>
+
+  </div><!-- end page-wrap -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="./app.js"></script>
+  <script>
+    const QUIZZES_1 = [
+      {
+        q: 'What does a CSS framework do?',
+        opts: [
+          'Provides pre-written CSS you activate with class names',
+          'Runs a server for your website',
+          'Converts CSS to JavaScript',
+          'Generates HTML automatically',
+        ],
+        correct: 0,
+      },
+      {
+        q: 'Which class makes the navbar collapse on small screens and expand on large ones?',
+        opts: [
+          'navbar-collapse',
+          'navbar-expand-lg',
+          'navbar-responsive',
+          'navbar-breakpoint-lg',
+        ],
+        correct: 1,
+      },
+      {
+        q: 'What class do you add to the brand/logo link?',
+        opts: ['navbar-logo', 'navbar-title', 'navbar-brand', 'brand-link'],
+        correct: 2,
+      },
+    ];
+
+    const STARTER_1 = `<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Net@</a>
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+    </ul>
+  </div>
+</nav>`;
+
+    renderQuiz('quiz-container', 1, QUIZZES_1);
+    restoreQuizState(1, 'go-ide-btn');
+    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_1);
+  </script>
+</body>
+</html>
