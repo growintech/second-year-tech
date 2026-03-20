@@ -58,9 +58,6 @@ body {
   background: rgba(10, 12, 16, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  margin-left: -24px;
-  margin-right: -24px;
-  width: calc(100% + 48px);
 }
 
 .topbar-logo img {
