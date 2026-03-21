@@ -4,8 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Level 4: Countdown Banner · GIT Lesson 14</title>
-  <link rel="stylesheet" href="style.css">
-  <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');</script>
+  <link rel="stylesheet" href="../../shared/style-intro.css">
+  <style>
+    /* lesson14 callout: flex layout with icon on the left */
+    .callout { display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; }
+    .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; margin-right: 0; }
+    .callout-body { display: block; }
+    .callout-body strong { display: block; margin-bottom: 3px; }
+  </style>
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
   <style>
     .preview-countdown {
       background: #0d0f14;
@@ -241,7 +248,7 @@ setInterval(function() {
   </div>
 
 </div>
-<script src="app.js"></script>
+<script src="../../shared/app-intro.js"></script>
 <script>
   // The HTML pre-loaded in the iframe output
   var COUNTDOWN_HTML = '<div id="countdown" style="font-family:monospace;font-size:22px;padding:12px;">'

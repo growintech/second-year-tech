@@ -68,10 +68,21 @@ Uses `style.css` + `app.js` from the same folder. Matches `lesson14/date-and-tim
 1. Topbar (GIT logo 48px + "JS · Year 2 · Lesson 15" label + theme toggle)
 2. Progress bar (5 dots)
 3. `.page-wrap` (max-width 780px, centred)
-   - Theory section: concept explanation, key classes, callouts (info/tip/warn), reference code block
+   - Theory section: short paragraphs, concept explanation, key classes via **class-switcher** (tab-like, one class shown at a time), max 1–2 single-sentence callouts (info/tip/warn), reference code block
+   - **Reference Snippet**: a `.snippet-block` div wrapping a `<textarea>` — initialized by `initSnippet()` as a read-only CodeMirror with VS Code theme. **Not** `.code-block`.
    - Mini-IDE section: small CodeMirror editor (8 lines) + preview iframe (200px) + ▶ Run button (no validation)
    - Quiz section: 2–3 multiple-choice questions. Check Answers → on pass, unlocks "Enter IDE →" link
 4. Nav footer: ← Back | Enter IDE → (disabled until quiz passed)
+
+**CodeMirror script loading order (all intro pages):**
+```html
+<script src="…/codemirror.min.js"></script>
+<script src="…/mode/xml/xml.min.js"></script>
+<script src="…/mode/javascript/javascript.min.js"></script>
+<script src="…/mode/css/css.min.js"></script>
+<script src="…/mode/htmlmixed/htmlmixed.min.js"></script>
+```
+`htmlmixed` requires `xml`, `javascript`, and `css` as dependencies. Loading `htmlmixed` alone causes CodeMirror to silently fail and render a plain textarea.
 
 **Quiz gate:**
 - On pass: `localStorage.setItem('quiz-passed-N', '1')` and enable the "Enter IDE →" link
@@ -79,25 +90,17 @@ Uses `style.css` + `app.js` from the same folder. Matches `lesson14/date-and-tim
 
 **Mini-IDE:** Free exploration only — no validation, no Check button. Short Bootstrap snippet pre-filled. `▶ Run` wraps content in a full Bootstrap HTML page and sets iframe `srcdoc`.
 
-**Callouts in each intro page:** Each theory section contains three callout blocks:
-- `.callout.callout-info` — explains what the concept is
-- `.callout.callout-tip` — practical usage tip
-- `.callout.callout-warn` — common mistake to avoid
-
 ### IDE pages (`0N-ide.html`)
 
 Fully self-contained (all CSS inline `<style>`, all JS inline `<script>`). VS Code aesthetic.
 
 **Layout:**
 ```
-#topbar         (GIT logo + label + ⊞ Split/☰ Top-down toggle + theme toggle)
-#progress-bar   (5 dots)
-#sub-row        (.pills-group: [Instructions][Editor][Console][Preview]) (.sub-right: "Step N of 5 · Topic" + "← Theory")
+#topbar         (.topbar-left: GIT logo + full breadcrumb) (.pills-group: Instructions/Editor/Console/Preview) (.topbar-right: ⊞ Split/☰ Top-down + theme toggle)
 #main           (flex row or column depending on layout)
-  #panel-instructions    (task description + hint-box + collapsible hints section)
+  #panel-instructions    (task list + hint-box + collapsible hints section)
   .drag-handle           (drag-1: resize between instructions and editor)
   #panel-editor-console
-    .editor-breadcrumb   ("Bootstrap Guide › Step N — Topic")
     .editor-tabs         ([index.html] [script.js] [✓ Check] [▶ Run])
     .editor-wrap         (CodeMirror)
     #check-result        (✅/❌ inline callout)
@@ -167,9 +170,9 @@ Theme persisted in `localStorage` key `git-theme`.
 
 ## IDE features
 
-### Panel visibility (JSBin-style pills)
+### Panel visibility (VS Code-style segmented buttons)
 
-Four pill buttons in `#sub-row`: Instructions, Editor, Console, Preview. Each toggles its panel. Active = gradient fill, inactive = outlined with cyan border. In split layout, hiding a panel collapses its column (via `updatePanelFlex()`).
+Four pill buttons centered in `#topbar`: Instructions, Editor, Console, Preview. Each toggles its panel. Active = solid fill with blue underline, inactive = outline. In split layout, hiding a panel collapses its column (via `updatePanelFlex()`).
 
 ### Drag-to-resize panels
 
@@ -226,9 +229,7 @@ In `#panel-instructions`, below the main task description:
 - On pass: switch to `ide-nav-btn-primary` (gradient), remove `disabled`. `goNext()` / `showCompletion()` guarded with `if (!stepPassed) return;`.
 - Styling: `min-height: 44px`, `min-width: 160px`, `justify-content: center`. Mobile: `width: 100%`.
 
-### Editor breadcrumb
 
-`<div class="editor-breadcrumb">Bootstrap Guide › Step N — Topic</div>` shown above `.editor-tabs`. Font: `DM Mono`, 11px, muted color.
 
 ---
 

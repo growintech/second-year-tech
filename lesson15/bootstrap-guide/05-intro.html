@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Step 5 — Footer · Bootstrap · GIT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="../../shared/style-intro.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
 </head>
 <body>
@@ -79,57 +79,34 @@
 
     <!-- THEORY SECTION -->
     <section>
-      <p>Unlike the navbar or card, Bootstrap has <strong>no dedicated footer component</strong>. This is intentional — footers vary too much across projects to prescribe a single structure. Instead, you compose Bootstrap's utility classes on a plain <code>&lt;footer&gt;</code> HTML element.</p>
+      <p>Unlike the navbar or card, Bootstrap has <strong>no dedicated footer component</strong>.</p>
+      
+      <p>Instead, you compose Bootstrap's utility classes on a plain <code>&lt;footer&gt;</code> HTML element.</p>
+      
+      <p>This approach — combining small, single-purpose utilities — is Bootstrap's <strong>composability philosophy</strong>.</p>
 
-      <p>This approach — combining small, single-purpose utilities rather than relying on one monolithic component — is Bootstrap's <strong>composability philosophy</strong>. Once you know the utility classes, you can build almost any layout without writing a single line of custom CSS.</p>
-
-      <div class="callout callout-info">
-        <strong>Bootstrap footers:</strong> Unlike a navbar, Bootstrap has no dedicated footer component. You build it yourself using the semantic <code>&lt;footer&gt;</code> HTML element and utility classes for color, spacing, and text alignment.
-      </div>
       <div class="callout callout-tip">
-        <strong>Tip:</strong> <code>mt-5</code> on the footer adds a top margin that separates it visually from the content above. <code>py-4</code> gives it vertical breathing room.
-      </div>
-      <div class="callout callout-warn">
-        <strong>Common mistake:</strong> Adding <code>bg-dark</code> to a wrapper <code>&lt;div&gt;</code> instead of the <code>&lt;footer&gt;</code> itself — the dark background won't extend to the page edges if it's inside a <code>container</code>.
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Tip</strong> <code>mt-5</code> on the footer adds a top margin that separates it visually from the content above.
+        </div>
       </div>
 
       <h2>Key Classes for a Footer</h2>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4><code>bg-dark</code> + <code>text-white</code></h4>
-            <p><code>bg-dark</code> applies a dark background, visually separating the footer from the page body. <code>text-white</code> makes the text readable on that dark background.</p>
-          </div>
+      <div class="class-switcher" id="cs-05">
+        <div class="cs-tabs">
+          <button class="cs-tab active" onclick="switchClassTab('cs-05', 0)">bg-dark + text-white</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-05', 1)">py-4</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-05', 2)">mt-5</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-05', 3)">text-center</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-05', 4)">text-muted + mb-0</button>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4><code>py-4</code></h4>
-            <p>Adds comfortable padding on the top and bottom (1.5 rem each side). The spacing scale runs 0–5; scale 4 = 1.5 rem.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h4><code>mt-5</code></h4>
-            <p>Adds a large top margin (3 rem) that creates breathing room between the last content section and the footer.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <h4><code>text-center</code></h4>
-            <p>Centers all inline content horizontally inside the footer. Pair with a <code>container</code> inside to keep content aligned with the rest of the page.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">5</div>
-          <div class="step-body">
-            <h4><code>text-muted</code> + <code>mb-0</code></h4>
-            <p><code>text-muted</code> applies a subdued grey color — perfect for copyright text. <code>mb-0</code> removes the default bottom margin from a paragraph, preventing unwanted extra space at the bottom of the footer.</p>
-          </div>
+        <div class="cs-content-wrap">
+          <div class="cs-pane active"><p><code>bg-dark</code> applies a dark background. <code>text-white</code> makes the text readable.</p></div>
+          <div class="cs-pane"><p>Adds comfortable padding on the top and bottom (1.5 rem each side).</p></div>
+          <div class="cs-pane"><p>Adds a large top margin (3 rem) that creates breathing room.</p></div>
+          <div class="cs-pane"><p>Centers all inline content horizontally inside the footer.</p></div>
+          <div class="cs-pane"><p><code>text-muted</code> applies a subdued grey color. <code>mb-0</code> removes default paragraph bottom margin.</p></div>
         </div>
       </div>
 
@@ -142,13 +119,12 @@
       </div>
 
       <h2>Reference Snippet</h2>
-      <div class="code-block">
-        <button class="copy-btn">Copy</button>
-        <pre>&lt;footer class="bg-dark text-white py-4 mt-5"&gt;
+      <div class="snippet-block">
+        <textarea id="ref-snippet-5">&lt;footer class="bg-dark text-white py-4 mt-5"&gt;
   &lt;div class="container text-center"&gt;
     &lt;p class="mb-0 text-muted"&gt;&amp;copy; 2025 Net@ — All rights reserved.&lt;/p&gt;
   &lt;/div&gt;
-&lt;/footer&gt;</pre>
+&lt;/footer&gt;</textarea>
       </div>
 
       <div class="callout callout-tip">
@@ -195,8 +171,11 @@
   </div><!-- end page-wrap -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-  <script src="./app.js"></script>
+  <script src="../../shared/app-intro.js"></script>
   <script>
     const QUIZZES_5 = [
       {
@@ -237,6 +216,7 @@
     renderQuiz('quiz-container', 5, QUIZZES_5);
     restoreQuizState(5, 'go-ide-btn');
     initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_5);
+    initSnippet('ref-snippet-5', true);
   </script>
 </body>
 </html>

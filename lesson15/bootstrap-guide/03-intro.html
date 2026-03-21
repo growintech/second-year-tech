@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Step 3 — Grid Layout · Bootstrap · GIT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="../../shared/style-intro.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
 </head>
 <body>
@@ -79,41 +79,28 @@
 
     <!-- THEORY SECTION -->
     <section>
-      <p>Bootstrap's <strong>12-column grid</strong> is the backbone of every multi-column layout. The idea is simple: every row is divided into 12 equal invisible columns. You tell each child element how many of those 12 columns it should occupy.</p>
+      <p>Bootstrap's <strong>12-column grid</strong> is the backbone of every multi-column layout.</p>
+      
+      <p>Every row is divided into 12 equal invisible columns. You tell each child element how many columns it should occupy.</p>
 
-      <p>The grid is built from three layers:</p>
-
-      <div class="callout callout-info">
-        <strong>How Bootstrap's grid works:</strong> The grid is based on 12 columns. You divide the row into columns that add up to 12. <code>col-lg-8</code> takes 8 columns (⅔ of the row) and <code>col-lg-4</code> takes 4 columns (⅓ of the row).
-      </div>
-      <div class="callout callout-tip">
-        <strong>Tip:</strong> Add <code>col-12</code> alongside your responsive class (e.g. <code>col-12 col-lg-8</code>) so columns stack full-width on mobile and sit side-by-side on large screens.
-      </div>
       <div class="callout callout-warn">
-        <strong>Common mistake:</strong> Putting columns directly inside a <code>container</code> without a <code>row</code> in between. The order must always be: <code>container</code> → <code>row</code> → <code>col-*</code>.
+        <span class="callout-icon">⚠</span>
+        <div class="callout-body">
+          <strong>Common mistake:</strong> Putting columns directly inside a <code>container</code> without a <code>row</code>. The order must always be: <code>container</code> → <code>row</code> → <code>col-*</code>.
+        </div>
       </div>
 
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4><code>container</code></h4>
-            <p>The outer wrapper that centres content and sets the max-width. Always the outermost layer of any grid.</p>
-          </div>
+      <h2>Key Classes</h2>
+      <div class="class-switcher" id="cs-03">
+        <div class="cs-tabs">
+          <button class="cs-tab active" onclick="switchClassTab('cs-03', 0)">container</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-03', 1)">row</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-03', 2)">col-*</button>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4><code>row</code></h4>
-            <p>A horizontal group of columns. Uses flexbox internally. Each <code>row</code> resets the 12-column counter — column numbers inside one row must add up to 12 (or less).</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h4><code>col-*</code></h4>
-            <p>A column inside the row. The number says how many of the 12 columns it spans. <code>col-6</code> takes half the row, <code>col-4</code> takes one third, <code>col-8</code> takes two thirds.</p>
-          </div>
+        <div class="cs-content-wrap">
+          <div class="cs-pane active"><p>The outer wrapper that centres content and sets the max-width. Always the outermost layer.</p></div>
+          <div class="cs-pane"><p>A horizontal group of columns. Each <code>row</code> resets the 12-column counter.</p></div>
+          <div class="cs-pane"><p>A column inside the row. The number says how many columns it spans (e.g. <code>col-6</code> takes half).</p></div>
         </div>
       </div>
 
@@ -167,9 +154,8 @@
       </div>
 
       <h2>Reference Snippet</h2>
-      <div class="code-block">
-        <button class="copy-btn">Copy</button>
-        <pre>&lt;div class="container py-5"&gt;
+      <div class="snippet-block">
+        <textarea id="ref-snippet-3">&lt;div class="container py-5"&gt;
   &lt;div class="row"&gt;
     &lt;div class="col-12 col-lg-8"&gt;
       &lt;!-- Main content (8 columns on desktop) --&gt;
@@ -178,7 +164,7 @@
       &lt;!-- Sidebar (4 columns on desktop) --&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/div&gt;</pre>
+&lt;/div&gt;</textarea>
       </div>
 
       <div class="callout callout-warn">
@@ -233,8 +219,11 @@
   </div><!-- end page-wrap -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-  <script src="./app.js"></script>
+  <script src="../../shared/app-intro.js"></script>
   <script>
     const QUIZZES_3 = [
       {
@@ -272,6 +261,7 @@
     renderQuiz('quiz-container', 3, QUIZZES_3);
     restoreQuizState(3, 'go-ide-btn');
     initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_3);
+    initSnippet('ref-snippet-3', true);
   </script>
 </body>
 </html>

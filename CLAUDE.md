@@ -127,11 +127,13 @@ All lesson guide pages share a consistent dark-first visual identity. Replicate 
 
 **Component library (defined in lesson14/style.css — reuse these patterns):**
 - `.card` — surface container with border and radius
-- `.callout` — info / tip / warn / bonus variants with left border accent
+- `.callout` — info / tip / warn / bonus variants with left border accent. **Rule:** Keep them single-column, max 1 sentence. Use at most 1-2 per page to avoid distracting students.
 - `.step` — numbered step with circle indicator
-- `.code-block` — dark code area with copy button
+- `.class-switcher` — tab-like component (`cs-tabs`, `cs-pane`) to present lists of key classes/concepts one by one, avoiding overwhelming lists.
+- `.code-block` — dark code area with copy button (for generic code display with `<pre>`)
+- `.snippet-block` — read-only CodeMirror instance with VS Code syntax highlighting. Used for **Reference Snippets** on intro pages. Requires CodeMirror modes loaded in this order: `xml` → `javascript` → `css` → `htmlmixed`.
 - `.activity-badge` — pill badge with color variants (green/yellow/red/blue/concept)
-- `.progress-bar` — dot-based step progress indicator
+- `.progress-bar` — dot-based step progress indicator (used only on intro pages, never IDE pages)
 - `.nav-footer` — back/next navigation at bottom of page
 - `.qa` — click-to-reveal Q&A pair
 
@@ -211,9 +213,10 @@ Seven activity pages building toward a countdown banner. Structure:
 
 Single-file IDE-style app. Key points:
 - Single file: `lesson15/bootstrap-guide/index.html`
-- IDE-style layout: instruction panel + CodeMirror editor + live preview iframe
+- IDE-style layout: instruction panel + CodeMirror editor + live preview iframe. The main wrapper `#shell` must be `flex: 1; flex-direction: column;` to ensure `.ide-nav` and `.status-bar` stay pinned to the absolute bottom of the screen.
 - Two layouts: **top-down** (default) and **split-pane**, toggled by the student, persisted in `localStorage` key `git-layout`
-- Panel visibility toggles (JSBin-style): Instructions / Editor / Console / Preview
+- Panel visibility toggles (VS Code-style rectangular segmented buttons): Instructions / Editor / Console / Preview. Positioned perfectly centered within the `#topbar`.
+- The Instructions panel is vertically scrollable (`overflow-y: auto`) with a block-level checkbox-styled `.task-list`.
 - CodeMirror 5 via CDN — theme `dracula` in dark mode, `default` in light mode
 - Bootstrap 5.3 loads **only inside the preview iframe** via CDN — never on the app shell itself
 - **5 guided steps** building a "Net@" landing page incrementally:

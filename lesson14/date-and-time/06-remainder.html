@@ -4,8 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Concept: The Remainder Pattern · GIT Lesson 14</title>
-  <link rel="stylesheet" href="style.css">
-  <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');</script>
+  <link rel="stylesheet" href="../../shared/style-intro.css">
+  <style>
+    /* lesson14 callout: flex layout with icon on the left */
+    .callout { display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; }
+    .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; margin-right: 0; }
+    .callout-body { display: block; }
+    .callout-body strong { display: block; margin-bottom: 3px; }
+  </style>
+  <style>
+    /* lesson14 paper-exercise component */
+    .paper-exercise { background: #fefce8; border: 1px solid #fde68a; border-radius: var(--radius); padding: 24px; color: #1c1917; }
+    .paper-exercise h3 { font-size: 15px; font-weight: 700; color: #78350f; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .paper-exercise .row { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 8px; align-items: center; margin-bottom: 12px; font-size: 14px; }
+    .paper-exercise .box { background: #fff; border: 1px solid #fde68a; border-radius: 6px; padding: 8px 12px; text-align: center; font-family: 'DM Mono', monospace; font-size: 13px; }
+    .paper-exercise .arrow { color: #92400e; font-size: 16px; text-align: center; }
+    .paper-exercise .blank { background: #fff; border: 2px dashed #fcd34d; border-radius: 6px; padding: 8px 12px; text-align: center; font-family: 'DM Mono', monospace; font-size: 13px; color: #d97706; }
+  </style>
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
   <style>
     .chain-row {
       display: grid;
@@ -211,7 +227,7 @@ console.log(days, hours, minutes, seconds);</textarea>
   </div>
 
 </div>
-<script src="app.js"></script>
+<script src="../../shared/app-intro.js"></script>
 <script>
   function check06() {
     var code = document.getElementById('editor-06').value;

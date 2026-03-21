@@ -4,8 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Level 3: Days until end of school · GIT Lesson 14</title>
-  <link rel="stylesheet" href="style.css">
-  <script>if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');</script>
+  <link rel="stylesheet" href="../../shared/style-intro.css">
+  <style>
+    /* lesson14 callout: flex layout with icon on the left */
+    .callout { display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; }
+    .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; margin-right: 0; }
+    .callout-body { display: block; }
+    .callout-body strong { display: block; margin-bottom: 3px; }
+  </style>
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
 </head>
 <body>
 <div class="page-wrap">
@@ -139,7 +146,7 @@ var now = new Date();
   </div>
 
 </div>
-<script src="app.js"></script>
+<script src="../../shared/app-intro.js"></script>
 <script>
   function check05() {
     var code = document.getElementById('editor-05').value;

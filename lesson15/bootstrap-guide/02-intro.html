@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Step 2 — Hero Section · Bootstrap · GIT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="../../shared/style-intro.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
 </head>
 <body>
@@ -79,64 +79,36 @@
 
     <!-- THEORY SECTION -->
     <section>
-      <p>A <strong>hero section</strong> is the large introductory block at the very top of a web page — the first thing a visitor sees. It typically contains a headline, a short supporting text, and a call-to-action button. Its job is to communicate the purpose of the page in under three seconds.</p>
+      <p>A <strong>hero section</strong> is the large introductory block at the very top of a web page — the first thing a visitor sees.</p>
+      
+      <p>It typically contains a headline, a short supporting text, and a call-to-action button, communicating the page's purpose immediately.</p>
+      
+      <p>Bootstrap does <em>not</em> have a dedicated "Hero" component. Instead, you <strong>compose utility classes</strong> on a plain <code>&lt;section&gt;</code> element.</p>
 
-      <p>Bootstrap does <em>not</em> have a dedicated "Hero" component. Instead, you <strong>compose utility classes</strong> on a plain <code>&lt;section&gt;</code> element. This is one of Bootstrap's core philosophies: instead of memorising one big component, you learn small single-purpose classes and combine them freely.</p>
-
-      <div class="callout callout-info">
-        <strong>What is a Hero section?</strong> A hero is the big, bold section at the top of a landing page — it introduces the site and grabs attention. Bootstrap doesn't have a hero component; you compose it from utility classes.
-      </div>
-      <div class="callout callout-tip">
-        <strong>Tip:</strong> Use <code>py-5</code> for generous top/bottom padding, <code>display-4</code> for a large heading, and <code>lead</code> for a slightly larger intro paragraph.
-      </div>
       <div class="callout callout-warn">
-        <strong>Common mistake:</strong> Using <code>text-center</code> without a <code>container</code> inside — the text will stretch edge-to-edge on wide screens. Always wrap content in a <code>container</code>.
+        <span class="callout-icon">⚠</span>
+        <div class="callout-body">
+          <strong>Common mistake:</strong> Using <code>text-center</code> without a <code>container</code> inside — the text will stretch edge-to-edge. Always wrap content in a <code>container</code>.
+        </div>
       </div>
 
       <h2>Key Classes</h2>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4><code>container</code></h4>
-            <p>Constrains content to a centred max-width column. Use it inside sections to prevent text from stretching too wide on large screens.</p>
-          </div>
+      <div class="class-switcher" id="cs-02">
+        <div class="cs-tabs">
+          <button class="cs-tab active" onclick="switchClassTab('cs-02', 0)">container</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 1)">py-5</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 2)">text-center</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 3)">display-4</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 4)">lead</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 5)">mt-3 / mb-3</button>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4><code>py-5</code></h4>
-            <p>Adds padding on the <em>y-axis</em> (top and bottom) using Bootstrap's spacing scale. Scale 5 equals 3 rem — generous breathing room above and below the content.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h4><code>text-center</code></h4>
-            <p>Centres all inline content — text, buttons, and inline elements — horizontally within the element.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <h4><code>display-4</code></h4>
-            <p>Renders a heading in a very large, lightweight display font. Bootstrap offers <code>display-1</code> through <code>display-6</code> — lower numbers are larger.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">5</div>
-          <div class="step-body">
-            <h4><code>lead</code></h4>
-            <p>Makes a paragraph slightly larger and lighter-weight, perfect for subtitles and supporting text beneath a headline.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">6</div>
-          <div class="step-body">
-            <h4><code>mt-3</code> / <code>mb-3</code></h4>
-            <p>Margin-top and margin-bottom using the spacing scale. Mix and match: <code>mt-2</code>, <code>mb-4</code>, <code>my-5</code> (both top and bottom), etc.</p>
-          </div>
+        <div class="cs-content-wrap">
+          <div class="cs-pane active"><p>Constrains content to a centred max-width column. Prevents text from stretching too wide on large screens.</p></div>
+          <div class="cs-pane"><p>Adds padding on the <em>y-axis</em> (top and bottom) using Bootstrap's spacing scale (5 = 3 rem).</p></div>
+          <div class="cs-pane"><p>Centres all inline content — text, buttons, and inline elements — horizontally within the element.</p></div>
+          <div class="cs-pane"><p>Renders a heading in a very large, lightweight display font.</p></div>
+          <div class="cs-pane"><p>Makes a paragraph slightly larger and lighter-weight, perfect for subtitles.</p></div>
+          <div class="cs-pane"><p>Margin-top and margin-bottom using the spacing scale.</p></div>
         </div>
       </div>
 
@@ -144,28 +116,19 @@
         <span class="callout-icon">ℹ</span>
         <div class="callout-body">
           <strong>Bootstrap's Spacing Scale</strong><br>
-          Bootstrap uses a scale from <code>0</code> to <code>5</code> for spacing utilities (<code>mt-*</code>, <code>py-*</code>, etc.). Each step multiplies a base unit (0.25 rem), so <code>mt-3</code> = 1 rem, <code>py-5</code> = 3 rem. This keeps spacing consistent across your whole page.
+          Bootstrap uses a scale from <code>0</code> to <code>5</code> for spacing utilities.
         </div>
       </div>
 
       <h2>Reference Snippet</h2>
-      <div class="code-block">
-        <button class="copy-btn">Copy</button>
-        <pre>&lt;section class="py-5 text-center bg-light"&gt;
+      <div class="snippet-block">
+        <textarea id="ref-snippet-2">&lt;section class="py-5 text-center bg-light"&gt;
   &lt;div class="container"&gt;
     &lt;h1 class="display-4"&gt;Welcome&lt;/h1&gt;
     &lt;p class="lead"&gt;A short description here.&lt;/p&gt;
     &lt;a href="javascript:void(0)" class="btn btn-primary mt-3"&gt;Get Started&lt;/a&gt;
   &lt;/div&gt;
-&lt;/section&gt;</pre>
-      </div>
-
-      <div class="callout callout-tip">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Tip — semantic HTML still matters</strong><br>
-          Use a <code>&lt;section&gt;</code> (not just a <code>&lt;div&gt;</code>) for the hero. Semantic tags improve accessibility and SEO while Bootstrap's classes handle the visual styling.
-        </div>
+&lt;/section&gt;</textarea>
       </div>
     </section>
 
@@ -204,8 +167,11 @@
   </div><!-- end page-wrap -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-  <script src="./app.js"></script>
+  <script src="../../shared/app-intro.js"></script>
   <script>
     const QUIZZES_2 = [
       {
@@ -246,6 +212,7 @@
     renderQuiz('quiz-container', 2, QUIZZES_2);
     restoreQuizState(2, 'go-ide-btn');
     initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_2);
+    initSnippet('ref-snippet-2', true);
   </script>
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Step 1 — Navbar · Bootstrap · GIT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="../../shared/style-intro.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
 </head>
 <body>
@@ -79,81 +79,49 @@
 
     <!-- THEORY SECTION -->
     <section>
-      <p>A <strong>CSS framework</strong> is a collection of pre-written CSS rules that you activate simply by adding class names to your HTML elements — no custom CSS required to get a polished result.</p>
+      <p>A <strong>CSS framework</strong> is a collection of pre-written CSS rules activated by class names.</p>
 
-      <p><strong>Bootstrap</strong> is the most widely used CSS framework in the world. It gives you a responsive grid system, a library of ready-made UI components (navbars, cards, modals, buttons…), and dozens of utility classes for spacing, color, and typography. You load it with a single <code>&lt;link&gt;</code> tag and start writing class names.</p>
+      <p><strong>Bootstrap</strong> provides a responsive grid, ready-made UI components, and utility classes. You load it with a single <code>&lt;link&gt;</code> tag.</p>
 
-      <p>The <strong>Navbar</strong> is the top navigation bar of a page. Bootstrap's navbar is <em>responsive by default</em>: on small screens it collapses into a hamburger button; on large screens it expands to show all links in a row.</p>
+      <p>The <strong>Navbar</strong> is <em>responsive by default</em>, collapsing on small screens and expanding on large ones.</p>
 
-      <div class="callout callout-info">
-        <strong>What is a Navbar?</strong> A navbar is a horizontal navigation bar that appears at the top of every page. Bootstrap's <code>navbar</code> component handles the layout, colors, and even mobile collapsing automatically.
-      </div>
       <div class="callout callout-tip">
-        <strong>Tip:</strong> The <code>navbar-dark</code> class sets the text color to white (for use on dark backgrounds). Pair it with <code>bg-dark</code> for a classic dark navbar.
-      </div>
-      <div class="callout callout-warn">
-        <strong>Common mistake:</strong> Forgetting to add <code>ms-auto</code> on the <code>&lt;ul&gt;</code> — without it, the nav links stay on the left instead of the right.
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Tip</strong> Pair <code>navbar-dark</code> with <code>bg-dark</code> for a classic dark navbar.
+        </div>
       </div>
 
       <h2>Key Classes</h2>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4><code>navbar</code></h4>
-            <p>Base class, required on the <code>&lt;nav&gt;</code> element. Enables flexbox layout and sets up the navbar structure.</p>
-          </div>
+      <div class="class-switcher" id="cs-01">
+        <div class="cs-tabs">
+          <button class="cs-tab active" onclick="switchClassTab('cs-01', 0)">navbar</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-01', 1)">navbar-expand-lg</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-01', 2)">navbar-dark + bg-dark</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-01', 3)">navbar-brand</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-01', 4)">nav-item / nav-link</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-01', 5)">container + ms-auto</button>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4><code>navbar-expand-lg</code></h4>
-            <p>Collapses the nav on screens smaller than "lg" (≥ 992 px) and expands to a full horizontal row on large screens.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h4><code>navbar-dark</code> + <code>bg-dark</code></h4>
-            <p><code>navbar-dark</code> sets link and icon colors to light — use this on dark backgrounds. <code>bg-dark</code> is a utility that applies the dark background color itself.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <h4><code>navbar-brand</code></h4>
-            <p>Styles the logo or site-name link. Apply it to the <code>&lt;a&gt;</code> tag that holds your brand name or logo image.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">5</div>
-          <div class="step-body">
-            <h4><code>nav-item</code> / <code>nav-link</code></h4>
-            <p><code>nav-item</code> goes on each <code>&lt;li&gt;</code> inside the nav list. <code>nav-link</code> goes on the <code>&lt;a&gt;</code> inside each list item.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">6</div>
-          <div class="step-body">
-            <h4><code>container</code> + <code>ms-auto</code></h4>
-            <p><code>container</code> centers and constrains content to a readable max-width. <code>ms-auto</code> (margin-start: auto) pushes the nav links all the way to the right.</p>
-          </div>
+        <div class="cs-content-wrap">
+          <div class="cs-pane active"><p>Base class, required on the <code>&lt;nav&gt;</code> element. Enables flexbox layout and sets up navbar structure.</p></div>
+          <div class="cs-pane"><p>Collapses the nav on screens smaller than "lg" and expands horizontally on large screens.</p></div>
+          <div class="cs-pane"><p><code>navbar-dark</code> sets links to light; <code>bg-dark</code> applies the background color.</p></div>
+          <div class="cs-pane"><p>Styles the logo or site-name link applied to the <code>&lt;a&gt;</code> tag.</p></div>
+          <div class="cs-pane"><p><code>nav-item</code> goes on each <code>&lt;li&gt;</code> inside the nav list; <code>nav-link</code> goes on the <code>&lt;a&gt;</code> inside it.</p></div>
+          <div class="cs-pane"><p><code>container</code> centers content; <code>ms-auto</code> pushes nav links to the right.</p></div>
         </div>
       </div>
 
-      <div class="callout callout-info">
-        <span class="callout-icon">ℹ</span>
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠</span>
         <div class="callout-body">
-          <strong>data-bs-* attributes</strong><br>
-          The collapse behaviour is wired up entirely via HTML attributes — <code>data-bs-toggle="collapse"</code> and <code>data-bs-target="#navMenu"</code>. Bootstrap's JavaScript reads these automatically; you don't write any JS yourself.
+          <strong>Common mistake:</strong> Without <code>ms-auto</code> on the <code>&lt;ul&gt;</code>, your links will stay on the left.
         </div>
       </div>
 
       <h2>Reference Snippet</h2>
-      <div class="code-block">
-        <button class="copy-btn">Copy</button>
-        <pre>&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+      <div class="snippet-block">
+        <textarea id="ref-snippet-1">&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
   &lt;div class="container"&gt;
     &lt;a class="navbar-brand" href="javascript:void(0)"&gt;My Site&lt;/a&gt;
     &lt;button class="navbar-toggler" type="button"
@@ -167,15 +135,7 @@
       &lt;/ul&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/nav&gt;</pre>
-      </div>
-
-      <div class="callout callout-tip">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Tip — always wrap in a container</strong><br>
-          Placing a <code>&lt;div class="container"&gt;</code> inside the navbar keeps your brand and links aligned with the rest of your page content. Without it, content stretches edge-to-edge.
-        </div>
+&lt;/nav&gt;</textarea>
       </div>
     </section>
 
@@ -214,8 +174,11 @@
   </div><!-- end page-wrap -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-  <script src="./app.js"></script>
+  <script src="../../shared/app-intro.js"></script>
   <script>
     const QUIZZES_1 = [
       {
@@ -259,6 +222,7 @@
     renderQuiz('quiz-container', 1, QUIZZES_1);
     restoreQuizState(1, 'go-ide-btn');
     initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_1);
+    initSnippet('ref-snippet-1', true);
   </script>
 </body>
 </html>

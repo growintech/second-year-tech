@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Step 4 — Buttons · Bootstrap · GIT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="../../shared/style-intro.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
 </head>
 <body>
@@ -79,57 +79,34 @@
 
     <!-- THEORY SECTION -->
     <section>
-      <p>Bootstrap provides a comprehensive button system built around a <strong>semantic color palette</strong>. Each color has a name that describes its <em>meaning</em>, not its hex value — so <code>btn-danger</code> means "destructive action" regardless of whether the theme uses red or another color.</p>
+      <p>Bootstrap provides a comprehensive button system built around a <strong>semantic color palette</strong>.</p>
+      
+      <p>Each color has a name that describes its <em>meaning</em> (like <code>btn-danger</code> for "destructive action").</p>
+      
+      <p>Every Bootstrap button requires <strong>two classes</strong>: the base <code>btn</code> class plus a <em>variant</em> class.</p>
 
-      <p>Every Bootstrap button requires <strong>two classes</strong>: the base <code>btn</code> class (which handles padding, border-radius, font, and cursor) plus a <em>variant</em> class that applies the color.</p>
-
-      <div class="callout callout-info">
-        <strong>Bootstrap buttons:</strong> Every Bootstrap button needs the base <code>btn</code> class plus a color variant. The base class adds padding, border-radius, and font styling. The variant adds the color.
-      </div>
-      <div class="callout callout-tip">
-        <strong>Tip:</strong> Use <code>btn-outline-primary</code> (and similar) for a ghost/outlined button style. It keeps the color accent without a solid fill.
-      </div>
       <div class="callout callout-warn">
-        <strong>Common mistake:</strong> Using just <code>btn-primary</code> without the base <code>btn</code> class — the button won't be styled at all. Both classes are always required.
+        <span class="callout-icon">⚠</span>
+        <div class="callout-body">
+          <strong>Common mistake:</strong> Using just <code>btn-primary</code> without the base <code>btn</code> class. Both classes are always required.
+        </div>
       </div>
 
       <h2>Semantic Color Variants</h2>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4><code>btn btn-primary</code></h4>
-            <p>The main call-to-action — blue by default. Use this for the single most important action on a page (e.g. "Enroll Now").</p>
-          </div>
+      <div class="class-switcher" id="cs-04">
+        <div class="cs-tabs">
+          <button class="cs-tab active" onclick="switchClassTab('cs-04', 0)">btn-primary</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-04', 1)">btn-secondary</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-04', 2)">btn-success / btn-danger</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-04', 3)">btn-outline-*</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-04', 4)">btn-lg / btn-sm</button>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4><code>btn btn-secondary</code></h4>
-            <p>Less prominent actions — grey by default. Pairs well next to a primary button for a secondary option like "Learn More".</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h4><code>btn btn-success</code> / <code>btn btn-danger</code></h4>
-            <p><code>btn-success</code> (green) signals a positive or confirming action. <code>btn-danger</code> (red) signals a destructive or irreversible action like deleting something.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <h4><code>btn btn-outline-*</code></h4>
-            <p>Prefix any variant with <code>outline-</code> to get a transparent background with just a colored border: <code>btn-outline-primary</code>, <code>btn-outline-danger</code>, etc. Great for secondary actions that shouldn't compete visually with solid buttons.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">5</div>
-          <div class="step-body">
-            <h4><code>btn-lg</code> / <code>btn-sm</code></h4>
-            <p>Size modifiers. Add <code>btn-lg</code> for larger padding and font size — ideal for hero CTAs. Add <code>btn-sm</code> for compact buttons in tight spaces like cards or tables.</p>
-          </div>
+        <div class="cs-content-wrap">
+          <div class="cs-pane active"><p>The main call-to-action. Use this for the single most important action on a page.</p></div>
+          <div class="cs-pane"><p>Less prominent actions. Pairs well next to a primary button for a secondary option.</p></div>
+          <div class="cs-pane"><p><code>btn-success</code> signals a positive action. <code>btn-danger</code> signals a destructive action.</p></div>
+          <div class="cs-pane"><p>Prefix any variant with <code>outline-</code> to get a transparent background with just a colored border.</p></div>
+          <div class="cs-pane"><p>Size modifiers: <code>btn-lg</code> for larger buttons, <code>btn-sm</code> for compact buttons.</p></div>
         </div>
       </div>
 
@@ -156,11 +133,10 @@
       </div>
 
       <h2>Reference Snippet</h2>
-      <div class="code-block">
-        <button class="copy-btn">Copy</button>
-        <pre>&lt;a href="javascript:void(0)" class="btn btn-primary btn-lg"&gt;Enroll Now&lt;/a&gt;
+      <div class="snippet-block">
+        <textarea id="ref-snippet-4">&lt;a href="javascript:void(0)" class="btn btn-primary btn-lg"&gt;Enroll Now&lt;/a&gt;
 &lt;a href="javascript:void(0)" class="btn btn-outline-secondary"&gt;Learn More&lt;/a&gt;
-&lt;a href="javascript:void(0)" class="btn btn-danger btn-sm"&gt;Limited spots!&lt;/a&gt;</pre>
+&lt;a href="javascript:void(0)" class="btn btn-danger btn-sm"&gt;Limited spots!&lt;/a&gt;</textarea>
       </div>
 
       <div class="callout callout-info">
@@ -207,8 +183,11 @@
   </div><!-- end page-wrap -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-  <script src="./app.js"></script>
+  <script src="../../shared/app-intro.js"></script>
   <script>
     const QUIZZES_4 = [
       {
@@ -248,6 +227,7 @@
     renderQuiz('quiz-container', 4, QUIZZES_4);
     restoreQuizState(4, 'go-ide-btn');
     initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_4);
+    initSnippet('ref-snippet-4', true);
   </script>
 </body>
 </html>
