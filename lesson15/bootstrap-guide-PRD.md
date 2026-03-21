@@ -1,381 +1,311 @@
 # PRD — Bootstrap Interactive Lesson Guide
-**Recipient: Claude Code. Build this exactly as specified.**
+**Status: Implemented.** This document reflects the current built state as of March 2026.
 
 ---
 
-## What you're building
+## What was built
 
-A single self-contained HTML file (`index.html` inside a new folder `bootstrap-guide/`) that teaches students how to use Bootstrap by having them build a landing page for **Net@** — a high school web development program — step by step.
+An interactive browser-based lesson guide (`lesson15/bootstrap-guide/`) that teaches students how to use Bootstrap by having them build a landing page for **Net@** — a high school web development program — step by step.
 
-The app is a full IDE-style environment in the browser: instruction panel + live code editor + preview, all in one page, no server needed, openable by double-clicking the file locally.
-
----
-
-## Reference project
-
-An existing lesson guide lives in `git-dates/`. Read its `style.css` and any of its HTML files carefully before writing a single line. Replicate the same visual identity, component language, and interaction patterns. This Bootstrap lesson must feel like it belongs to the same product family.
-
-Key patterns to replicate from `git-dates/`:
-- Topbar with GIT logo (48px height) + lesson label + light/dark toggle
-- `DM Sans` + `DM Mono` from Google Fonts
-- CSS variable system for theming
-- Callout components (info / tip / warn / bonus)
-- Step-numbered lists
-- The gradient `#00E1FF → #0061FF` for accents and CTAs
-- Dark-first design with full light mode via `.light` on `<html>`
-
----
-
-## Tech stack
-
-- **Vanilla HTML/CSS/JS only** — no build tools, no npm, no frameworks for the app shell itself
-- **CodeMirror 5** loaded via CDN for the code editor (syntax highlighting for HTML)
-  - CDN: `https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js`
-  - CSS: `https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css`
-  - HTML mode: `https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js`
-  - Theme (use `dracula` for dark, `default` for light): `https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css`
-- **Bootstrap 5.3** pre-loaded inside the preview iframe only — NOT on the app shell
-- **Google Fonts**: DM Sans + DM Mono (same import as `git-dates/style.css`)
-- The GIT logo SVG must be inlined directly in the HTML (copy from `git-dates/logo.svg`)
-
----
-
-## Layout system
-
-The student can switch between two layouts using a toggle in the topbar. Persist their choice in `localStorage` key `git-layout`.
-
-### Top-down layout (default)
-```
-┌─────────────────────────────────┐
-│           TOPBAR                │
-├─────────────────────────────────┤
-│      INSTRUCTION PANEL          │  (current step: title, explanation, hint)
-├─────────────────────────────────┤
-│      CODE EDITOR (CodeMirror)   │  (HTML editor, full width)
-│      [Run ▶]  [Check ✓]         │
-├─────────────────────────────────┤
-│         CONSOLE                 │  (error messages only, collapsible)
-├─────────────────────────────────┤
-│      LIVE PREVIEW (iframe)      │  (Bootstrap pre-loaded inside)
-└─────────────────────────────────┘
-```
-
-### Split-pane layout
-```
-┌──────────────┬─────────────────┬──────────────┐
-│  INSTRUCTION │  CODE EDITOR    │  LIVE        │
-│  PANEL       │  (CodeMirror)   │  PREVIEW     │
-│              │                 │  (iframe)    │
-│              │  [Run ▶][Check] │              │
-│              ├─────────────────┤              │
-│              │  CONSOLE        │              │
-└──────────────┴─────────────────┴──────────────┘
-```
-
-### Panel visibility toggles (JSBin-style)
-Small pill buttons in the topbar row (below the main topbar): `[Instructions]` `[Editor]` `[Console]` `[Preview]`. Each toggles visibility of its panel. Active panels have a filled style, hidden ones are dimmed outlines. In split-pane, hiding a panel collapses its column; in top-down, it collapses the row.
-
----
-
-## Theming
-
-Same system as `git-dates/style.css`. Apply `.light` class to `<html>`.
-
-```css
-/* Dark (default) */
---bg: #0a0c10;
---surface: #13161d;
---surface-2: #1b1f28;
---border: rgba(255,255,255,0.07);
---border-2: rgba(255,255,255,0.13);
---text: #e8eaf0;
---text-muted: #7a8099;
---text-dim: #4a5070;
-
-/* Light */
---bg: #f4f5f8;
---surface: #ffffff;
---surface-2: #eef0f5;
---border: rgba(0,0,0,0.08);
---border-2: rgba(0,0,0,0.13);
---text: #0f1117;
---text-muted: #5a6070;
---text-dim: #9aa0b0;
-
-/* Shared */
---grad-start: #00E1FF;
---grad-end: #0061FF;
---grad: linear-gradient(135deg, var(--grad-start), var(--grad-end));
---green: #22c55e;
---yellow: #eab308;
---red: #ef4444;
-```
-
-The CodeMirror editor uses theme `dracula` in dark mode and `default` in light mode — swap the theme when toggling.
-
-Persist theme in `localStorage` key `git-theme`. Toggle button: moon icon in dark mode, sun icon in light mode.
-
----
-
-## Progress & navigation
-
-A step progress bar is always visible below the topbar (7 dots, matching the `git-dates/` style — but here 5 dots for 5 steps). The student can only advance to the next step after their code passes the **Check**. 
-
-Navigation:
-- `[← Back]` button: always available, goes to previous step (no validation required to go back)
-- `[Next →]` button: **disabled and greyed out** until Check passes. Once it passes, it becomes active with the gradient style and can be clicked.
-- On the very last step (Step 5), the Next button is replaced by `[🎉 Finish]` which triggers a completion screen.
-
-Step counter label (e.g. "Step 2 of 5") is visible in the instruction panel header.
-
----
-
-## The 5 steps
-
-The student is building the **Net@ landing page** incrementally. Each step adds one section to the page. The editor always contains the full HTML built so far — each step's starter code is the previous step's correct solution with a new section stubbed out for the student to complete.
-
-The preview iframe always renders the full page as written, with Bootstrap loaded.
-
-The iframe `srcdoc` must always include this Bootstrap boilerplate wrapping the student's code:
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Net@ Landing Page</title>
-</head>
-<body>
-  STUDENT_CODE_HERE
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-```
-
----
-
-### Step 1 — Navbar
-
-**Concept to teach:** Bootstrap pre-built components. You add a class and Bootstrap does the styling. No custom CSS needed.
-
-**Instruction panel content:**
-- Explain what a CSS framework is in one sentence: pre-written CSS you activate with class names.
-- Explain the Bootstrap Navbar: a responsive header component with brand name, links, and a hamburger menu on mobile.
-- Key classes to introduce: `navbar`, `navbar-expand-lg`, `navbar-dark`/`navbar-light`, `bg-dark`/`bg-primary`, `navbar-brand`, `nav-item`, `nav-link`, `container`.
-- Show this reference snippet in a read-only code block (not editable):
-  ```html
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">My Site</a>
-    </div>
-  </nav>
-  ```
-- Task: "Add a navbar for Net@ with the brand name **Net@** and three navigation links: **Home**, **About**, **Contact**."
-
-**Starter code in editor:**
-```html
-<!-- Step 1: Add your Navbar here -->
-<!-- Use the navbar classes you just learned -->
-```
-
-**Validation logic (Check button):**
-Run the code through a JS function that checks the HTML string for all of:
-1. Contains `navbar` class
-2. Contains `navbar-brand`
-3. Contains at least two `nav-link` occurrences
-4. Contains "Net@" text somewhere
-
-If all pass: ✅ green success callout — "Great! Your navbar is live. You can see it in the preview." — and unlock Next.
-If any fail: ❌ red error callout listing specifically which check failed (e.g. "We couldn't find a `navbar-brand` — make sure your brand name has that class.").
-
----
-
-### Step 2 — Hero Section
-
-**Concept to teach:** Bootstrap utility classes for spacing, typography, and layout. Using `container`, `py-*`, `text-center`, `display-*`, `lead`.
-
-**Instruction panel content:**
-- Explain what a "hero section" is: the big introductory block at the top of a landing page. First thing visitors see.
-- Key classes: `container`, `py-5`, `text-center`, `display-4` (big headline), `lead` (subtitle text), `mt-*`/`mb-*` spacing utilities.
-- Show reference snippet:
-  ```html
-  <section class="py-5 text-center bg-light">
-    <div class="container">
-      <h1 class="display-4">Welcome</h1>
-      <p class="lead">A short description here.</p>
-    </div>
-  </section>
-  ```
-- Task: "Add a hero section below the navbar. It should have a big title 'Welcome to Net@', a subtitle that briefly describes the course, and a call-to-action button (any Bootstrap button style)."
-
-**Starter code in editor:**
-The correct navbar from Step 1, then:
-```html
-<!-- Step 2: Add your Hero Section below the navbar -->
-```
-
-**Validation logic:**
-1. Navbar from step 1 is still present (`navbar` class exists)
-2. Contains `display-` class (any display utility, e.g. `display-4`)
-3. Contains `lead` class
-4. Contains a `<button` or `<a` with `btn` class
-5. Contains "Net@" text in the hero content
-
----
-
-### Step 3 — Sidebar Layout
-
-**Concept to teach:** The Bootstrap grid system. 12-column logic. `row`, `col-*`, responsive breakpoints (`col-lg-*`).
-
-**Instruction panel content:**
-- Explain the 12-column grid: every row has 12 slots. You decide how many each column takes.
-- Show visual diagram of the grid inline in the instruction panel (draw it with HTML/CSS — a simple row of 12 numbered boxes, then examples of 6+6, 8+4, 3+9).
-- Key classes: `row`, `col-12`, `col-lg-8`, `col-lg-4`, `container`.
-- Explain responsive breakpoints: `col-12` = full width on mobile, `col-lg-8` = 8 columns only on large screens. On small screens everything stacks vertically automatically.
-- Show reference snippet for a sidebar layout:
-  ```html
-  <div class="container py-5">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <!-- Main content -->
-      </div>
-      <div class="col-12 col-lg-4">
-        <!-- Sidebar -->
-      </div>
-    </div>
-  </div>
-  ```
-- Task: "Add a content section below the hero. The main column (8/12) should contain a short paragraph about what students learn in Net@. The sidebar column (4/12) should contain a small box with upcoming lesson info (use any Bootstrap card or just a `div` with some text)."
-
-**Validation logic:**
-1. `row` class present
-2. At least two `col-` classes present
-3. One column uses `col-lg-8` or similar (checking for `col-lg-` prefix)
-4. Navbar and hero from previous steps still present
-
----
-
-### Step 4 — Buttons
-
-**Concept to teach:** Bootstrap button variants and sizing. `btn`, `btn-primary`, `btn-secondary`, `btn-outline-*`, `btn-lg`, `btn-sm`, `btn-danger`, `btn-success`. Also Bootstrap `badge` as a bonus.
-
-**Instruction panel content:**
-- Explain Bootstrap's semantic color system: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark`.
-- Show the full button palette in the instruction panel as a live mini-preview (render a small read-only iframe or HTML block showing all variants).
-- Key classes: `btn btn-primary`, `btn btn-outline-secondary`, `btn btn-lg`, `btn btn-sm`.
-- Task: "Add a section called 'Join Us' with at least **three different button styles**. For example: a primary 'Enroll Now' button, an outline secondary 'Learn More' button, and a small danger 'Limited spots!' button. Try using `btn-lg` on one of them."
-
-**Starter code:** All previous steps' correct code + comment placeholder for this section.
-
-**Validation logic:**
-1. At least 3 elements with `btn` class
-2. At least 2 different color variants (check for at least 2 of: `btn-primary`, `btn-secondary`, `btn-danger`, `btn-success`, `btn-warning`, `btn-outline-*`)
-3. At least 1 size modifier (`btn-lg` or `btn-sm`)
-4. All previous sections still present
-
----
-
-### Step 5 — Footer
-
-**Concept to teach:** Semantic HTML `<footer>`, combining Bootstrap utilities (background, text color, padding, text alignment) without a specific "footer component" — Bootstrap gives you the tools, you compose them.
-
-**Instruction panel content:**
-- Explain that Bootstrap has no dedicated footer component — instead you combine utilities: `bg-dark`, `text-white`, `text-muted`, `py-4`, `text-center`, `mt-auto`.
-- Show a reference snippet:
-  ```html
-  <footer class="bg-dark text-white py-4 mt-5">
-    <div class="container text-center">
-      <p class="mb-0 text-muted">© 2025 Net@ — All rights reserved.</p>
-    </div>
-  </footer>
-  ```
-- Task: "Add a footer at the bottom of the page. It should have a dark background, the Net@ name, the current year, and at least one of these: social links, a tagline, or navigation links."
-
-**Validation logic:**
-1. `<footer` tag present
-2. Contains `bg-dark` or `bg-*` class (any background utility)
-3. Contains "Net@" text
-4. Contains `©` or "2025" or "rights" (copyright indicator)
-5. All 4 previous sections still present
-
-**On pass:** Unlock the `[🎉 Finish]` button.
-
----
-
-## Completion screen
-
-When the student clicks `[🎉 Finish]` after Step 5 passes, replace the entire instruction panel content (not the editor or preview — those stay) with:
-
-```
-🎉 You built a full Bootstrap landing page!
-
-Here's what you used:
-✅ Navbar      — pre-built responsive header
-✅ Hero        — utility classes for spacing and typography  
-✅ Grid layout — 12-column system with responsive breakpoints
-✅ Buttons     — semantic color variants and sizing
-✅ Footer      — composing utilities without a component
-
-What's next: open VS Code, start a blank HTML file, connect Bootstrap via CDN,
-and build your own landing page from scratch. You now know how.
-```
-
-Below this, show two buttons:
-- `[↩ Review my code]` — scrolls to the editor
-- `[📋 Copy full HTML]` — copies the complete student code to clipboard
-
----
-
-## Console panel
-
-The console is a read-only output panel that shows:
-- **Red error messages** when the student's HTML causes a JS error inside the iframe (catch via `window.onerror` in the iframe and `postMessage` back to parent)
-- **Check results** — both pass and fail messages appear here as well as in the inline callout
-- When there are no errors: show a dim "No errors" state
-
-The console is **collapsed by default** and auto-expands when an error occurs.
-
----
-
-## Run button behavior
-
-- Clicking **Run** takes the current CodeMirror content and injects it into the iframe `srcdoc` (with Bootstrap boilerplate wrapping as specified above)
-- The preview updates immediately
-- Run does NOT trigger validation — it just renders
-- Auto-run on editor change is OFF by default (students must click Run explicitly)
-
----
-
-## Check button behavior
-
-1. Read the current CodeMirror value
-2. Run the step-specific validation function (pure string checks on the HTML — no execution needed for most steps)
-3. Show result in a callout that appears between the editor and the console:
-   - ✅ Green callout: specific success message for this step + "Next is now unlocked"
-   - ❌ Red callout: list each failed condition with a plain-English hint
-4. If all checks pass, enable the Next button (remove `disabled` attribute, apply gradient style)
-
-Validation is string-based (regex / `includes()` checks on the HTML string). No need to execute the code for validation.
+The lesson uses a **two-phase flow per step**: first an intro page (theory + live mini-IDE + quiz gate), then a full IDE page (VS Code-style editor + preview + validation). Students must pass the quiz before accessing the IDE for each step.
 
 ---
 
 ## File structure
 
 ```
-bootstrap-guide/
-  index.html      ← the entire app, self-contained
+lesson15/bootstrap-guide/
+  index.html          ← hub page (lesson14-style activity grid, links to all 5 steps)
+  style.css           ← shared CSS for hub + all intro pages (dark/light, components)
+  app.js              ← shared JS: theme toggle, quiz engine, localStorage helpers
+  logo.svg            ← GIT logo SVG (do NOT modify)
+
+  01-intro.html       ← Step 1: Navbar theory + mini-IDE + quiz gate
+  01-ide.html         ← Step 1: full VS Code-like IDE
+  02-intro.html       ← Step 2: Hero theory + mini-IDE + quiz gate
+  02-ide.html         ← Step 2: full IDE
+  03-intro.html       ← Step 3: Grid theory + mini-IDE + quiz gate
+  03-ide.html         ← Step 3: full IDE
+  04-intro.html       ← Step 4: Buttons theory + mini-IDE + quiz gate
+  04-ide.html         ← Step 4: full IDE
+  05-intro.html       ← Step 5: Footer theory + mini-IDE + quiz gate
+  05-ide.html         ← Step 5: full IDE
 ```
 
-No other files. The GIT logo SVG is inlined in `index.html`. All CSS is in a `<style>` block. All JS is in `<script>` blocks at the bottom.
+`index.html` at `lesson15/` folder level redirects to `./bootstrap-guide/`. This is required for GitHub Pages deployment.
 
 ---
 
-## Constraints and non-negotiables
+## Tech stack
 
-- **All student-facing text must be in English**
-- **No frameworks on the app shell** — the app itself is vanilla. Bootstrap only loads inside the preview iframe.
-- **Self-contained** — the file must work by double-clicking locally, with no server. The only network requests are Google Fonts, CodeMirror CDN, and Bootstrap CDN (for the preview). Everything else is inline.
-- **Consistent with `git-dates/`** — a student switching between the two lesson guides should feel no visual discontinuity. Same fonts, same dark theme, same component shapes, same logo.
-- **The editor always contains the full page code** — never just a fragment. This way the preview always shows a complete, functional Bootstrap page.
-- **Never show the complete correct solution outright** — the starter code for each step has a comment placeholder (`<!-- Add your X here -->`). Hints describe the classes to use. The solution is only revealed implicitly when the check passes.
+- **Vanilla HTML/CSS/JS** — no build tools, no npm, no frameworks on the app shell
+- **CodeMirror 5** via CDN (`cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/`)
+  - Modes: `htmlmixed`, `javascript`, `xml`, `css`
+  - Addons: `show-hint`, `html-hint`, `javascript-hint`, `closetag`, `matchbrackets`, `active-line`
+  - Theme: **custom VS Code dark/light** (inline CSS classes `.cm-s-vscode-dark` / `.cm-s-vscode-light`) — NOT the CDN dracula or default themes
+- **Bootstrap 5.3** loaded only inside preview iframes via CDN (`cdn.jsdelivr.net/npm/bootstrap@5.3.0/`) — never on the app shell
+- **Google Fonts**: `DM Sans` (body) + `DM Mono` (code), same import as `lesson14/`
+- GIT logo SVG inlined directly in each HTML file
+
+---
+
+## Student flow (per step)
+
+```
+Hub (index.html)
+  └─→ 0N-intro.html   Theory + mini-IDE + quiz
+        ↓ (pass quiz)
+      0N-ide.html     Full editor + validation
+        ↓ (pass check)
+      0{N+1}-intro.html  (or completion overlay on step 5)
+```
+
+### Intro pages (`0N-intro.html`)
+
+Uses `style.css` + `app.js` from the same folder. Matches `lesson14/date-and-time/` visual identity exactly.
+
+**Structure:**
+1. Topbar (GIT logo 48px + "JS · Year 2 · Lesson 15" label + theme toggle)
+2. Progress bar (5 dots)
+3. `.page-wrap` (max-width 780px, centred)
+   - Theory section: concept explanation, key classes, callouts (info/tip/warn), reference code block
+   - Mini-IDE section: small CodeMirror editor (8 lines) + preview iframe (200px) + ▶ Run button (no validation)
+   - Quiz section: 2–3 multiple-choice questions. Check Answers → on pass, unlocks "Enter IDE →" link
+4. Nav footer: ← Back | Enter IDE → (disabled until quiz passed)
+
+**Quiz gate:**
+- On pass: `localStorage.setItem('quiz-passed-N', '1')` and enable the "Enter IDE →" link
+- On load: if `localStorage.getItem('quiz-passed-N') === '1'`, pre-enable the link
+
+**Mini-IDE:** Free exploration only — no validation, no Check button. Short Bootstrap snippet pre-filled. `▶ Run` wraps content in a full Bootstrap HTML page and sets iframe `srcdoc`.
+
+**Callouts in each intro page:** Each theory section contains three callout blocks:
+- `.callout.callout-info` — explains what the concept is
+- `.callout.callout-tip` — practical usage tip
+- `.callout.callout-warn` — common mistake to avoid
+
+### IDE pages (`0N-ide.html`)
+
+Fully self-contained (all CSS inline `<style>`, all JS inline `<script>`). VS Code aesthetic.
+
+**Layout:**
+```
+#topbar         (GIT logo + label + ⊞ Split/☰ Top-down toggle + theme toggle)
+#progress-bar   (5 dots)
+#sub-row        (.pills-group: [Instructions][Editor][Console][Preview]) (.sub-right: "Step N of 5 · Topic" + "← Theory")
+#main           (flex row or column depending on layout)
+  #panel-instructions    (task description + hint-box + collapsible hints section)
+  .drag-handle           (drag-1: resize between instructions and editor)
+  #panel-editor-console
+    .editor-breadcrumb   ("Bootstrap Guide › Step N — Topic")
+    .editor-tabs         ([index.html] [script.js] [✓ Check] [▶ Run])
+    .editor-wrap         (CodeMirror)
+    #check-result        (✅/❌ inline callout)
+    #panel-console       (collapsible, shows errors + dismissible × close buttons)
+  .drag-handle           (drag-2: resize between editor and preview)
+  #panel-preview         (iframe with Bootstrap loaded)
+#ide-nav        (← Theory | Next Step → or Finish ✓ on step 5)
+#status-bar     (always blue #007acc: Bootstrap Guide · HTML · Step N — Topic)
+```
+
+**Two layout modes:** Split (default, flex-row) and Top-down (flex-column). Toggled by topbar button. Persisted in `localStorage` key `git-layout`.
+
+---
+
+## Theming
+
+### Intro pages and hub (`style.css`)
+
+CSS variable system, dark by default, `.light` class on `<html>` for light mode:
+
+```css
+/* Dark (default) */
+--bg: #0a0c10; --surface: #13161d; --surface-2: #1b1f28;
+--border: rgba(255,255,255,0.07); --border-2: rgba(255,255,255,0.13);
+--text: #e8eaf0; --text-muted: #7a8099; --text-dim: #4a5070;
+
+/* Light */
+--bg: #f4f5f8; --surface: #ffffff; --surface-2: #eef0f5;
+--border: rgba(0,0,0,0.08); --border-2: rgba(0,0,0,0.13);
+--text: #0f1117; --text-muted: #5a6070; --text-dim: #9aa0b0;
+
+/* Shared */
+--grad-start: #00E1FF; --grad-end: #0061FF;
+--grad: linear-gradient(135deg, var(--grad-start), var(--grad-end));
+--green: #22c55e; --yellow: #eab308; --red: #ef4444;
+```
+
+### IDE pages (inline CSS)
+
+VS Code variables, dark by default, `.light` on `<html>`:
+
+```css
+/* Dark */
+--vsc-bg: #1e1e1e; --vsc-surface: #252526; --vsc-tab-inactive: #2d2d30;
+--vsc-border: #3c3c3c; --vsc-text: #cccccc; --vsc-muted: #969696;
+
+/* Light */
+--vsc-bg: #ffffff; --vsc-surface: #f3f3f3; --vsc-tab-inactive: #ececec;
+--vsc-border: #e8e8e8; --vsc-text: #333333; --vsc-muted: #717171;
+```
+
+Status bar: `background: #007acc` always (both modes).
+
+CodeMirror uses custom `.cm-s-vscode-dark` / `.cm-s-vscode-light` classes defined inline in each IDE page. Theme swaps on toggle: `editor.setOption('theme', isLight ? 'vscode-light' : 'vscode-dark')`.
+
+Theme persisted in `localStorage` key `git-theme`.
+
+---
+
+## Hub page (`index.html`)
+
+- Topbar + hero section ("Bootstrap · Building a Landing Page")
+- Collapsible "Before you start" card (between hero and activity grid): what Bootstrap is, what they'll build, what to keep open, Bootstrap pre-loaded in preview. State persisted in `localStorage` key `git-before-open`.
+- Activity grid: 5 cards, one per step, each linking to `0N-intro.html`
+
+---
+
+## IDE features
+
+### Panel visibility (JSBin-style pills)
+
+Four pill buttons in `#sub-row`: Instructions, Editor, Console, Preview. Each toggles its panel. Active = gradient fill, inactive = outlined with cyan border. In split layout, hiding a panel collapses its column (via `updatePanelFlex()`).
+
+### Drag-to-resize panels
+
+Two `.drag-handle` elements inside `#main`:
+- `drag-1` between `#panel-instructions` and `#panel-editor-console`
+- `drag-2` between `#panel-editor-console` and `#panel-preview`
+
+In split layout: `width: 6px; cursor: col-resize`. In top-down: `height: 6px; cursor: row-resize`. Hover/drag highlight: `rgba(0,225,255,0.35)`.
+
+Panel sizes persist in `localStorage` key `git-panel-sizes` (JSON object of panel IDs → pixel sizes). Restored on page load.
+
+### HTML + JS tabs
+
+One CodeMirror instance; mode swaps on tab click. `htmlContent` and `jsContent` variables store each tab's content independently. JS tab content is injected before `</body>` in the preview srcdoc.
+
+### Starter code
+
+Stored in `<script type="text/html" id="starter-code">` to avoid template literal escaping issues. Read via `.textContent` at script init. Each step's starter = previous step's correct solution + a `<!-- Step N: Add your X here -->` comment.
+
+Starters:
+- Step 1: Bootstrap CDN + comment placeholder for navbar
+- Step 2: Step 1 correct navbar + comment for hero section
+- Step 3: Steps 1+2 correct + comment for grid layout
+- Step 4: Steps 1+2+3 correct + comment for buttons section
+- Step 5: Steps 1+2+3+4 correct + comment for footer
+
+### Save/restore editor code
+
+On every editor `change` event (debounced 500ms): `localStorage.setItem('git-code-step-N', htmlContent)`.
+
+On page load (after editor init): restore from `localStorage.getItem('git-code-step-N')` if present.
+
+Key: `git-code-step-{STEP}` where STEP is 1–5.
+
+### Hints system (collapsible, progressive)
+
+In `#panel-instructions`, below the main task description:
+- Toggle button `💡 Hints ▶/▼` shows/hides `.hints-body`
+- 3 hint items per step; first is pre-revealed, others revealed one at a time by "Show next hint →" button
+- Hints are specific to each step (Grid: container/row/col layers; Buttons: btn + variant; etc.)
+
+### Console
+
+- Collapsible panel (collapsed by default, auto-expands on error)
+- Each message rendered as: `<div class="console-msg [error]"><span class="console-msg-text">…</span><button class="console-close">×</button></div>`
+- × button dismisses individual messages
+- `runPreview()` clears all `.console-msg.error` elements before running (so stale errors don't persist)
+- iFrame errors forwarded via `postMessage` (`window.onerror` inside iframe)
+
+### Navigation buttons
+
+- `← Theory` link (always available, goes to `0N-intro.html`)
+- `Next Step →` / `Finish ✓` button: `ide-nav-btn-disabled` (opacity 0.4, `pointer-events: all`, `cursor: not-allowed`) until check passes. Has `title="Complete the check above to unlock the next step."` tooltip.
+- On pass: switch to `ide-nav-btn-primary` (gradient), remove `disabled`. `goNext()` / `showCompletion()` guarded with `if (!stepPassed) return;`.
+- Styling: `min-height: 44px`, `min-width: 160px`, `justify-content: center`. Mobile: `width: 100%`.
+
+### Editor breadcrumb
+
+`<div class="editor-breadcrumb">Bootstrap Guide › Step N — Topic</div>` shown above `.editor-tabs`. Font: `DM Mono`, 11px, muted color.
+
+---
+
+## Validation
+
+`validateStep(step, code)` — pure string checks on the HTML string. Returns array of failure messages.
+
+| Step | Checks |
+|------|--------|
+| 1 Navbar | `navbar`, `navbar-brand`, ≥2 `nav-link`, `Net@` |
+| 2 Hero | step 1 present, `display-` class, `lead`, `btn` class, `Net@` |
+| 3 Grid | step 1+2 present, `row`, ≥2 `col-` classes, `col-lg-` |
+| 4 Buttons | step 1+3 present, ≥3 `btn`, ≥2 color variants, `btn-lg` or `btn-sm` |
+| 5 Footer | `<footer`, `bg-dark` or `bg-*`, `Net@`, `©` or `2025` or `rights`, steps 1–4 present |
+
+On pass → unlock Next/Finish button, show green callout, log to console.
+On fail → show red callout with list of failed conditions, log error to console.
+
+---
+
+## Completion screen (step 5)
+
+When `Finish ✓` is clicked after step 5 passes, a full-screen overlay appears (`#completion-overlay`) on top of the page:
+- "You built a Bootstrap landing page!" heading
+- Checklist of all 5 components learned
+- CTA to open VSCode and build from scratch
+- Two buttons: `Copy HTML` (copies editor content to clipboard) + `Back to Lesson Hub`
+
+---
+
+## localStorage keys
+
+| Key | Used by | Value |
+|-----|---------|-------|
+| `git-theme` | all pages | `'light'` or absent (dark) |
+| `git-layout` | IDE pages | `'split'` or `'topdown'` |
+| `quiz-passed-N` (N=1–5) | intro pages | `'1'` when quiz passed |
+| `git-panel-sizes` | IDE pages | JSON: `{ "panel-instructions": px, ... }` |
+| `git-code-step-N` (N=1–5) | IDE pages | HTML string of student's code |
+| `git-before-open` | hub index.html | `'1'` when "Before you start" is expanded |
+
+---
+
+## The 5 steps
+
+### Step 1 — Navbar
+- **Concept:** Bootstrap pre-built components. Add a class, Bootstrap does the styling.
+- **Key classes:** `navbar`, `navbar-expand-lg`, `navbar-dark`, `bg-dark`, `navbar-brand`, `navbar-nav`, `nav-item`, `nav-link`, `container`, `ms-auto`
+- **Task:** Add a navbar with brand "Net@" and at least two nav links.
+
+### Step 2 — Hero Section
+- **Concept:** Bootstrap utility classes for spacing and typography.
+- **Key classes:** `py-5`, `text-center`, `bg-primary`, `text-white`, `container`, `display-4`, `fw-bold`, `lead`, `btn`, `btn-light`, `btn-lg`, `mt-3`
+- **Task:** Add a hero section with big title "Welcome to Net@", a subtitle, and a CTA button.
+
+### Step 3 — Grid Layout
+- **Concept:** 12-column grid system with responsive breakpoints.
+- **Key classes:** `container`, `py-5`, `row`, `col-12`, `col-lg-8`, `col-lg-4`
+- **Task:** Add a two-column section: main content (8/12) + sidebar (4/12).
+
+### Step 4 — Buttons
+- **Concept:** Semantic color variants and size modifiers.
+- **Key classes:** `btn`, `btn-primary`, `btn-secondary`, `btn-danger`, `btn-success`, `btn-warning`, `btn-outline-*`, `btn-lg`, `btn-sm`
+- **Task:** Add a "Join Us" section with at least 3 buttons using ≥2 color variants and ≥1 size modifier.
+
+### Step 5 — Footer
+- **Concept:** Composing Bootstrap utilities on semantic HTML without a dedicated component.
+- **Key classes:** `footer` (HTML element), `bg-dark`, `text-white`, `py-4`, `mt-5`, `container`, `text-center`, `text-muted`, `mb-0`
+- **Task:** Add a footer with dark background, Net@ name, year 2025, and © symbol.
+
+---
+
+## Constraints
+
+- **All student-facing text in English**
+- **No frameworks on the app shell** — Bootstrap only inside preview iframes
+- **Self-contained** — every page works by double-clicking locally. Network requests: Google Fonts, CodeMirror CDN, Bootstrap CDN (preview only)
+- **Consistent with `lesson14/`** — same fonts, same dark theme, same component shapes, same logo
+- **Never show the complete correct solution outright** — starters have comment placeholders; hints describe classes, not full solutions
+- **Relative paths** — always `./`, never absolute (served both from `lessons.growintech.it/lesson15/` and local filesystem)
