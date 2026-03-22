@@ -59,31 +59,24 @@
 <defs><linearGradient id="ide3_p0" x1="67" y1="107" x2="232" y2="194" gradientUnits="userSpaceOnUse"><stop stop-color="#00E1FF"/><stop offset="1" stop-color="#0061FF"/></linearGradient></defs>
       </svg>
     </a>
-    <span class="topbar-label">JS · Year 2 · Lesson 15</span>
+    <div class="topbar-breadcrumbs">
+      <span class="breadcrumb-dots">... /</span>
+      <a href="../../index.html" class="breadcrumb-link desktop-only">Lesson 15</a>
+      <span class="breadcrumb-sep desktop-only">/</span>
+      <a href="03-intro.html" class="breadcrumb-link desktop-only">Bootstrap Guide</a>
+      <span class="breadcrumb-sep desktop-only">/</span>
+      <span class="breadcrumb-current">Step 3 &mdash; Grid</span>
+    </div>
     <div class="topbar-spacer"></div>
-    <button class="topbar-btn" onclick="toggleLayout()" id="layout-btn">⊞ Split</button>
-    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
-  </div>
-
-  <div id="progress-bar">
-    <div class="prog-dot done"></div>
-    <div class="prog-dot done"></div>
-    <div class="prog-dot active"></div>
-    <div class="prog-dot"></div>
-    <div class="prog-dot"></div>
-  </div>
-
-  <div id="sub-row">
     <div class="pills-group">
       <button class="pill-btn pill-active" id="pill-instructions" onclick="togglePanel('instructions')">Instructions</button>
       <button class="pill-btn pill-active" id="pill-editor" onclick="togglePanel('editor')">Editor</button>
       <button class="pill-btn" id="pill-console" onclick="toggleConsolePanel()">Console</button>
       <button class="pill-btn pill-active" id="pill-preview" onclick="togglePanel('preview')">Preview</button>
     </div>
-    <div class="sub-right">
-      <span class="sub-step-label">Step 3 of 5 · Grid</span>
-      <a href="./03-intro.html" class="sub-intro-link">← Theory</a>
-    </div>
+    <div class="topbar-spacer"></div>
+    <button class="topbar-btn" onclick="toggleLayout()" id="layout-btn">⊞ Split</button>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
   </div>
 
   <div id="main">
@@ -115,7 +108,6 @@
 
     <div id="panel-editor-console">
       <div id="panel-editor">
-        <div class="editor-breadcrumb">Bootstrap Guide › Step 3 — Grid Layout</div>
         <div class="editor-tabs">
           <button class="editor-tab active" id="tab-html" onclick="switchTab('html')"><span>index.html</span></button>
           <button class="editor-tab" id="tab-js" onclick="switchTab('js')"><span>script.js</span></button>
@@ -129,7 +121,13 @@
       </div>
       <div id="panel-console" class="hidden">
         <div class="console-header" onclick="toggleConsoleExpand()"><span>Console</span><span class="console-chevron" id="console-chevron">▼</span></div>
-        <div class="console-body" id="console-body"><div class="console-msg" data-default>No output yet.</div></div>
+        <div class="console-body" id="console-body">
+          <div class="console-msg" data-default>No output yet.</div>
+          <div id="console-input-row">
+            <span id="console-prompt">&gt;</span>
+            <input type="text" id="console-input" placeholder="Type JavaScript and press Enter..." autocomplete="off">
+          </div>
+        </div>
       </div>
     </div>
     <div class="drag-handle" id="drag-2" data-panel-a="panel-editor-console" data-panel-b="panel-preview"></div>
@@ -146,9 +144,14 @@
   </div>
 
   <div id="status-bar">
-    <span>Bootstrap Guide</span>
-    <span id="status-lang">HTML</span>
-    <span>Step 3 — Grid Layout</span>
+    <div class="status-left">
+      <span>Bootstrap Guide</span>
+      <span id="status-lang">HTML</span>
+      <span>Step 3 &mdash; Grid</span>
+    </div>
+    <div class="status-right">
+      <span>JS &middot; Year 2</span>
+    </div>
   </div>
 </div>
 

@@ -159,6 +159,19 @@ body { font-family: 'DM Sans', 'Segoe UI', sans-serif; background: var(--vsc-bg)
 #status-bar { height:24px; background:var(--grad-start); display:flex; align-items:center; justify-content:space-between; padding:0 12px; font-size:11px; color:rgba(255,255,255,0.9); flex-shrink:0; font-family:'DM Mono',monospace; }
 .status-left, .status-right { display:flex; align-items:center; gap:14px; }
 
+/* COMPLETION OVERLAY */
+#completion-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:999; align-items:center; justify-content:center; }
+#completion-overlay.visible { display:flex; }
+.completion-card { background:var(--vsc-surface); border:1px solid var(--vsc-border); border-radius:14px; padding:36px 40px; max-width:520px; width:90%; color:var(--vsc-text); }
+.completion-card h2 { font-size:22px; margin-bottom:16px; font-family:'DM Sans',sans-serif; }
+.completion-card p { font-size:14px; color:var(--vsc-muted); margin-bottom:16px; line-height:1.6; font-family:'DM Sans',sans-serif; }
+.completion-card ul { list-style:none; padding:0; margin:0 0 20px; font-family:'DM Sans',sans-serif; }
+.completion-card li { padding:5px 0; font-size:14px; color:var(--vsc-muted); }
+.completion-card li::before { content:'✅ '; }
+.completion-btns { display:flex; gap:10px; flex-wrap:wrap; }
+.comp-btn { padding:8px 18px; border-radius:7px; border:none; font-size:14px; font-weight:600; cursor:pointer; background:var(--grad); color:#fff; font-family:'DM Sans',sans-serif; text-decoration: none; }
+.comp-btn-outline { background:transparent; border:1px solid var(--vsc-border); color:var(--vsc-text); }
+
 /* HIDDEN */
 .hidden { display:none !important; }
 
