@@ -3,12 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Step 5 — Footer · Bootstrap · GIT</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-  <link rel="stylesheet" href="../../shared/style-intro.css">
+  <title>Lesson 15 — Bootstrap · Grow in Tech</title>
+  <link rel="stylesheet" href="../shared/style-intro.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    .before-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .before-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      gap: 8px;
+    }
+    .before-toggle:hover { background: var(--surface-2); }
+    .before-chevron {
+      font-style: normal;
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .before-card.open .before-chevron { transform: rotate(90deg); }
+    .before-body {
+      display: none;
+      padding: 4px 20px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .before-card.open .before-body { display: block; }
+    .before-body ul { margin: 8px 0 0; padding-left: 20px; }
+    .before-body li { margin-bottom: 6px; }
+  </style>
 </head>
 <body>
+<div class="page-wrap">
 
   <header class="topbar">
     <a class="topbar-logo" href="./index.html">
@@ -63,160 +107,120 @@
     </div>
   </header>
 
-  <div class="progress-bar-wrap">
-    <div class="progress-dot done"></div>
-    <div class="progress-dot done"></div>
-    <div class="progress-dot done"></div>
-    <div class="progress-dot done"></div>
-    <div class="progress-dot active"></div>
+  <div class="hero">
+    <div class="activity-badge badge-blue">🅱 Bootstrap</div>
+    <h1>Building a<br><span class="grad">Landing Page</span></h1>
+    <p class="lead">
+      Learn to use Bootstrap to quickly style web pages — build a complete Net@ landing page step by step using components, utility classes, and the responsive grid.
+    </p>
   </div>
 
-  <div class="page-wrap">
-
-    <div class="activity-badge badge-build">Step 5 · Bootstrap</div>
-    <h1 class="hero-title">The <span class="grad">Footer</span></h1>
-    <p class="hero-sub">Bootstrap has no footer component — learn to compose utility classes to build one.</p>
-
-    <!-- THEORY SECTION -->
-    <section>
-      <p>Unlike the navbar or card, Bootstrap has <strong>no dedicated footer component</strong>.</p>
-      
-      <p>Instead, you compose Bootstrap's utility classes on a plain <code>&lt;footer&gt;</code> HTML element.</p>
-      
-      <p>This approach — combining small, single-purpose utilities — is Bootstrap's <strong>composability philosophy</strong>.</p>
-
-      <div class="callout callout-tip">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Tip</strong> <code>mt-5</code> on the footer adds a top margin that separates it visually from the content above.
-        </div>
-      </div>
-
-      <h2>Key Classes for a Footer</h2>
-      <div class="class-switcher" id="cs-05">
-        <div class="cs-tabs">
-          <button class="cs-tab active" onclick="switchClassTab('cs-05', 0)">bg-dark + text-white</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-05', 1)">py-4</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-05', 2)">mt-5</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-05', 3)">text-center</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-05', 4)">text-muted + mb-0</button>
-        </div>
-        <div class="cs-content-wrap">
-          <div class="cs-pane active"><p><code>bg-dark</code> applies a dark background. <code>text-white</code> makes the text readable.</p></div>
-          <div class="cs-pane"><p>Adds comfortable padding on the top and bottom (1.5 rem each side).</p></div>
-          <div class="cs-pane"><p>Adds a large top margin (3 rem) that creates breathing room.</p></div>
-          <div class="cs-pane"><p>Centers all inline content horizontally inside the footer.</p></div>
-          <div class="cs-pane"><p><code>text-muted</code> applies a subdued grey color. <code>mb-0</code> removes default paragraph bottom margin.</p></div>
-        </div>
-      </div>
-
-      <div class="callout callout-info">
-        <span class="callout-icon">ℹ</span>
-        <div class="callout-body">
-          <strong>Spacing scale recap</strong><br>
-          Bootstrap's margin and padding utilities follow the pattern <code>{property}{side}-{scale}</code>. Property: <code>m</code> = margin, <code>p</code> = padding. Side: <code>t</code> top, <code>b</code> bottom, <code>s</code> start, <code>e</code> end, <code>x</code> left+right, <code>y</code> top+bottom (omit for all sides). Scale: 0–5, where 0 = 0 and 5 = 3 rem.
-        </div>
-      </div>
-
-      <h2>Reference Snippet</h2>
-      <div class="snippet-block">
-        <textarea id="ref-snippet-5">&lt;footer class="bg-dark text-white py-4 mt-5"&gt;
-  &lt;div class="container text-center"&gt;
-    &lt;p class="mb-0 text-muted"&gt;&amp;copy; 2025 Net@ — All rights reserved.&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/footer&gt;</textarea>
-      </div>
-
-      <div class="callout callout-tip">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Tip — use semantic HTML</strong><br>
-          Always use the <code>&lt;footer&gt;</code> element (not a plain <code>&lt;div&gt;</code>). Screen readers and search engines use it to understand your page structure, and it costs nothing extra.
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- MINI-IDE SECTION -->
-    <div class="mini-ide-wrap">
-      <h3>▶ Try it yourself</h3>
-      <div class="mini-ide-actions">
-        <button id="run-btn" class="btn-run">▶ Run</button>
-        <span style="font-size:13px;color:var(--text-muted)">Edit the code and click Run to preview your footer.</span>
-      </div>
-      <div class="mini-editor-wrap">
-        <textarea id="mini-editor"></textarea>
-      </div>
-      <iframe id="mini-preview" class="mini-preview" sandbox="allow-scripts allow-same-origin"></iframe>
+  <div class="before-card" id="before-card">
+    <button class="before-toggle" onclick="toggleBefore()" aria-expanded="false" aria-controls="before-body">
+      <span>📋 Before you start</span>
+      <i class="before-chevron">▶</i>
+    </button>
+    <div class="before-body" id="before-body">
+      <ul>
+        <li><strong>Bootstrap is a CSS framework</strong> — it gives you pre-built components and utility classes you activate by adding class names to your HTML. No custom CSS required.</li>
+        <li><strong>You'll build a Net@ landing page</strong> step by step across 5 activities, adding a new section in each one.</li>
+        <li><strong>Keep the Preview panel open</strong> as you work — click <em>Run</em> to see your changes live inside the page.</li>
+        <li><strong>Bootstrap is already loaded inside the preview</strong> — you just write the HTML with Bootstrap class names.</li>
+      </ul>
     </div>
-
-    <div class="divider"></div>
-
-    <!-- QUIZ SECTION -->
-    <div class="quiz-section">
-      <h2>Quick Check</h2>
-      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Answer all questions correctly to unlock the IDE.</p>
-      <div id="quiz-container"></div>
-      <button class="quiz-check-btn" onclick="checkQuiz(5, QUIZZES_5, 'go-ide-btn', 'quiz-result')">Check Answers</button>
-      <div id="quiz-result" class="quiz-result"></div>
-    </div>
-
-    <!-- NAV FOOTER -->
-    <div class="nav-footer">
-      <a href="./04-ide.html" class="nav-btn nav-btn-outline">← Back</a>
-      <button id="go-ide-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='05-ide.html'">Enter IDE →</button>
-    </div>
-
-  </div><!-- end page-wrap -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-  <script src="../../shared/app-intro.js"></script>
-  <script>
-    const QUIZZES_5 = [
-      {
-        q: 'Does Bootstrap have a dedicated &lt;footer&gt; component?',
-        opts: [
-          "Yes, use class 'footer-component'",
-          "Yes, use class 'bs-footer'",
-          'No — you compose utility classes',
-          'No — you need custom CSS',
-        ],
-        correct: 2,
-      },
-      {
-        q: 'Which class gives an element a dark background?',
-        opts: ['dark-bg', 'bg-black', 'bg-dark', 'background-dark'],
-        correct: 2,
-      },
-      {
-        q: 'What does `mt-5` stand for?',
-        opts: [
-          'margin-top: 5px',
-          'margin-top with spacing scale 5 (large)',
-          'min-top: 5',
-          'margin: 5px on top',
-        ],
-        correct: 1,
-      },
-    ];
-
-    const STARTER_5 = `<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<footer class="bg-dark text-white py-4 mt-5">
-  <div class="container text-center">
-    <p class="fw-bold mb-1">Net@</p>
-    <p class="text-muted mb-0">&copy; 2025 Net@ — All rights reserved.</p>
   </div>
-</footer>`;
 
-    renderQuiz('quiz-container', 5, QUIZZES_5);
-    restoreQuizState(5, 'go-ide-btn');
-    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_5);
-    initSnippet('ref-snippet-5', true);
-  </script>
+  <section>
+    <h2>Today's activities</h2>
+    <div class="activity-grid">
+
+      <a class="activity-card" href="./01-intro.html">
+        <div class="activity-card-icon">🧭</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Step 1 — Navbar</div>
+          <div class="activity-card-desc">Bootstrap pre-built components</div>
+        </div>
+        <span class="activity-card-time">~15 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="./02-intro.html">
+        <div class="activity-card-icon">🦸</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Step 2 — Hero Section</div>
+          <div class="activity-card-desc">Utility classes: spacing &amp; typography</div>
+        </div>
+        <span class="activity-card-time">~15 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="./03-intro.html">
+        <div class="activity-card-icon">⚙️</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Step 3 — Grid Layout</div>
+          <div class="activity-card-desc">12-column responsive grid system</div>
+        </div>
+        <span class="activity-card-time">~20 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="./04-intro.html">
+        <div class="activity-card-icon">🔘</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Step 4 — Buttons</div>
+          <div class="activity-card-desc">Semantic color variants and sizing</div>
+        </div>
+        <span class="activity-card-time">~15 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+      <a class="activity-card" href="./05-intro.html">
+        <div class="activity-card-icon">🦶</div>
+        <div class="activity-card-body">
+          <div class="activity-card-title">Step 5 — Footer</div>
+          <div class="activity-card-desc">Composing utilities without a component</div>
+        </div>
+        <span class="activity-card-time">~15 min</span>
+        <span class="activity-card-arrow">›</span>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <h2>Before you start</h2>
+    <div class="card">
+      <h3>Two pages per step</h3>
+      <p>Each step has an <strong>Intro page</strong> with theory and a short quiz, then an <strong>IDE page</strong> where you write code. The IDE unlocks after you answer the quiz correctly.</p>
+    </div>
+    <div class="card">
+      <h3>Everything runs in the page</h3>
+      <p>The IDE has a live preview. Your Bootstrap code renders in real time — no browser tab switching, no external tools needed.</p>
+    </div>
+    <div class="card">
+      <h3>What you are building</h3>
+      <p>A complete <strong>Net@</strong> landing page, assembled one section at a time. By Step 5 you will have a navbar, hero, grid layout, buttons, and a footer — all built with Bootstrap classes.</p>
+    </div>
+  </section>
+
+</div>
+<script src="../shared/app-intro.js"></script>
+<script>
+  (function() {
+    var card = document.getElementById('before-card');
+    if (localStorage.getItem('git-before-open') === 'true') {
+      card.classList.add('open');
+      card.querySelector('.before-toggle').setAttribute('aria-expanded', 'true');
+    }
+  })();
+  function toggleBefore() {
+    var card = document.getElementById('before-card');
+    var isOpen = card.classList.toggle('open');
+    card.querySelector('.before-toggle').setAttribute('aria-expanded', String(isOpen));
+    localStorage.setItem('git-before-open', String(isOpen));
+  }
+</script>
 </body>
 </html>

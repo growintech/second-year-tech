@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Step 1 — Navbar · Bootstrap · GIT</title>
+  <title>Step 2 — Hero Section · Bootstrap · GIT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-  <link rel="stylesheet" href="../../shared/style-intro.css">
+  <link rel="stylesheet" href="../shared/style-intro.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
 </head>
 <body>
@@ -64,8 +64,8 @@
   </header>
 
   <div class="progress-bar-wrap">
+    <div class="progress-dot done"></div>
     <div class="progress-dot active"></div>
-    <div class="progress-dot"></div>
     <div class="progress-dot"></div>
     <div class="progress-dot"></div>
     <div class="progress-dot"></div>
@@ -73,69 +73,62 @@
 
   <div class="page-wrap">
 
-    <div class="activity-badge badge-explore">Step 1 · Bootstrap</div>
-    <h1 class="hero-title">The <span class="grad">Navbar</span> Component</h1>
-    <p class="hero-sub">Learn what a CSS framework is and how Bootstrap's navbar works.</p>
+    <div class="activity-badge badge-build">Step 2 · Bootstrap</div>
+    <h1 class="hero-title">The <span class="grad">Hero Section</span></h1>
+    <p class="hero-sub">Compose utility classes to build the most important block on a page.</p>
 
     <!-- THEORY SECTION -->
     <section>
-      <p>A <strong>CSS framework</strong> is a collection of pre-written CSS rules activated by class names.</p>
-
-      <p><strong>Bootstrap</strong> provides a responsive grid, ready-made UI components, and utility classes. You load it with a single <code>&lt;link&gt;</code> tag.</p>
-
-      <p>The <strong>Navbar</strong> is <em>responsive by default</em>, collapsing on small screens and expanding on large ones.</p>
-
-      <div class="callout callout-tip">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Tip</strong> Pair <code>navbar-dark</code> with <code>bg-dark</code> for a classic dark navbar.
-        </div>
-      </div>
-
-      <h2>Key Classes</h2>
-      <div class="class-switcher" id="cs-01">
-        <div class="cs-tabs">
-          <button class="cs-tab active" onclick="switchClassTab('cs-01', 0)">navbar</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-01', 1)">navbar-expand-lg</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-01', 2)">navbar-dark + bg-dark</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-01', 3)">navbar-brand</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-01', 4)">nav-item / nav-link</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-01', 5)">container + ms-auto</button>
-        </div>
-        <div class="cs-content-wrap">
-          <div class="cs-pane active"><p>Base class, required on the <code>&lt;nav&gt;</code> element. Enables flexbox layout and sets up navbar structure.</p></div>
-          <div class="cs-pane"><p>Collapses the nav on screens smaller than "lg" and expands horizontally on large screens.</p></div>
-          <div class="cs-pane"><p><code>navbar-dark</code> sets links to light; <code>bg-dark</code> applies the background color.</p></div>
-          <div class="cs-pane"><p>Styles the logo or site-name link applied to the <code>&lt;a&gt;</code> tag.</p></div>
-          <div class="cs-pane"><p><code>nav-item</code> goes on each <code>&lt;li&gt;</code> inside the nav list; <code>nav-link</code> goes on the <code>&lt;a&gt;</code> inside it.</p></div>
-          <div class="cs-pane"><p><code>container</code> centers content; <code>ms-auto</code> pushes nav links to the right.</p></div>
-        </div>
-      </div>
+      <p>A <strong>hero section</strong> is the large introductory block at the very top of a web page — the first thing a visitor sees.</p>
+      
+      <p>It typically contains a headline, a short supporting text, and a call-to-action button, communicating the page's purpose immediately.</p>
+      
+      <p>Bootstrap does <em>not</em> have a dedicated "Hero" component. Instead, you <strong>compose utility classes</strong> on a plain <code>&lt;section&gt;</code> element.</p>
 
       <div class="callout callout-warn">
         <span class="callout-icon">⚠</span>
         <div class="callout-body">
-          <strong>Common mistake:</strong> Without <code>ms-auto</code> on the <code>&lt;ul&gt;</code>, your links will stay on the left.
+          <strong>Common mistake:</strong> Using <code>text-center</code> without a <code>container</code> inside — the text will stretch edge-to-edge. Always wrap content in a <code>container</code>.
+        </div>
+      </div>
+
+      <h2>Key Classes</h2>
+      <div class="class-switcher" id="cs-02">
+        <div class="cs-tabs">
+          <button class="cs-tab active" onclick="switchClassTab('cs-02', 0)">container</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 1)">py-5</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 2)">text-center</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 3)">display-4</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 4)">lead</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 5)">mt-3 / mb-3</button>
+        </div>
+        <div class="cs-content-wrap">
+          <div class="cs-pane active"><p>Constrains content to a centred max-width column. Prevents text from stretching too wide on large screens.</p></div>
+          <div class="cs-pane"><p>Adds padding on the <em>y-axis</em> (top and bottom) using Bootstrap's spacing scale (5 = 3 rem).</p></div>
+          <div class="cs-pane"><p>Centres all inline content — text, buttons, and inline elements — horizontally within the element.</p></div>
+          <div class="cs-pane"><p>Renders a heading in a very large, lightweight display font.</p></div>
+          <div class="cs-pane"><p>Makes a paragraph slightly larger and lighter-weight, perfect for subtitles.</p></div>
+          <div class="cs-pane"><p>Margin-top and margin-bottom using the spacing scale.</p></div>
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body">
+          <strong>Bootstrap's Spacing Scale</strong><br>
+          Bootstrap uses a scale from <code>0</code> to <code>5</code> for spacing utilities.
         </div>
       </div>
 
       <h2>Reference Snippet</h2>
       <div class="snippet-block">
-        <textarea id="ref-snippet-1">&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+        <textarea id="ref-snippet-2">&lt;section class="py-5 text-center bg-light"&gt;
   &lt;div class="container"&gt;
-    &lt;a class="navbar-brand" href="javascript:void(0)"&gt;My Site&lt;/a&gt;
-    &lt;button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse" data-bs-target="#navMenu"&gt;
-      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;div class="collapse navbar-collapse" id="navMenu"&gt;
-      &lt;ul class="navbar-nav ms-auto"&gt;
-        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="javascript:void(0)"&gt;Home&lt;/a&gt;&lt;/li&gt;
-        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="javascript:void(0)"&gt;About&lt;/a&gt;&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/div&gt;
+    &lt;h1 class="display-4"&gt;Welcome&lt;/h1&gt;
+    &lt;p class="lead"&gt;A short description here.&lt;/p&gt;
+    &lt;a href="javascript:void(0)" class="btn btn-primary mt-3"&gt;Get Started&lt;/a&gt;
   &lt;/div&gt;
-&lt;/nav&gt;</textarea>
+&lt;/section&gt;</textarea>
       </div>
     </section>
 
@@ -161,14 +154,14 @@
       <h2>Quick Check</h2>
       <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Answer all questions correctly to unlock the IDE.</p>
       <div id="quiz-container"></div>
-      <button class="quiz-check-btn" onclick="checkQuiz(1, QUIZZES_1, 'go-ide-btn', 'quiz-result')">Check Answers</button>
+      <button class="quiz-check-btn" onclick="checkQuiz(2, QUIZZES_2, 'go-ide-btn', 'quiz-result')">Check Answers</button>
       <div id="quiz-result" class="quiz-result"></div>
     </div>
 
     <!-- NAV FOOTER -->
     <div class="nav-footer">
-      <a href="./index.html" class="nav-btn nav-btn-outline">← Back</a>
-      <button id="go-ide-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='01-ide.html'">Enter IDE →</button>
+      <a href="./01-ide.html" class="nav-btn nav-btn-outline">← Back</a>
+      <button id="go-ide-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='02-ide.html'">Enter IDE →</button>
     </div>
 
   </div><!-- end page-wrap -->
@@ -178,51 +171,48 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-  <script src="../../shared/app-intro.js"></script>
+  <script src="../shared/app-intro.js"></script>
   <script>
-    const QUIZZES_1 = [
+    const QUIZZES_2 = [
       {
-        q: 'What does a CSS framework do?',
+        q: 'What is a "hero section"?',
         opts: [
-          'Provides pre-written CSS you activate with class names',
-          'Runs a server for your website',
-          'Converts CSS to JavaScript',
-          'Generates HTML automatically',
-        ],
-        correct: 0,
-      },
-      {
-        q: 'Which class makes the navbar collapse on small screens and expand on large ones?',
-        opts: [
-          'navbar-collapse',
-          'navbar-expand-lg',
-          'navbar-responsive',
-          'navbar-breakpoint-lg',
+          "A section for the site's navigation menu",
+          'The large introductory block at the top of a page',
+          'A footer with contact info',
+          'A sidebar with links',
         ],
         correct: 1,
       },
       {
-        q: 'What class do you add to the brand/logo link?',
-        opts: ['navbar-logo', 'navbar-title', 'navbar-brand', 'brand-link'],
-        correct: 2,
+        q: 'Which class makes a heading display extra-large?',
+        opts: ['h1-display', 'display-4', 'heading-xl', 'big-text'],
+        correct: 1,
+      },
+      {
+        q: 'What does `py-5` do?',
+        opts: [
+          'Adds padding on the x-axis (left and right)',
+          'Adds padding on the y-axis (top and bottom)',
+          'Sets a fixed height of 5px',
+          'Adds a 5px border',
+        ],
+        correct: 1,
       },
     ];
 
-    const STARTER_1 = `<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    const STARTER_2 = `<section class="py-5 text-center bg-primary text-white">
   <div class="container">
-    <a class="navbar-brand" href="javascript:void(0)">Net@</a>
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="javascript:void(0)">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="javascript:void(0)">About</a></li>
-      <li class="nav-item"><a class="nav-link" href="javascript:void(0)">Contact</a></li>
-    </ul>
+    <h1 class="display-4 fw-bold">Welcome to Net@</h1>
+    <p class="lead">Learn web development from the ground up.</p>
+    <a href="javascript:void(0)" class="btn btn-light btn-lg mt-3">Explore the program</a>
   </div>
-</nav>`;
+</section>`;
 
-    renderQuiz('quiz-container', 1, QUIZZES_1);
-    restoreQuizState(1, 'go-ide-btn');
-    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_1);
-    initSnippet('ref-snippet-1', true);
+    renderQuiz('quiz-container', 2, QUIZZES_2);
+    restoreQuizState(2, 'go-ide-btn');
+    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_2);
+    initSnippet('ref-snippet-2', true);
   </script>
 </body>
 </html>

@@ -3,56 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lesson 15 — Bootstrap · Grow in Tech</title>
-  <link rel="stylesheet" href="../../shared/style-intro.css">
+  <title>Step 4 — Buttons · Bootstrap · GIT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="../shared/style-intro.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
-  <style>
-    .before-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      margin-bottom: 32px;
-      overflow: hidden;
-    }
-    .before-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      cursor: pointer;
-      user-select: none;
-      font-weight: 600;
-      font-size: 15px;
-      color: var(--text);
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-      gap: 8px;
-    }
-    .before-toggle:hover { background: var(--surface-2); }
-    .before-chevron {
-      font-style: normal;
-      font-size: 12px;
-      color: var(--text-muted);
-      transition: transform 0.2s;
-      flex-shrink: 0;
-    }
-    .before-card.open .before-chevron { transform: rotate(90deg); }
-    .before-body {
-      display: none;
-      padding: 4px 20px 20px;
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-    .before-card.open .before-body { display: block; }
-    .before-body ul { margin: 8px 0 0; padding-left: 20px; }
-    .before-body li { margin-bottom: 6px; }
-  </style>
 </head>
 <body>
-<div class="page-wrap">
 
   <header class="topbar">
     <a class="topbar-logo" href="./index.html">
@@ -107,120 +63,171 @@
     </div>
   </header>
 
-  <div class="hero">
-    <div class="activity-badge badge-blue">🅱 Bootstrap</div>
-    <h1>Building a<br><span class="grad">Landing Page</span></h1>
-    <p class="lead">
-      Learn to use Bootstrap to quickly style web pages — build a complete Net@ landing page step by step using components, utility classes, and the responsive grid.
-    </p>
+  <div class="progress-bar-wrap">
+    <div class="progress-dot done"></div>
+    <div class="progress-dot done"></div>
+    <div class="progress-dot done"></div>
+    <div class="progress-dot active"></div>
+    <div class="progress-dot"></div>
   </div>
 
-  <div class="before-card" id="before-card">
-    <button class="before-toggle" onclick="toggleBefore()" aria-expanded="false" aria-controls="before-body">
-      <span>📋 Before you start</span>
-      <i class="before-chevron">▶</i>
-    </button>
-    <div class="before-body" id="before-body">
-      <ul>
-        <li><strong>Bootstrap is a CSS framework</strong> — it gives you pre-built components and utility classes you activate by adding class names to your HTML. No custom CSS required.</li>
-        <li><strong>You'll build a Net@ landing page</strong> step by step across 5 activities, adding a new section in each one.</li>
-        <li><strong>Keep the Preview panel open</strong> as you work — click <em>Run</em> to see your changes live inside the page.</li>
-        <li><strong>Bootstrap is already loaded inside the preview</strong> — you just write the HTML with Bootstrap class names.</li>
-      </ul>
+  <div class="page-wrap">
+
+    <div class="activity-badge badge-build">Step 4 · Bootstrap</div>
+    <h1 class="hero-title">Bootstrap <span class="grad">Buttons</span></h1>
+    <p class="hero-sub">Learn Bootstrap's semantic button system — color variants, outline styles, and size modifiers.</p>
+
+    <!-- THEORY SECTION -->
+    <section>
+      <p>Bootstrap provides a comprehensive button system built around a <strong>semantic color palette</strong>.</p>
+      
+      <p>Each color has a name that describes its <em>meaning</em> (like <code>btn-danger</code> for "destructive action").</p>
+      
+      <p>Every Bootstrap button requires <strong>two classes</strong>: the base <code>btn</code> class plus a <em>variant</em> class.</p>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠</span>
+        <div class="callout-body">
+          <strong>Common mistake:</strong> Using just <code>btn-primary</code> without the base <code>btn</code> class. Both classes are always required.
+        </div>
+      </div>
+
+      <h2>Semantic Color Variants</h2>
+      <div class="class-switcher" id="cs-04">
+        <div class="cs-tabs">
+          <button class="cs-tab active" onclick="switchClassTab('cs-04', 0)">btn-primary</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-04', 1)">btn-secondary</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-04', 2)">btn-success / btn-danger</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-04', 3)">btn-outline-*</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-04', 4)">btn-lg / btn-sm</button>
+        </div>
+        <div class="cs-content-wrap">
+          <div class="cs-pane active"><p>The main call-to-action. Use this for the single most important action on a page.</p></div>
+          <div class="cs-pane"><p>Less prominent actions. Pairs well next to a primary button for a secondary option.</p></div>
+          <div class="cs-pane"><p><code>btn-success</code> signals a positive action. <code>btn-danger</code> signals a destructive action.</p></div>
+          <div class="cs-pane"><p>Prefix any variant with <code>outline-</code> to get a transparent background with just a colored border.</p></div>
+          <div class="cs-pane"><p>Size modifiers: <code>btn-lg</code> for larger buttons, <code>btn-sm</code> for compact buttons.</p></div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Button variants at a glance</strong>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+            <span style="padding:5px 14px;background:#0d6efd;color:#fff;border-radius:6px;font-size:13px">btn-primary</span>
+            <span style="padding:5px 14px;background:#6c757d;color:#fff;border-radius:6px;font-size:13px">btn-secondary</span>
+            <span style="padding:5px 14px;background:#198754;color:#fff;border-radius:6px;font-size:13px">btn-success</span>
+            <span style="padding:5px 14px;background:#dc3545;color:#fff;border-radius:6px;font-size:13px">btn-danger</span>
+            <span style="padding:5px 14px;background:transparent;border:1px solid #0d6efd;color:#0d6efd;border-radius:6px;font-size:13px">btn-outline-primary</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠</span>
+        <div class="callout-body">
+          <strong>Never forget the base <code>btn</code> class</strong><br>
+          Writing <code>class="btn-primary"</code> alone will do nothing. The variant class only adds color; the base <code>btn</code> class adds all the shape, padding, and hover behaviour.
+        </div>
+      </div>
+
+      <h2>Reference Snippet</h2>
+      <div class="snippet-block">
+        <textarea id="ref-snippet-4">&lt;a href="javascript:void(0)" class="btn btn-primary btn-lg"&gt;Enroll Now&lt;/a&gt;
+&lt;a href="javascript:void(0)" class="btn btn-outline-secondary"&gt;Learn More&lt;/a&gt;
+&lt;a href="javascript:void(0)" class="btn btn-danger btn-sm"&gt;Limited spots!&lt;/a&gt;</textarea>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body">
+          <strong>Buttons vs Links</strong><br>
+          Visually, Bootstrap buttons look the same whether applied to a <code>&lt;button&gt;</code> element or an <code>&lt;a&gt;</code> tag. Use <code>&lt;button&gt;</code> for actions that stay on the page (form submit, toggle) and <code>&lt;a&gt;</code> for navigation.
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MINI-IDE SECTION -->
+    <div class="mini-ide-wrap">
+      <h3>▶ Try it yourself</h3>
+      <div class="mini-ide-actions">
+        <button id="run-btn" class="btn-run">▶ Run</button>
+        <span style="font-size:13px;color:var(--text-muted)">Edit the code and click Run to see Bootstrap buttons in action.</span>
+      </div>
+      <div class="mini-editor-wrap">
+        <textarea id="mini-editor"></textarea>
+      </div>
+      <iframe id="mini-preview" class="mini-preview" sandbox="allow-scripts allow-same-origin"></iframe>
     </div>
+
+    <div class="divider"></div>
+
+    <!-- QUIZ SECTION -->
+    <div class="quiz-section">
+      <h2>Quick Check</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Answer all questions correctly to unlock the IDE.</p>
+      <div id="quiz-container"></div>
+      <button class="quiz-check-btn" onclick="checkQuiz(4, QUIZZES_4, 'go-ide-btn', 'quiz-result')">Check Answers</button>
+      <div id="quiz-result" class="quiz-result"></div>
+    </div>
+
+    <!-- NAV FOOTER -->
+    <div class="nav-footer">
+      <a href="./03-ide.html" class="nav-btn nav-btn-outline">← Back</a>
+      <button id="go-ide-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='04-ide.html'">Enter IDE →</button>
+    </div>
+
+  </div><!-- end page-wrap -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="../shared/app-intro.js"></script>
+  <script>
+    const QUIZZES_4 = [
+      {
+        q: 'What base class do all Bootstrap buttons require?',
+        opts: ['button', 'bs-btn', 'btn', 'bootstrap-button'],
+        correct: 2,
+      },
+      {
+        q: 'Which class makes a button extra large?',
+        opts: ['btn-xl', 'btn-large', 'btn-lg', 'btn-size-large'],
+        correct: 2,
+      },
+      {
+        q: 'What does `btn-outline-primary` do differently from `btn-primary`?',
+        opts: [
+          'Makes the button smaller',
+          'Makes the button transparent with just a colored border',
+          'Changes the hover color',
+          'Disables the button',
+        ],
+        correct: 1,
+      },
+    ];
+
+    const STARTER_4 = `<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<div class="container py-4">
+  <h2 class="mb-4">Bootstrap Buttons</h2>
+  <div class="d-flex flex-wrap gap-2">
+    <a href="javascript:void(0)" class="btn btn-primary btn-lg">Primary Large</a>
+    <a href="javascript:void(0)" class="btn btn-secondary">Secondary</a>
+    <a href="javascript:void(0)" class="btn btn-success">Success</a>
+    <a href="javascript:void(0)" class="btn btn-danger btn-sm">Danger Small</a>
+    <a href="javascript:void(0)" class="btn btn-outline-primary">Outline Primary</a>
   </div>
+</div>`;
 
-  <section>
-    <h2>Today's activities</h2>
-    <div class="activity-grid">
-
-      <a class="activity-card" href="./01-intro.html">
-        <div class="activity-card-icon">🧭</div>
-        <div class="activity-card-body">
-          <div class="activity-card-title">Step 1 — Navbar</div>
-          <div class="activity-card-desc">Bootstrap pre-built components</div>
-        </div>
-        <span class="activity-card-time">~15 min</span>
-        <span class="activity-card-arrow">›</span>
-      </a>
-
-      <a class="activity-card" href="./02-intro.html">
-        <div class="activity-card-icon">🦸</div>
-        <div class="activity-card-body">
-          <div class="activity-card-title">Step 2 — Hero Section</div>
-          <div class="activity-card-desc">Utility classes: spacing &amp; typography</div>
-        </div>
-        <span class="activity-card-time">~15 min</span>
-        <span class="activity-card-arrow">›</span>
-      </a>
-
-      <a class="activity-card" href="./03-intro.html">
-        <div class="activity-card-icon">⚙️</div>
-        <div class="activity-card-body">
-          <div class="activity-card-title">Step 3 — Grid Layout</div>
-          <div class="activity-card-desc">12-column responsive grid system</div>
-        </div>
-        <span class="activity-card-time">~20 min</span>
-        <span class="activity-card-arrow">›</span>
-      </a>
-
-      <a class="activity-card" href="./04-intro.html">
-        <div class="activity-card-icon">🔘</div>
-        <div class="activity-card-body">
-          <div class="activity-card-title">Step 4 — Buttons</div>
-          <div class="activity-card-desc">Semantic color variants and sizing</div>
-        </div>
-        <span class="activity-card-time">~15 min</span>
-        <span class="activity-card-arrow">›</span>
-      </a>
-
-      <a class="activity-card" href="./05-intro.html">
-        <div class="activity-card-icon">🦶</div>
-        <div class="activity-card-body">
-          <div class="activity-card-title">Step 5 — Footer</div>
-          <div class="activity-card-desc">Composing utilities without a component</div>
-        </div>
-        <span class="activity-card-time">~15 min</span>
-        <span class="activity-card-arrow">›</span>
-      </a>
-
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <section>
-    <h2>Before you start</h2>
-    <div class="card">
-      <h3>Two pages per step</h3>
-      <p>Each step has an <strong>Intro page</strong> with theory and a short quiz, then an <strong>IDE page</strong> where you write code. The IDE unlocks after you answer the quiz correctly.</p>
-    </div>
-    <div class="card">
-      <h3>Everything runs in the page</h3>
-      <p>The IDE has a live preview. Your Bootstrap code renders in real time — no browser tab switching, no external tools needed.</p>
-    </div>
-    <div class="card">
-      <h3>What you are building</h3>
-      <p>A complete <strong>Net@</strong> landing page, assembled one section at a time. By Step 5 you will have a navbar, hero, grid layout, buttons, and a footer — all built with Bootstrap classes.</p>
-    </div>
-  </section>
-
-</div>
-<script src="../../shared/app-intro.js"></script>
-<script>
-  (function() {
-    var card = document.getElementById('before-card');
-    if (localStorage.getItem('git-before-open') === 'true') {
-      card.classList.add('open');
-      card.querySelector('.before-toggle').setAttribute('aria-expanded', 'true');
-    }
-  })();
-  function toggleBefore() {
-    var card = document.getElementById('before-card');
-    var isOpen = card.classList.toggle('open');
-    card.querySelector('.before-toggle').setAttribute('aria-expanded', String(isOpen));
-    localStorage.setItem('git-before-open', String(isOpen));
-  }
-</script>
+    renderQuiz('quiz-container', 4, QUIZZES_4);
+    restoreQuizState(4, 'go-ide-btn');
+    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_4);
+    initSnippet('ref-snippet-4', true);
+  </script>
 </body>
 </html>

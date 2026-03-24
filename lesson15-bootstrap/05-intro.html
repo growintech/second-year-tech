@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Step 4 — Buttons · Bootstrap · GIT</title>
+  <title>Step 5 — Footer · Bootstrap · GIT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-  <link rel="stylesheet" href="../../shared/style-intro.css">
+  <link rel="stylesheet" href="../shared/style-intro.css">
   <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
 </head>
 <body>
@@ -67,83 +67,71 @@
     <div class="progress-dot done"></div>
     <div class="progress-dot done"></div>
     <div class="progress-dot done"></div>
+    <div class="progress-dot done"></div>
     <div class="progress-dot active"></div>
-    <div class="progress-dot"></div>
   </div>
 
   <div class="page-wrap">
 
-    <div class="activity-badge badge-build">Step 4 · Bootstrap</div>
-    <h1 class="hero-title">Bootstrap <span class="grad">Buttons</span></h1>
-    <p class="hero-sub">Learn Bootstrap's semantic button system — color variants, outline styles, and size modifiers.</p>
+    <div class="activity-badge badge-build">Step 5 · Bootstrap</div>
+    <h1 class="hero-title">The <span class="grad">Footer</span></h1>
+    <p class="hero-sub">Bootstrap has no footer component — learn to compose utility classes to build one.</p>
 
     <!-- THEORY SECTION -->
     <section>
-      <p>Bootstrap provides a comprehensive button system built around a <strong>semantic color palette</strong>.</p>
+      <p>Unlike the navbar or card, Bootstrap has <strong>no dedicated footer component</strong>.</p>
       
-      <p>Each color has a name that describes its <em>meaning</em> (like <code>btn-danger</code> for "destructive action").</p>
+      <p>Instead, you compose Bootstrap's utility classes on a plain <code>&lt;footer&gt;</code> HTML element.</p>
       
-      <p>Every Bootstrap button requires <strong>two classes</strong>: the base <code>btn</code> class plus a <em>variant</em> class.</p>
-
-      <div class="callout callout-warn">
-        <span class="callout-icon">⚠</span>
-        <div class="callout-body">
-          <strong>Common mistake:</strong> Using just <code>btn-primary</code> without the base <code>btn</code> class. Both classes are always required.
-        </div>
-      </div>
-
-      <h2>Semantic Color Variants</h2>
-      <div class="class-switcher" id="cs-04">
-        <div class="cs-tabs">
-          <button class="cs-tab active" onclick="switchClassTab('cs-04', 0)">btn-primary</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-04', 1)">btn-secondary</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-04', 2)">btn-success / btn-danger</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-04', 3)">btn-outline-*</button>
-          <button class="cs-tab" onclick="switchClassTab('cs-04', 4)">btn-lg / btn-sm</button>
-        </div>
-        <div class="cs-content-wrap">
-          <div class="cs-pane active"><p>The main call-to-action. Use this for the single most important action on a page.</p></div>
-          <div class="cs-pane"><p>Less prominent actions. Pairs well next to a primary button for a secondary option.</p></div>
-          <div class="cs-pane"><p><code>btn-success</code> signals a positive action. <code>btn-danger</code> signals a destructive action.</p></div>
-          <div class="cs-pane"><p>Prefix any variant with <code>outline-</code> to get a transparent background with just a colored border.</p></div>
-          <div class="cs-pane"><p>Size modifiers: <code>btn-lg</code> for larger buttons, <code>btn-sm</code> for compact buttons.</p></div>
-        </div>
-      </div>
+      <p>This approach — combining small, single-purpose utilities — is Bootstrap's <strong>composability philosophy</strong>.</p>
 
       <div class="callout callout-tip">
         <span class="callout-icon">💡</span>
         <div class="callout-body">
-          <strong>Button variants at a glance</strong>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
-            <span style="padding:5px 14px;background:#0d6efd;color:#fff;border-radius:6px;font-size:13px">btn-primary</span>
-            <span style="padding:5px 14px;background:#6c757d;color:#fff;border-radius:6px;font-size:13px">btn-secondary</span>
-            <span style="padding:5px 14px;background:#198754;color:#fff;border-radius:6px;font-size:13px">btn-success</span>
-            <span style="padding:5px 14px;background:#dc3545;color:#fff;border-radius:6px;font-size:13px">btn-danger</span>
-            <span style="padding:5px 14px;background:transparent;border:1px solid #0d6efd;color:#0d6efd;border-radius:6px;font-size:13px">btn-outline-primary</span>
-          </div>
+          <strong>Tip</strong> <code>mt-5</code> on the footer adds a top margin that separates it visually from the content above.
         </div>
       </div>
 
-      <div class="callout callout-warn">
-        <span class="callout-icon">⚠</span>
-        <div class="callout-body">
-          <strong>Never forget the base <code>btn</code> class</strong><br>
-          Writing <code>class="btn-primary"</code> alone will do nothing. The variant class only adds color; the base <code>btn</code> class adds all the shape, padding, and hover behaviour.
+      <h2>Key Classes for a Footer</h2>
+      <div class="class-switcher" id="cs-05">
+        <div class="cs-tabs">
+          <button class="cs-tab active" onclick="switchClassTab('cs-05', 0)">bg-dark + text-white</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-05', 1)">py-4</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-05', 2)">mt-5</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-05', 3)">text-center</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-05', 4)">text-muted + mb-0</button>
         </div>
-      </div>
-
-      <h2>Reference Snippet</h2>
-      <div class="snippet-block">
-        <textarea id="ref-snippet-4">&lt;a href="javascript:void(0)" class="btn btn-primary btn-lg"&gt;Enroll Now&lt;/a&gt;
-&lt;a href="javascript:void(0)" class="btn btn-outline-secondary"&gt;Learn More&lt;/a&gt;
-&lt;a href="javascript:void(0)" class="btn btn-danger btn-sm"&gt;Limited spots!&lt;/a&gt;</textarea>
+        <div class="cs-content-wrap">
+          <div class="cs-pane active"><p><code>bg-dark</code> applies a dark background. <code>text-white</code> makes the text readable.</p></div>
+          <div class="cs-pane"><p>Adds comfortable padding on the top and bottom (1.5 rem each side).</p></div>
+          <div class="cs-pane"><p>Adds a large top margin (3 rem) that creates breathing room.</p></div>
+          <div class="cs-pane"><p>Centers all inline content horizontally inside the footer.</p></div>
+          <div class="cs-pane"><p><code>text-muted</code> applies a subdued grey color. <code>mb-0</code> removes default paragraph bottom margin.</p></div>
+        </div>
       </div>
 
       <div class="callout callout-info">
         <span class="callout-icon">ℹ</span>
         <div class="callout-body">
-          <strong>Buttons vs Links</strong><br>
-          Visually, Bootstrap buttons look the same whether applied to a <code>&lt;button&gt;</code> element or an <code>&lt;a&gt;</code> tag. Use <code>&lt;button&gt;</code> for actions that stay on the page (form submit, toggle) and <code>&lt;a&gt;</code> for navigation.
+          <strong>Spacing scale recap</strong><br>
+          Bootstrap's margin and padding utilities follow the pattern <code>{property}{side}-{scale}</code>. Property: <code>m</code> = margin, <code>p</code> = padding. Side: <code>t</code> top, <code>b</code> bottom, <code>s</code> start, <code>e</code> end, <code>x</code> left+right, <code>y</code> top+bottom (omit for all sides). Scale: 0–5, where 0 = 0 and 5 = 3 rem.
+        </div>
+      </div>
+
+      <h2>Reference Snippet</h2>
+      <div class="snippet-block">
+        <textarea id="ref-snippet-5">&lt;footer class="bg-dark text-white py-4 mt-5"&gt;
+  &lt;div class="container text-center"&gt;
+    &lt;p class="mb-0 text-muted"&gt;&amp;copy; 2025 Net@ — All rights reserved.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</textarea>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Tip — use semantic HTML</strong><br>
+          Always use the <code>&lt;footer&gt;</code> element (not a plain <code>&lt;div&gt;</code>). Screen readers and search engines use it to understand your page structure, and it costs nothing extra.
         </div>
       </div>
     </section>
@@ -155,7 +143,7 @@
       <h3>▶ Try it yourself</h3>
       <div class="mini-ide-actions">
         <button id="run-btn" class="btn-run">▶ Run</button>
-        <span style="font-size:13px;color:var(--text-muted)">Edit the code and click Run to see Bootstrap buttons in action.</span>
+        <span style="font-size:13px;color:var(--text-muted)">Edit the code and click Run to preview your footer.</span>
       </div>
       <div class="mini-editor-wrap">
         <textarea id="mini-editor"></textarea>
@@ -170,14 +158,14 @@
       <h2>Quick Check</h2>
       <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Answer all questions correctly to unlock the IDE.</p>
       <div id="quiz-container"></div>
-      <button class="quiz-check-btn" onclick="checkQuiz(4, QUIZZES_4, 'go-ide-btn', 'quiz-result')">Check Answers</button>
+      <button class="quiz-check-btn" onclick="checkQuiz(5, QUIZZES_5, 'go-ide-btn', 'quiz-result')">Check Answers</button>
       <div id="quiz-result" class="quiz-result"></div>
     </div>
 
     <!-- NAV FOOTER -->
     <div class="nav-footer">
-      <a href="./03-ide.html" class="nav-btn nav-btn-outline">← Back</a>
-      <button id="go-ide-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='04-ide.html'">Enter IDE →</button>
+      <a href="./04-ide.html" class="nav-btn nav-btn-outline">← Back</a>
+      <button id="go-ide-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='05-ide.html'">Enter IDE →</button>
     </div>
 
   </div><!-- end page-wrap -->
@@ -187,47 +175,48 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-  <script src="../../shared/app-intro.js"></script>
+  <script src="../shared/app-intro.js"></script>
   <script>
-    const QUIZZES_4 = [
+    const QUIZZES_5 = [
       {
-        q: 'What base class do all Bootstrap buttons require?',
-        opts: ['button', 'bs-btn', 'btn', 'bootstrap-button'],
-        correct: 2,
-      },
-      {
-        q: 'Which class makes a button extra large?',
-        opts: ['btn-xl', 'btn-large', 'btn-lg', 'btn-size-large'],
-        correct: 2,
-      },
-      {
-        q: 'What does `btn-outline-primary` do differently from `btn-primary`?',
+        q: 'Does Bootstrap have a dedicated &lt;footer&gt; component?',
         opts: [
-          'Makes the button smaller',
-          'Makes the button transparent with just a colored border',
-          'Changes the hover color',
-          'Disables the button',
+          "Yes, use class 'footer-component'",
+          "Yes, use class 'bs-footer'",
+          'No — you compose utility classes',
+          'No — you need custom CSS',
+        ],
+        correct: 2,
+      },
+      {
+        q: 'Which class gives an element a dark background?',
+        opts: ['dark-bg', 'bg-black', 'bg-dark', 'background-dark'],
+        correct: 2,
+      },
+      {
+        q: 'What does `mt-5` stand for?',
+        opts: [
+          'margin-top: 5px',
+          'margin-top with spacing scale 5 (large)',
+          'min-top: 5',
+          'margin: 5px on top',
         ],
         correct: 1,
       },
     ];
 
-    const STARTER_4 = `<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<div class="container py-4">
-  <h2 class="mb-4">Bootstrap Buttons</h2>
-  <div class="d-flex flex-wrap gap-2">
-    <a href="javascript:void(0)" class="btn btn-primary btn-lg">Primary Large</a>
-    <a href="javascript:void(0)" class="btn btn-secondary">Secondary</a>
-    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-    <a href="javascript:void(0)" class="btn btn-danger btn-sm">Danger Small</a>
-    <a href="javascript:void(0)" class="btn btn-outline-primary">Outline Primary</a>
+    const STARTER_5 = `<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<footer class="bg-dark text-white py-4 mt-5">
+  <div class="container text-center">
+    <p class="fw-bold mb-1">Net@</p>
+    <p class="text-muted mb-0">&copy; 2025 Net@ — All rights reserved.</p>
   </div>
-</div>`;
+</footer>`;
 
-    renderQuiz('quiz-container', 4, QUIZZES_4);
-    restoreQuizState(4, 'go-ide-btn');
-    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_4);
-    initSnippet('ref-snippet-4', true);
+    renderQuiz('quiz-container', 5, QUIZZES_5);
+    restoreQuizState(5, 'go-ide-btn');
+    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_5);
+    initSnippet('ref-snippet-5', true);
   </script>
 </body>
 </html>

@@ -1,256 +1,131 @@
-# CLAUDE.md
+# CLAUDE.md — GIT Lesson Hub
 
-This file provides guidance to Claude Code when working with code in this repository.
+## What this repo is
 
----
+The official repository for all technical lesson materials for GIT (Grow in Tech) second-year JavaScript curriculum, published at `lessons.growintech.it` via GitHub Pages.
 
-## Organisation & program
-
-**Grow in Tech (GIT)** is an Italian coding education organisation that runs structured programming courses in high schools. Website: growintech.it.
-
-The program runs for **3 years**, **60 hours/year**, split into **20 lessons of 3 hours each**. Every lesson divides time equally between technical coding content and soft skills / relational competencies. Lessons are taught by paid university STEM students using a peer-to-peer, interactive methodology — direct student engagement over frontal lecturing.
-
-**Net@** is the name of the specific school program/course that students are enrolled in. When lesson content refers to a project the students are building (e.g. a landing page), that project is for **Net@**.
-
-**Curriculum by year:**
-- Year 1: HTML + CSS
-- Year 2: JavaScript (this repository)
-- Year 3: Introduction to Python
+Lesson plan source files sit at the repo root as `.md` files (e.g. `LESSON-16.md`). Skills in `skills/` process those files to generate lesson folders and other static materials.
 
 ---
 
-## This repository
-
-**Repo:** `second-year-lessons` (hosted at `https://lessons.growintech.it/`)
-
-This is the **Year 2 JavaScript lesson platform** — a collection of interactive browser-based lesson guides that students open during class to follow along, complete exercises, and check their work. It is **not** a backend platform; everything runs in the browser with no server.
-
-**Primary audience:** High school students, 15–18 years old, in Italy. They are beginners — they know HTML and CSS from Year 1 but are new to programming logic.
-
-**Instructor audience:** University STEM students who teach the lessons. They use these materials as a live reference during class.
-
----
-
-## Purpose of the platform
-
-These files are **in-class companions**, not homework assignments. Students open them on their laptops during a lesson and use them as:
-1. A step-by-step guide to the activity they are working on
-2. An interactive code environment (editor + live preview) where they write and test code without leaving the browser
-3. A validation layer that tells them whether their solution is correct
-
-The platform replaces the need to switch between a lesson PDF, JSBin, and a separate instructions document. Everything is in one place.
-
----
-
-## Architecture & patterns
-
-### Repo structure
+## Repo structure
 
 ```
-second-year-lessons/
-  index.html                  ← hub page (in Italian, links to all lessons)
-  lesson14/
-    date-and-time/
-      index.html              ← lesson hub listing all activities
-      01-explore.html
-      02-birthday.html
-      …
-      07-countdown.html
-      app.js
-      style.css
-      logo.svg
-  lesson15/
-    bootstrap-guide/
-      index.html              ← full IDE-style single-file app
-      bootstrap-guide-PRD.md  ← full spec for Claude Code
+/
+├── CLAUDE.md                          ← this file
+├── PRD.md                             ← product requirements
+├── DESIGN.md                          ← design system
+├── index.html                         ← root hub: list of all lessons
+│
+├── reference-material/
+│   ├── LESSON-14.md                       ← lesson plan source (Date & Time)
+│   ├── LESSON-15.md                       ← lesson plan source (Bootstrap)
+│   └── LESSON-16.md                       ← lesson plan source (to be generated)
+│
+├── shared/
+│   ├── style-intro.css                ← shared CSS for all intro/exercise pages
+│   ├── style-ide.css                  ← shared CSS for all IDE pages
+│   ├── app-intro.js                   ← shared JS for intro pages (theme, quiz, editors)
+│   ├── app-ide.js                     ← shared JS for IDE pages (layout, CM, check)
+│   └── logo.svg                       ← GIT logo SVG (do NOT modify)
+│
+├── lesson14-date_and_time/
+│   ├── index.html
+│   ├── logo.svg                   ← local copy for relative-path safety
+│   ├── 01-explore.html
+│   ├── 02-birthday.html
+│   └── ...
+│
+├── lesson15-bootstrap/             ← Lesson 15 — canonical reference (intro+IDE style)
+│   ├── index.html
+│   ├── logo.svg
+│   ├── 01-intro.html
+│   ├── 01-ide.html
+│   ├── 02-intro.html
+│   ├── 02-ide.html
+│   └── ...
+│
+└── skills/
+    ├── generate-lesson/               ← /generate-lesson skill
+    │   └── SKILL.md
+    └── [future-skill]/
+        └── SKILL.md
 ```
-
-Each lesson lives in its own folder and follows this pattern:
-- `index.html` — lesson hub page listing all activities
-- `01-*.html`, `02-*.html`, … — individual activity files
-- `app.js` — shared utilities (theme toggle, copy buttons, sandbox runner, validation)
-- `style.css` — all styling for that lesson
-- `logo.svg` — GIT branding (reuse across all lessons, do not modify)
-
-Lessons must be **self-contained** — they work by double-clicking the HTML file locally with no server. CDN links are allowed (Google Fonts, CodeMirror, Bootstrap).
-
-### Hub page (`index.html`)
-
-The root `index.html` is the student-facing dashboard listing all 15 lessons of Year 2. It is written in **Italian** (the students are Italian). It links to each lesson folder.
-
-The hub page uses the **GIT brand identity** (see Design System below), not the dark lesson-guide aesthetic. It is light-background, high-contrast, energetic — matching the GIT visual identity PDF. Cards are numbered 01–15, accent colors rotate through the GIT palette (cyan, lime, mint, blue), lessons not yet available are visually dimmed with a "PROSSIMAMENTE" label.
 
 ---
 
-## Design system
+## Page types
 
-### Lesson guides (lesson14, lesson15, …)
+Each lesson uses a consistent two-file pattern per activity:
 
-All lesson guide pages share a consistent dark-first visual identity. Replicate it exactly when building new lesson content.
+| File | Purpose |
+|------|---------|
+| `{N}-intro.html` | Theory, reference snippets, mini-IDE exploration, quiz gate |
+| `{N}-ide.html` | Full VS Code-style editor + live preview + validation |
 
-**Colors (CSS variables):**
-```css
-/* Dark mode (default) */
---bg: #0a0c10;
---surface: #13161d;
---surface-2: #1b1f28;
---border: rgba(255,255,255,0.07);
---border-2: rgba(255,255,255,0.13);
---text: #e8eaf0;
---text-muted: #7a8099;
---text-dim: #4a5070;
+The lesson index (`index.html`) lists all activities and links to their intro pages.
 
-/* Light mode (applied via .light class on <html>) */
---bg: #f4f5f8;
---surface: #ffffff;
---surface-2: #eef0f5;
---border: rgba(0,0,0,0.08);
---border-2: rgba(0,0,0,0.13);
---text: #0f1117;
---text-muted: #5a6070;
---text-dim: #9aa0b0;
-
-/* Shared */
---grad-start: #00E1FF;
---grad-end: #0061FF;
---grad: linear-gradient(135deg, var(--grad-start), var(--grad-end));
---green: #22c55e;
---yellow: #eab308;
---red: #ef4444;
-```
-
-**Fonts:** `DM Sans` (body) + `DM Mono` (code) from Google Fonts.
-
-**Theme toggle:** Button with ☀️/🌙 icon, stored in `localStorage` key `git-theme`. Toggle applies/removes `.light` on `<html>`.
-
-**Topbar:** GIT logo at **48px height** (SVG inlined, never an `<img>` tag for cross-origin safety) + lesson label (e.g. "JS · Year 2 · Lesson 14") + theme toggle. Logo must be visible in both dark and light themes — the SVG uses the `#00E1FF → #0061FF` gradient fill which works on both.
-
-**Component library (defined in lesson14/style.css — reuse these patterns):**
-- `.card` — surface container with border and radius
-- `.callout` — info / tip / warn / bonus variants with left border accent. **Rule:** Keep them single-column, max 1 sentence. Use at most 1-2 per page to avoid distracting students.
-- `.step` — numbered step with circle indicator
-- `.class-switcher` — tab-like component (`cs-tabs`, `cs-pane`) to present lists of key classes/concepts one by one, avoiding overwhelming lists.
-- `.code-block` — dark code area with copy button (for generic code display with `<pre>`)
-- `.snippet-block` — read-only CodeMirror instance with VS Code syntax highlighting. Used for **Reference Snippets** on intro pages. Requires CodeMirror modes loaded in this order: `xml` → `javascript` → `css` → `htmlmixed`.
-- `.activity-badge` — pill badge with color variants (green/yellow/red/blue/concept)
-- `.progress-bar` — dot-based step progress indicator (used only on intro pages, never IDE pages)
-- `.nav-footer` — back/next navigation at bottom of page
-- `.qa` — click-to-reveal Q&A pair
-
-### Hub page (`index.html`) — GIT brand identity
-
-The hub page uses the **full GIT brand palette**, distinct from the lesson guide dark theme:
-
-**Colors:**
-- Cyan: `#00E1FF`
-- Lime: `#E1FF00`
-- Mint: `#00FF9E`
-- Electric blue: `#0061FF`
-- Navy: `#010034`
-- Background: `#F4FEFF`
-
-**Fonts:** `Barlow Condensed` (700, 800) for headlines + `DM Sans` (400, 500, 600) for body and labels.
-
-**Decorative elements:** A repeating binary `010101` diagonal pattern used as a subtle background texture on colored surfaces. Diagonal geometric shapes and color bands as accents.
-
-**Logo:** The GIT logo is a double chevron `>>` mark followed by "Grow in Tech" in bold sans-serif. Rendered in the `#00E1FF → #0061FF` gradient (same as lesson guides). Use the inlined SVG from `logo.svg`.
+All pages share CSS and JS from `shared/` via relative paths (`../../shared/`).
 
 ---
 
-## Content language rules
+## Canonical reference
+
+**Lesson 15 (`lesson15/`)** is the canonical reference for the two-phase intro+IDE pattern. Read its files before generating any new lesson.
+
+Lesson 14 uses a simpler single-file-per-activity pattern with inline editors — valid but older. New lessons should follow Lesson 15's structure.
+
+---
+
+## Available skills
+
+| Command | Input | What it does |
+|---------|-------|--------------|
+| `/generate-lesson LESSON-16.md` | Lesson plan `.md` at repo root | Generates a full lesson folder with intro+IDE pages |
+
+Additional skills can be added under `skills/` following the same structure.
+
+---
+
+## How to add a new lesson (instructor manual)
+
+1. Write the lesson plan and save it as `LESSON-{N}.md` at the repo root
+2. Run `/generate-lesson LESSON-{N}.md` in Claude Code
+3. Claude reads `skills/generate-lesson/SKILL.md` and examines the reference lesson
+4. Claude proposes the activity plan (scaffolding insertions labelled and justified)
+5. Instructor approves or adjusts
+6. Claude generates `lesson{N}/{slug}/` with all files
+7. Commit and push → auto-deploy
+
+---
+
+## Ground rules
+
+- **All files must work offline** — openable from `file://` with no server. Relative paths everywhere (`../../shared/`).
+- **No local dependencies** — CDN only (Google Fonts, CodeMirror 5, Bootstrap 5 inside preview iframes only). CDNs must degrade gracefully.
+- **No frameworks on the app shell** — vanilla HTML/CSS/JS. No React, Vue, Vite, Webpack.
+- **Never modify `shared/`** unless explicitly asked — changes break all existing lessons.
+- **Never modify existing lesson files** without explicit request.
+- **Always read the reference lesson first** — before generating, inspect `lesson15/` to match structure, components and patterns exactly.
+
+---
+
+## Content language
 
 | File | Language |
 |------|----------|
-| Root `index.html` (hub) | Italian |
-| All lesson guide pages (`lesson14/`, `lesson15/`, …) | English |
-| `CLAUDE.md`, PRD files, code comments | English |
-
-Student-facing text in lesson guides is always in **English**. This is an explicit pedagogical choice — students are expected to read English technical content.
+| Root `index.html` (hub) | English |
+| All lesson pages | English |
+| `CLAUDE.md`, `PRD.md`, `DESIGN.md`, `SKILL.md`, lesson plan `.md` files | English |
 
 ---
 
-## Tech constraints
+## Hosting
 
-- **No build tools** — no npm scripts, no bundlers, no compilation step
-- **No frameworks on the app shell** — vanilla HTML/CSS/JS only for the lesson guide UI
-- **CDN dependencies allowed:** Google Fonts, CodeMirror 5, Bootstrap 5.3 (only inside preview iframes)
-- **Self-contained files** — every lesson folder must work by double-clicking `index.html` locally
-- **Relative paths** — always use `./` relative paths, never absolute. The lessons are served both from `lessons.growintech.it/lessonXX/` and from a local filesystem
-- **No localStorage for lesson content** — student code and progress do not persist between sessions (by design — each class starts fresh)
-- `localStorage` is used only for UI preferences: `git-theme` (dark/light) and `git-layout` (top-down/split-pane)
+GitHub Pages, domain `growintech.github.io/second-year-tech` via CNAME. Push to `main` → automatic deploy.
 
 ---
 
-## Lesson 14 — Date and Time
+## Commit convention
 
-**Location:** `lesson14/date-and-time/`
-
-Seven activity pages building toward a countdown banner. Structure:
-1. `01-explore.html` — exploring the `Date` object and its methods
-2. `02-birthday.html` — 🟢 Level 1: Birthday Finder (`getDay()`)
-3. `03-age.html` — 🟡 Level 2: Age Calculator (`getFullYear()`)
-4. `04-gettime.html` — Concept: `getTime()` and ms differences
-5. `05-school.html` — 🟡 Level 3: Days until end of school
-6. `06-remainder.html` — Concept: the extract→subtract→proceed remainder pattern
-7. `07-countdown.html` — 🔴 Level 4: Live countdown banner with `setInterval`
-
-**Interactive pattern:** Each exercise page has an inline CodeMirror-style editor (or styled textarea) where students write code. A **Run** button injects their code into a sandboxed `<iframe srcdoc>` for live output. A **Check** button validates their solution with string/regex checks and shows ✅/❌ feedback. The Next button is unlocked only after Check passes.
-
-**Five additional exercises planned** (not yet built, to be added as extra pages):
-1. What season is it? (`getMonth()` + if/else ranges)
-2. Is it the weekend? (`getDay()` + OR operator)
-3. Good morning/afternoon/evening (`getHours()` + if/else if)
-4. How many days have you been alive? (`getTime()` + ms → days conversion)
-5. Format today's date as DD/MM/YYYY (`getDate()`, `getMonth()+1`, `getFullYear()` + string concatenation)
-
----
-
-## Lesson 15 — Bootstrap Guide
-
-**Location:** `lesson15/bootstrap-guide/`
-
-**Full spec:** `lesson15/bootstrap-guide-PRD.md` — read this before touching any code.
-
-Single-file IDE-style app. Key points:
-- Single file: `lesson15/bootstrap-guide/index.html`
-- IDE-style layout: instruction panel + CodeMirror editor + live preview iframe. The main wrapper `#shell` must be `flex: 1; flex-direction: column;` to ensure `.ide-nav` and `.status-bar` stay pinned to the absolute bottom of the screen.
-- Two layouts: **top-down** (default) and **split-pane**, toggled by the student, persisted in `localStorage` key `git-layout`
-- Panel visibility toggles (VS Code-style rectangular segmented buttons): Instructions / Editor / Console / Preview. Positioned perfectly centered within the `#topbar`.
-- The Instructions panel is vertically scrollable (`overflow-y: auto`) with a block-level checkbox-styled `.task-list`.
-- CodeMirror 5 via CDN — theme `dracula` in dark mode, `default` in light mode
-- Bootstrap 5.3 loads **only inside the preview iframe** via CDN — never on the app shell itself
-- **5 guided steps** building a "Net@" landing page incrementally:
-  1. Navbar
-  2. Hero section
-  3. Sidebar layout (Bootstrap grid 8+4 columns)
-  4. Buttons (semantic color variants)
-  5. Footer
-- Each step's starter code = previous step's correct solution + placeholder comment
-- Validation is **string-based** (`includes()` / regex on the HTML string) — no code execution needed for checking
-- Next button is **disabled** until Check passes
-- Completion screen after Step 5 with summary of what was learned + CTA to build from scratch in VSCode
-- Visual identity must match `lesson14/date-and-time/` exactly
-
----
-
-## Lessons 1–13 (reference only)
-
-These lessons exist on the live platform but their source files are not in this repo (they were built separately). Lesson topics for reference:
-
-| # | Title |
-|---|-------|
-| 01 | Introduzione a JavaScript |
-| 02 | Identity Card |
-| 03 | Tipi di dati e if/else |
-| 04 | Guess the Number |
-| 05 | Input e numeri random |
-| 06 | Funzioni e condizioni |
-| 07 | Operatori booleani |
-| 08 | Whac-A-Mole / parte 1 |
-| 09 | Whac-A-Mole / parte 2 |
-| 10 | *(coming soon)* |
-| 11 | To-Do List |
-| 12 | JSON e localStorage |
-| 13 | Image Slideshow |
-| 14 | Date e countdown |
-| 15 | Bootstrap |
+Use the `git-commit` skill. Type `content` for new or modified lesson files, `docs` for CLAUDE.md / PRD.md / DESIGN.md / any SKILL.md.
