@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 3 — Website &amp; Presentation · Final Project · GIT</title>
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    .session-step { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:16px; overflow:hidden; }
+    .session-step-header { display:flex; align-items:center; gap:14px; padding:18px 20px 14px; border-bottom:1px solid var(--border); }
+    .session-step-num { width:36px; height:36px; border-radius:50%; background:var(--surface-2); border:1px solid rgba(0,225,255,.3); display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:var(--grad-start); flex-shrink:0; }
+    .session-step-meta { flex:1; }
+    .session-step-title { font-size:16px; font-weight:600; color:#fff; margin-bottom:2px; }
+    .session-step-sub { font-size:13px; color:var(--text-muted); }
+    .time-badge { font-size:11px; font-weight:600; letter-spacing:.05em; color:var(--text-muted); background:var(--surface-2); border:1px solid var(--border-2); border-radius:999px; padding:3px 10px; white-space:nowrap; flex-shrink:0; }
+    .session-step-body { padding:16px 20px; }
+    .session-step-body p { color:var(--text-muted); font-size:14px; line-height:1.7; margin-bottom:10px; }
+    .session-step-body p:last-child { margin-bottom:0; }
+    .session-step-body ul, .session-step-body ol { padding-left:20px; margin:8px 0; }
+    .session-step-body li { color:var(--text-muted); font-size:14px; line-height:1.7; margin-bottom:5px; }
+    .session-step-body a { color:var(--grad-start); }
+
+    .req-list { display:flex; flex-direction:column; gap:10px; margin:14px 0; }
+    .req-item { display:flex; gap:12px; align-items:flex-start; }
+    .req-badge { font-size:11px; font-weight:700; color:var(--green); background:rgba(34,197,94,.08); border:1px solid rgba(34,197,94,.25); border-radius:6px; padding:2px 8px; flex-shrink:0; white-space:nowrap; margin-top:2px; }
+    .req-body { flex:1; font-size:14px; color:var(--text-muted); line-height:1.6; }
+    .req-body strong { color:#fff; }
+
+    .pitch-flow { display:flex; flex-direction:column; gap:10px; margin:14px 0; }
+    .pitch-flow-item { display:flex; gap:14px; align-items:flex-start; }
+    .pitch-flow-num { font-size:12px; font-weight:700; color:var(--grad-start); background:rgba(0,225,255,.08); border:1px solid rgba(0,225,255,.2); border-radius:50%; width:26px; height:26px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+    .pitch-flow-body { flex:1; font-size:14px; color:var(--text-muted); line-height:1.6; }
+    .pitch-flow-body strong { color:#fff; }
+
+    .deliver-box { border-radius:var(--radius-sm); padding:16px 18px; margin-top:24px; }
+    .deliver-box + .deliver-box { margin-top:12px; }
+    .deliver-box-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+    .deliver-box ul { padding-left:18px; margin:0; }
+    .deliver-box li { font-size:14px; line-height:1.7; margin-bottom:3px; }
+    .deliver-inclass { background:rgba(234,179,8,.06); border:1px solid rgba(234,179,8,.25); }
+    .deliver-inclass .deliver-box-label { color:var(--yellow); }
+    .deliver-inclass li { color:#9a8a50; }
+    .deliver-classroom { background:rgba(34,197,94,.05); border:1px solid rgba(34,197,94,.2); }
+    .deliver-classroom .deliver-box-label { color:var(--green); }
+    .deliver-classroom li { color:#5a9070; }
+    .deliver-classroom .deadline { font-size:12px; font-weight:600; color:var(--yellow); }
+
+    .lesson-nav { display:flex; justify-content:space-between; align-items:center; margin-top:48px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .nav-btn { display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border-radius:var(--radius-sm); font-size:14px; font-weight:500; text-decoration:none; transition:all .15s; }
+    .nav-btn-outline { background:transparent; border:1px solid var(--border-2); color:var(--text-muted); }
+    .nav-btn-outline:hover { background:var(--surface); color:var(--text); }
+    .nav-btn-primary { background:var(--surface); border:1px solid rgba(0,225,255,.3); color:var(--grad-start); }
+    .nav-btn-primary:hover { background:rgba(0,225,255,.06); border-color:rgba(0,225,255,.5); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <img src="./logo.svg" alt="Grow in Tech" style="height:48px;width:auto;">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">Final Project · Year 2</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <div style="max-width:780px;margin:0 auto;padding:0 24px 80px;">
+
+    <div class="hero">
+      <div class="activity-badge badge-blue">💻 Phase 3 of 3</div>
+      <h1>Website &amp;<br><span class="grad">Presentation</span></h1>
+      <p class="lead">The final sprint. Build your startup's website in HTML, CSS and JavaScript, then prepare and deliver your live oral presentation.</p>
+    </div>
+
+    <div class="callout callout-info" style="margin-bottom:36px;">
+      <span class="callout-icon">🎯</span>
+      <strong>Goal for this phase.</strong>
+      <span class="callout-body">A working, responsive website that communicates your startup's problem and solution — and a confident live presentation in front of the class.</span>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="session-step">
+      <div class="session-step-header">
+        <div class="session-step-num">1</div>
+        <div class="session-step-meta">
+          <div class="session-step-title">Build the website</div>
+          <div class="session-step-sub">Pair work — multiple sessions</div>
+        </div>
+        <span class="time-badge">⏱ ongoing</span>
+      </div>
+      <div class="session-step-body">
+        <p>Build a website in HTML, CSS and JavaScript. It must have a responsive layout, a working navbar, and clear sections that communicate your startup's problem, solution and product.</p>
+        <p>You can look at the <a href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=drive_link" target="_blank">startup website examples ↗</a> for inspiration.</p>
+
+        <p style="margin-top:14px;"><strong style="color:#fff;">Mandatory JavaScript requirements:</strong></p>
+
+        <div class="req-list">
+          <div class="req-item">
+            <span class="req-badge">Required 1</span>
+            <div class="req-body">
+              <strong>Launch countdown</strong> using <code>Date()</code> and <code>setInterval()</code>. The countdown must update every second and display days, hours, minutes and seconds remaining to a launch date you choose.
+            </div>
+          </div>
+          <div class="req-item">
+            <span class="req-badge">Required 2</span>
+            <div class="req-body">
+              <strong>At least one additional interactive feature</strong> that makes sense for your product. Examples: contact form with validation and alert, FAQ accordion, animated counter, embedded map, image slider, newsletter sign-up.
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin:16px 0 4px;">
+          <pre><span class="cmt">// Required 1 — Launch countdown</span>
+<span class="kw">const</span> launchDate = <span class="kw">new</span> <span class="fn">Date</span>(<span class="str">'2025-12-01'</span>);
+
+<span class="fn">setInterval</span>(<span class="kw">function</span>() {
+  <span class="kw">const</span> diff = launchDate - <span class="kw">new</span> <span class="fn">Date</span>();
+  <span class="kw">const</span> days    = <span class="fn">Math.floor</span>(diff / (<span class="num">1000</span> * <span class="num">60</span> * <span class="num">60</span> * <span class="num">24</span>));
+  <span class="kw">const</span> hours   = <span class="fn">Math.floor</span>(diff / (<span class="num">1000</span> * <span class="num">60</span> * <span class="num">60</span>) % <span class="num">24</span>);
+  <span class="kw">const</span> minutes = <span class="fn">Math.floor</span>(diff / (<span class="num">1000</span> * <span class="num">60</span>) % <span class="num">60</span>);
+  <span class="kw">const</span> seconds = <span class="fn">Math.floor</span>(diff / <span class="num">1000</span> % <span class="num">60</span>);
+  <span class="cmt">// update your DOM elements here...</span>
+}, <span class="num">1000</span>);
+
+<span class="cmt">// Required 2 — Your choice of interactive feature</span></pre>
+        </div>
+
+        <div class="callout callout-warn" style="margin-top:16px;">
+          <span class="callout-icon">🤖</span>
+          <strong>AI is allowed.</strong>
+          <span class="callout-body">You can use ChatGPT, Claude, or any other tool to help generate and structure your code. However, you must be able to <strong>explain every single line of code</strong> during the oral presentation — including anything generated with AI.</span>
+        </div>
+
+        <p style="margin-top:14px;">
+          <a href="https://jsbin.com" target="_blank">Test your code on JSBin ↗</a>
+          &nbsp;·&nbsp;
+          <a href="https://getbootstrap.com" target="_blank">Bootstrap for responsive layout ↗</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="session-step">
+      <div class="session-step-header">
+        <div class="session-step-num">2</div>
+        <div class="session-step-meta">
+          <div class="session-step-title">Prepare the oral presentation</div>
+          <div class="session-step-sub">Pair work — before the presentation day</div>
+        </div>
+        <span class="time-badge">⏱ ~20 min prep</span>
+      </div>
+      <div class="session-step-body">
+        <p>Your presentation must follow this order. Practise it out loud at least once before the day — you will have limited time to rehearse in class.</p>
+
+        <div class="pitch-flow">
+          <div class="pitch-flow-item">
+            <div class="pitch-flow-num">1</div>
+            <div class="pitch-flow-body"><strong>Pitch Deck</strong> — walk through your 4 slides: problem, solution, market data, call to action. Keep it under 3 minutes.</div>
+          </div>
+          <div class="pitch-flow-item">
+            <div class="pitch-flow-num">2</div>
+            <div class="pitch-flow-body"><strong>Website demo</strong> — switch to your live site and walk through it. Demonstrate the countdown and the interactive JS feature in real time.</div>
+          </div>
+          <div class="pitch-flow-item">
+            <div class="pitch-flow-num">3</div>
+            <div class="pitch-flow-body"><strong>Q&amp;A</strong> — instructors may ask you to explain specific parts of your code. Both members of the pair must be able to answer.</div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip" style="margin-top:12px;">
+          <span class="callout-icon">🎤</span>
+          <strong>Delivery tip.</strong>
+          <span class="callout-body">Don't read from slides. Look at the audience. Talk about the <em>problem</em> first — make it feel real before you show the solution. Read the <a href="https://docs.google.com/document/u/0/d/15yfYb_NzsoJEd4fyeid9TJfXwSb2sMdCq_b93tZdjTU/edit" target="_blank">delivery techniques guide ↗</a> before you practise.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deliverables -->
+    <div class="deliver-box deliver-inclass">
+      <div class="deliver-box-label">⚡ Deliver on presentation day (in class)</div>
+      <ul>
+        <li>Live <strong>oral presentation</strong> — Pitch Deck + website demo + Q&amp;A</li>
+        <li>Both pair members must present and be able to answer questions about the code</li>
+      </ul>
+    </div>
+
+    <div class="deliver-box deliver-classroom">
+      <div class="deliver-box-label">
+        📤 Deliver on Google Classroom
+        <span class="deadline">Sommelier — 8 April &nbsp;|&nbsp; Monti — 10 April</span>
+      </div>
+      <ul>
+        <li><strong>Website</strong> — <code>.zip</code> folder with all HTML, CSS and JS files, or a link to GitHub Pages / JSBin</li>
+      </ul>
+    </div>
+
+    <!-- Nav -->
+    <div class="lesson-nav">
+      <a class="nav-btn nav-btn-outline" href="./phase-2.html">← Phase 2</a>
+      <a class="nav-btn nav-btn-primary" href="./index.html">Back to overview →</a>
+    </div>
+
+  </div>
+
+<script src="../shared/app-intro.js"></script>
+</body>
+</html>

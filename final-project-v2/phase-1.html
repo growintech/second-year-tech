@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 1 — Problem to Solution · Final Project · GIT</title>
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    /* ── Session step ── */
+    .session-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .session-step-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .session-step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 1px solid rgba(0,225,255,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--grad-start);
+      flex-shrink: 0;
+    }
+    .session-step-meta { flex: 1; }
+    .session-step-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+    .session-step-sub { font-size: 13px; color: var(--text-muted); }
+    .time-badge {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: 999px;
+      padding: 3px 10px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .session-step-body {
+      padding: 16px 20px;
+    }
+    .session-step-body p { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    .session-step-body p:last-child { margin-bottom: 0; }
+    .session-step-body ul, .session-step-body ol { padding-left: 20px; margin: 8px 0; }
+    .session-step-body li { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 4px; }
+    .session-step-body a { color: var(--grad-start); }
+
+    /* ── Deliver boxes ── */
+    .deliver-box {
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      margin-top: 24px;
+    }
+    .deliver-box + .deliver-box { margin-top: 12px; }
+    .deliver-box-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .deliver-box ul { padding-left: 18px; margin: 0; }
+    .deliver-box li { font-size: 14px; line-height: 1.7; margin-bottom: 3px; }
+    .deliver-inclass {
+      background: rgba(234,179,8,.06);
+      border: 1px solid rgba(234,179,8,.25);
+    }
+    .deliver-inclass .deliver-box-label { color: var(--yellow); }
+    .deliver-inclass li { color: #9a8a50; }
+    .deliver-classroom {
+      background: rgba(34,197,94,.05);
+      border: 1px solid rgba(34,197,94,.2);
+    }
+    .deliver-classroom .deliver-box-label { color: var(--green); }
+    .deliver-classroom li { color: #5a9070; }
+    .deliver-classroom .deadline { font-size: 12px; font-weight: 600; color: var(--yellow); margin-left: 6px; }
+
+    /* ── Nav footer ── */
+    .lesson-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      gap: 12px;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .15s;
+    }
+    .nav-btn-outline { background: transparent; border: 1px solid var(--border-2); color: var(--text-muted); }
+    .nav-btn-outline:hover { border-color: var(--border-2); background: var(--surface); color: var(--text); }
+    .nav-btn-primary { background: var(--surface); border: 1px solid rgba(0,225,255,.3); color: var(--grad-start); }
+    .nav-btn-primary:hover { background: rgba(0,225,255,.06); border-color: rgba(0,225,255,.5); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <img src="./logo.svg" alt="Grow in Tech" style="height:48px;width:auto;">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">Final Project · Year 2</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <div style="max-width:780px;margin:0 auto;padding:0 24px 80px;">
+
+    <div class="hero">
+      <div class="activity-badge badge-green">🌱 Phase 1 of 3</div>
+      <h1>Problem to<br><span class="grad">Solution</span></h1>
+      <p class="lead">During this session you will choose your track, analyse the problem deeply, and define your startup idea — from root causes to a written Elevator Pitch.</p>
+    </div>
+
+    <div class="callout callout-info" style="margin-bottom:36px;">
+      <span class="callout-icon">🎯</span>
+      <strong>Goal for today.</strong>
+      <span class="callout-body">Leave this session with a clear problem statement, a completed Problem Tree, and a written Elevator Pitch with your startup name.</span>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="session-step">
+      <div class="session-step-header">
+        <div class="session-step-num">1</div>
+        <div class="session-step-meta">
+          <div class="session-step-title">Choose your track and analyse the problem</div>
+          <div class="session-step-sub">Individual + pair discussion</div>
+        </div>
+        <span class="time-badge">⏱ ~20 min</span>
+      </div>
+      <div class="session-step-body">
+        <p>Browse the <a href="./index.html">5 tracks on the overview page</a>. Read each one carefully — the context, the real problem, and the stimulus questions. Discuss with your partner and choose the one that feels most relevant or interesting to you.</p>
+        <p>Once you have chosen, build your <strong>Problem Tree</strong> using XMind, Miro, or pen and paper. Your tree must:</p>
+        <ul>
+          <li>Start from the core problem defined in the track</li>
+          <li>Break it down into at least <strong>2–3 root causes</strong></li>
+          <li>Lead naturally to 2–3 possible solutions</li>
+        </ul>
+        <p>Watch the tutorial first if you haven't done one before, and look at the startup examples for reference.</p>
+        <p>
+          <a href="https://www.loom.com/share/70c6057d71804a31b80c1e556cf60462" target="_blank">Watch the Problem Tree tutorial ↗</a>
+          &nbsp;·&nbsp;
+          <a href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=sharing" target="_blank">Browse 5 startup examples ↗</a>
+          &nbsp;·&nbsp;
+          <a href="https://xmind.app" target="_blank">XMind ↗</a>
+          &nbsp;·&nbsp;
+          <a href="https://miro.com" target="_blank">Miro ↗</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="session-step">
+      <div class="session-step-header">
+        <div class="session-step-num">2</div>
+        <div class="session-step-meta">
+          <div class="session-step-title">Define your target audience</div>
+          <div class="session-step-sub">Pair discussion</div>
+        </div>
+        <span class="time-badge">⏱ ~10 min</span>
+      </div>
+      <div class="session-step-body">
+        <p>Based on your Problem Tree, define your target audience as specifically as possible. A good target is not "young people" — it is a real person with a real, specific problem.</p>
+
+        <div class="callout callout-tip" style="margin-top:8px;">
+          <span class="callout-icon">✅</span>
+          <strong>Good example:</strong>
+          <span class="callout-body">"A 17-year-old student in Milan who takes two buses to school every morning and misses the first class at least once a week because of delays."</span>
+        </div>
+        <div class="callout callout-warn">
+          <span class="callout-icon">❌</span>
+          <strong>Too vague:</strong>
+          <span class="callout-body">"Young people who have trouble with public transport."</span>
+        </div>
+
+        <p>Write your target definition down — you will need to submit it alongside your Problem Tree.</p>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="session-step">
+      <div class="session-step-header">
+        <div class="session-step-num">3</div>
+        <div class="session-step-meta">
+          <div class="session-step-title">Pick one solution and write the Elevator Pitch</div>
+          <div class="session-step-sub">Pair work</div>
+        </div>
+        <span class="time-badge">⏱ ~15 min</span>
+      </div>
+      <div class="session-step-body">
+        <p>From the 2–3 solutions at the bottom of your Problem Tree, choose the strongest one. Ask yourself: which solution is most original, most feasible, and most clearly connected to the root causes you found?</p>
+        <p>Then write your <strong>Elevator Pitch</strong> — maximum 10 lines, answering three questions:</p>
+        <ol>
+          <li><strong>What does the product do?</strong></li>
+          <li><strong>Who uses it?</strong> (your target audience)</li>
+          <li><strong>What makes it different</strong> from what already exists?</li>
+        </ol>
+        <p>Give your startup a name. Provisional is fine — you can change it later.</p>
+
+        <div class="callout callout-info" style="margin-top:12px;">
+          <span class="callout-icon">💡</span>
+          <strong>Problem statement format.</strong>
+          <span class="callout-body">Your pitch must start with a clear problem statement — a single sentence that explains the issue. <em>"Students waste 30 minutes a day waiting for late buses with no reliable information"</em> — not <em>"we built an app for commuters"</em>.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deliverables -->
+    <div class="deliver-box deliver-inclass">
+      <div class="deliver-box-label">⚡ Deliver by end of today's session</div>
+      <ul>
+        <li>Send your <strong>problem statement and track choice</strong> to your instructor</li>
+        <li>Your startup name (provisional is fine)</li>
+      </ul>
+    </div>
+
+    <div class="deliver-box deliver-classroom">
+      <div class="deliver-box-label">
+        📤 Deliver on Google Classroom
+        <span class="deadline">Sommelier — 30 March &nbsp;|&nbsp; Monti — 1 April</span>
+      </div>
+      <ul>
+        <li><strong>Problem Tree</strong> (PDF or photo) with a written description of your target audience</li>
+        <li><strong>Elevator Pitch</strong> (written, max 10 lines) and startup name</li>
+      </ul>
+    </div>
+
+    <!-- Nav -->
+    <div class="lesson-nav">
+      <a class="nav-btn nav-btn-outline" href="./index.html">← Overview</a>
+      <a class="nav-btn nav-btn-primary" href="./phase-2.html">Phase 2: Validation &amp; Pitch Deck →</a>
+    </div>
+
+  </div>
+
+<script src="../shared/app-intro.js"></script>
+</body>
+</html>

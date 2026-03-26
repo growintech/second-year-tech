@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 2 — Validation &amp; Pitch Deck · Final Project · GIT</title>
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    .session-step { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:16px; overflow:hidden; }
+    .session-step-header { display:flex; align-items:center; gap:14px; padding:18px 20px 14px; border-bottom:1px solid var(--border); }
+    .session-step-num { width:36px; height:36px; border-radius:50%; background:var(--surface-2); border:1px solid rgba(0,225,255,.3); display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:var(--grad-start); flex-shrink:0; }
+    .session-step-meta { flex:1; }
+    .session-step-title { font-size:16px; font-weight:600; color:#fff; margin-bottom:2px; }
+    .session-step-sub { font-size:13px; color:var(--text-muted); }
+    .time-badge { font-size:11px; font-weight:600; letter-spacing:.05em; color:var(--text-muted); background:var(--surface-2); border:1px solid var(--border-2); border-radius:999px; padding:3px 10px; white-space:nowrap; flex-shrink:0; }
+    .session-step-body { padding:16px 20px; }
+    .session-step-body p { color:var(--text-muted); font-size:14px; line-height:1.7; margin-bottom:10px; }
+    .session-step-body p:last-child { margin-bottom:0; }
+    .session-step-body ul, .session-step-body ol { padding-left:20px; margin:8px 0; }
+    .session-step-body li { color:var(--text-muted); font-size:14px; line-height:1.7; margin-bottom:4px; }
+    .session-step-body a { color:var(--grad-start); }
+
+    .checkpoint-banner { background:rgba(165,180,252,.07); border:1px solid rgba(165,180,252,.25); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px; }
+    .checkpoint-banner-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#a5b4fc; margin-bottom:8px; }
+    .checkpoint-banner p { color:#7a80a0; font-size:14px; line-height:1.7; margin-bottom:6px; }
+    .checkpoint-banner p:last-child { margin-bottom:0; }
+    .checkpoint-banner ol { padding-left:18px; margin:6px 0; }
+    .checkpoint-banner li { color:#7a80a0; font-size:14px; line-height:1.7; margin-bottom:3px; }
+
+    .slide-list { display:flex; flex-direction:column; gap:10px; margin:12px 0; }
+    .slide-item { display:flex; gap:12px; align-items:flex-start; }
+    .slide-num { font-size:11px; font-weight:700; color:var(--grad-start); background:rgba(0,225,255,.08); border:1px solid rgba(0,225,255,.2); border-radius:6px; padding:2px 8px; flex-shrink:0; white-space:nowrap; margin-top:2px; }
+    .slide-body { flex:1; font-size:14px; color:var(--text-muted); line-height:1.6; }
+    .slide-body strong { color:#fff; }
+
+    .deliver-box { border-radius:var(--radius-sm); padding:16px 18px; margin-top:24px; }
+    .deliver-box + .deliver-box { margin-top:12px; }
+    .deliver-box-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+    .deliver-box ul { padding-left:18px; margin:0; }
+    .deliver-box li { font-size:14px; line-height:1.7; margin-bottom:3px; }
+    .deliver-inclass { background:rgba(234,179,8,.06); border:1px solid rgba(234,179,8,.25); }
+    .deliver-inclass .deliver-box-label { color:var(--yellow); }
+    .deliver-inclass li { color:#9a8a50; }
+    .deliver-classroom { background:rgba(34,197,94,.05); border:1px solid rgba(34,197,94,.2); }
+    .deliver-classroom .deliver-box-label { color:var(--green); }
+    .deliver-classroom li { color:#5a9070; }
+    .deliver-classroom .deadline { font-size:12px; font-weight:600; color:var(--yellow); }
+
+    .howto-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); margin-top:12px; overflow:hidden; }
+    .howto-toggle { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; cursor:pointer; user-select:none; font-weight:600; font-size:14px; color:var(--text); background:none; border:none; width:100%; text-align:left; gap:8px; }
+    .howto-toggle:hover { background:var(--surface-2); }
+    .howto-chevron { font-style:normal; font-size:12px; color:var(--text-muted); transition:transform .2s; flex-shrink:0; }
+    .howto-card.open .howto-chevron { transform:rotate(90deg); }
+    .howto-body { display:none; padding:4px 18px 16px; color:var(--text-muted); font-size:14px; line-height:1.7; }
+    .howto-card.open .howto-body { display:block; }
+    .howto-body ul { margin:6px 0 0; padding-left:18px; }
+    .howto-body li { margin-bottom:8px; }
+    .howto-body p { margin-bottom:8px; }
+    .howto-body a { color:var(--grad-start); }
+
+    .lesson-nav { display:flex; justify-content:space-between; align-items:center; margin-top:48px; padding-top:24px; border-top:1px solid var(--border); gap:12px; }
+    .nav-btn { display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border-radius:var(--radius-sm); font-size:14px; font-weight:500; text-decoration:none; transition:all .15s; }
+    .nav-btn-outline { background:transparent; border:1px solid var(--border-2); color:var(--text-muted); }
+    .nav-btn-outline:hover { background:var(--surface); color:var(--text); }
+    .nav-btn-primary { background:var(--surface); border:1px solid rgba(0,225,255,.3); color:var(--grad-start); }
+    .nav-btn-primary:hover { background:rgba(0,225,255,.06); border-color:rgba(0,225,255,.5); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <img src="./logo.svg" alt="Grow in Tech" style="height:48px;width:auto;">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">Final Project · Year 2</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <div style="max-width:780px;margin:0 auto;padding:0 24px 80px;">
+
+    <div class="hero">
+      <div class="activity-badge badge-yellow">📊 Phase 2 of 3</div>
+      <h1>Validation &amp;<br><span class="grad">Pitch Deck</span></h1>
+      <p class="lead">This session opens with a quick checkpoint, then you build your validation form and start working on the pitch deck — with real market data backed by sources.</p>
+    </div>
+
+    <!-- Checkpoint banner -->
+    <div class="checkpoint-banner">
+      <div class="checkpoint-banner-label">✋ Checkpoint — before you start</div>
+      <p>At the beginning of this session, each pair will have <strong>5 minutes</strong> to briefly present to the instructor:</p>
+      <ol>
+        <li>Your <strong>problem statement</strong> (one clear sentence)</li>
+        <li>Your <strong>Problem Tree</strong> — the root causes and solutions you found</li>
+        <li>The <strong>solution you chose</strong> and why</li>
+        <li>Your <strong>startup name</strong></li>
+      </ol>
+      <p>This checkpoint is not graded — it's a chance to get feedback before you go deeper. Come prepared.</p>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="session-step">
+      <div class="session-step-header">
+        <div class="session-step-num">1</div>
+        <div class="session-step-meta">
+          <div class="session-step-title">Build the validation form</div>
+          <div class="session-step-sub">Pair work</div>
+        </div>
+        <span class="time-badge">⏱ ~20 min</span>
+      </div>
+      <div class="session-step-body">
+        <p>Create a form using Google Forms or Tally to test whether other people feel the problem and would use your solution. You need to collect <strong>at least 20 responses</strong> before the deadline.</p>
+        <p>Read the how-to guide below before you start writing questions — a badly structured form will give you useless data.</p>
+
+        <div class="howto-card" id="howto-form">
+          <button class="howto-toggle" onclick="toggleHowto('howto-form')" aria-expanded="false">
+            <span>📋 How to build an effective validation form</span>
+            <i class="howto-chevron">▶</i>
+          </button>
+          <div class="howto-body">
+            <ul>
+              <li><strong>Ask about the problem, not the solution</strong> — at least at first.<br>
+                ❌ "Would you use an app that helps you manage your money?"<br>
+                ✅ "How often do you reach the end of the month without knowing how you spent your money?"
+              </li>
+              <li><strong>Use numerical scales</strong> (1–5 or 1–10) for intensity questions — they give you quantifiable data.</li>
+              <li><strong>Include at least one open question</strong> — open answers surface insights you'd never have thought to ask for.</li>
+              <li><strong>Briefly explain your idea</strong> before asking if people would use it — 2–3 lines about your startup, then ask.</li>
+              <li><strong>Keep it under 8–10 questions</strong> — beyond that, people abandon the form or answer randomly.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p style="margin-top:12px;">You can also look at the <a href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=sharing" target="_blank">startup examples document ↗</a> — it includes complete form examples for 5 different startups.</p>
+        <p>Once you have collected 20+ responses, write a short comment (5–10 lines) on what you learned: were your assumptions confirmed? Did anything surprise you? How will this shape your product?</p>
+
+        <p>
+          <a href="https://forms.google.com" target="_blank">Google Forms ↗</a>
+          &nbsp;·&nbsp;
+          <a href="https://tally.so" target="_blank">Tally ↗</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="session-step">
+      <div class="session-step-header">
+        <div class="session-step-num">2</div>
+        <div class="session-step-meta">
+          <div class="session-step-title">Build the Pitch Deck (4 slides)</div>
+          <div class="session-step-sub">Pair work</div>
+        </div>
+        <span class="time-badge">⏱ ~30 min</span>
+      </div>
+      <div class="session-step-body">
+        <p>Create a presentation on Google Slides or Canva. Your deck must have exactly these 4 slides:</p>
+
+        <div class="slide-list">
+          <div class="slide-item">
+            <span class="slide-num">Slide 1</span>
+            <div class="slide-body"><strong>Problem &amp; Target</strong> — your problem statement (one sentence) and who it affects. Make the problem feel real and urgent.</div>
+          </div>
+          <div class="slide-item">
+            <span class="slide-num">Slide 2</span>
+            <div class="slide-body"><strong>Solution</strong> — what your product does. One clear sentence + a brief description. Show how it directly addresses the root causes in your Problem Tree.</div>
+          </div>
+          <div class="slide-item">
+            <span class="slide-num">Slide 3</span>
+            <div class="slide-body"><strong>Market &amp; Competitors</strong> — TAM, SAM and SOM data with sources, plus 1–2 competitors. <strong>Every number must have a source.</strong> Use PerplexityAI Deep Research to find the data — see the how-to guide below.</div>
+          </div>
+          <div class="slide-item">
+            <span class="slide-num">Slide 4</span>
+            <div class="slide-body"><strong>Call to Action / Conclusion</strong> — why your idea wins. What makes it different? What is the one thing you want the audience to remember?</div>
+          </div>
+        </div>
+
+        <div class="howto-card" id="howto-perplexity" style="margin-top:14px;">
+          <button class="howto-toggle" onclick="toggleHowto('howto-perplexity')" aria-expanded="false">
+            <span>🔍 How to use PerplexityAI for market research (Slide 3)</span>
+            <i class="howto-chevron">▶</i>
+          </button>
+          <div class="howto-body">
+            <p>Use <strong>PerplexityAI Deep Research</strong> with a precise prompt to get numerical TAM/SAM/SOM data with verifiable sources. Every number you put in the deck must have a source — PerplexityAI provides them automatically.</p>
+            <p>Find the full ready-to-use template in the <a href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing" target="_blank">Deep Research prompt document ↗</a>. Take the key numbers and their sources and insert them directly into Slide 3.</p>
+            <p>See what the TAM/SAM/SOM graph should look like: <a href="https://advertising.amazon.com/it-it/library/guides/tam-sam-som#1a" target="_blank">graph example ↗</a>.</p>
+          </div>
+        </div>
+
+        <p style="margin-top:12px;">
+          <a href="https://slides.google.com" target="_blank">Google Slides ↗</a>
+          &nbsp;·&nbsp;
+          <a href="https://www.canva.com" target="_blank">Canva ↗</a>
+          &nbsp;·&nbsp;
+          <a href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=sharing" target="_blank">Startup examples for reference ↗</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Deliverables -->
+    <div class="deliver-box deliver-inclass">
+      <div class="deliver-box-label">⚡ Deliver by end of today's session</div>
+      <ul>
+        <li>Share your <strong>validation form link</strong> with your instructor so they can review the questions</li>
+        <li>Show a <strong>draft of your pitch deck</strong> (even incomplete) to your instructor before you leave</li>
+      </ul>
+    </div>
+
+    <div class="deliver-box deliver-classroom">
+      <div class="deliver-box-label">
+        📤 Deliver on Google Classroom
+        <span class="deadline">Sommelier — 3 April &nbsp;|&nbsp; Monti — 6 April</span>
+      </div>
+      <ul>
+        <li><strong>Validation form</strong> link + screenshot of results + short comment (5–10 lines on what you learned)</li>
+        <li><strong>Pitch deck</strong> (exactly 3–4 slides, exported as PDF — no Canva/Slides links)</li>
+      </ul>
+    </div>
+
+    <!-- Nav -->
+    <div class="lesson-nav">
+      <a class="nav-btn nav-btn-outline" href="./phase-1.html">← Phase 1</a>
+      <a class="nav-btn nav-btn-primary" href="./phase-3.html">Phase 3: Website →</a>
+    </div>
+
+  </div>
+
+<script src="../shared/app-intro.js"></script>
+<script>
+  function toggleHowto(id) {
+    var card = document.getElementById(id);
+    var isOpen = card.classList.toggle('open');
+    card.querySelector('.howto-toggle').setAttribute('aria-expanded', String(isOpen));
+  }
+</script>
+</body>
+</html>
