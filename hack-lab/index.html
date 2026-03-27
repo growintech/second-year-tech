@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hack Lab · JS Year 2 · GIT</title>
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    :root { --accent: #22c55e; --accent-dim: #22c55e18; }
+    html.light { --accent: #16a34a; }
+
+    .hack-hero {
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .hack-hero p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-top: 16px;
+    }
+
+    .challenge-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    .challenge-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.15s;
+      position: relative;
+    }
+    .challenge-card:hover {
+      border-color: var(--border-2);
+      background: var(--surface-2);
+      transform: translateX(3px);
+    }
+    .challenge-card.card-done {
+      border-color: #22c55e60 !important;
+    }
+    .challenge-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 6px;
+      padding: 4px 9px;
+      flex-shrink: 0;
+      letter-spacing: 0.06em;
+    }
+    .challenge-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .challenge-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    html.light .challenge-title { color: #0d1020; }
+    .challenge-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .challenge-arrow {
+      color: var(--text-dim);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .done-badge {
+      display: none;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-right: 4px;
+    }
+    .card-done .done-badge { display: block; }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .progress-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      flex-shrink: 0;
+    }
+    .progress-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border-2);
+      transition: background 0.3s;
+    }
+    .progress-dot.done { background: var(--accent); }
+    .progress-count {
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-muted);
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .info-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    html.light .info-card h3 { color: #0d1020; }
+    .info-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+
+    <header class="topbar">
+      <a class="topbar-logo" href="./index.html">
+        <img src="./logo.svg" style="height:48px;width:auto;" alt="GIT">
+      </a>
+      <div class="topbar-right">
+        <span class="topbar-lesson">Hack Lab · JS Year 2</span>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+      </div>
+    </header>
+
+    <div class="hack-hero">
+      <div class="activity-badge badge-green">Hack Lab</div>
+      <h1 class="hero-title">Can you <span class="grad">break it?</span></h1>
+      <p class="hero-sub">6 challenges. Use your browser. Find the flags.</p>
+      <p>MegaCorp left security holes all over their website. Your job: find them. Each challenge teaches you how NOT to build a website — and how attackers think.</p>
+    </div>
+
+    <div class="progress-row">
+      <span class="progress-label">Progress</span>
+      <div class="progress-dots" id="progress-dots">
+        <div class="progress-dot" id="dot-01"></div>
+        <div class="progress-dot" id="dot-02"></div>
+        <div class="progress-dot" id="dot-03"></div>
+        <div class="progress-dot" id="dot-04"></div>
+        <div class="progress-dot" id="dot-05"></div>
+        <div class="progress-dot" id="dot-06"></div>
+      </div>
+      <span class="progress-count" id="progress-count">0 / 6</span>
+    </div>
+
+    <div class="challenge-grid">
+
+      <a class="challenge-card" href="./01-challenge.html" id="card-01">
+        <div class="challenge-num">01</div>
+        <div class="challenge-body">
+          <div class="challenge-title">View Source</div>
+          <div class="challenge-desc">Something is hidden in the HTML. Find it.</div>
+        </div>
+        <div class="done-badge">✓</div>
+        <div class="challenge-arrow">›</div>
+      </a>
+
+      <a class="challenge-card" href="./02-challenge.html" id="card-02">
+        <div class="challenge-num">02</div>
+        <div class="challenge-body">
+          <div class="challenge-title">Invisible Text</div>
+          <div class="challenge-desc">The page looks blank. Or is it?</div>
+        </div>
+        <div class="done-badge">✓</div>
+        <div class="challenge-arrow">›</div>
+      </a>
+
+      <a class="challenge-card" href="./03-challenge.html" id="card-03">
+        <div class="challenge-num">03</div>
+        <div class="challenge-body">
+          <div class="challenge-title">Hidden Element</div>
+          <div class="challenge-desc">display:none doesn't make things disappear.</div>
+        </div>
+        <div class="done-badge">✓</div>
+        <div class="challenge-arrow">›</div>
+      </a>
+
+      <a class="challenge-card" href="./04-challenge.html" id="card-04">
+        <div class="challenge-num">04</div>
+        <div class="challenge-body">
+          <div class="challenge-title">localStorage</div>
+          <div class="challenge-desc">The app stores a secret in your browser.</div>
+        </div>
+        <div class="done-badge">✓</div>
+        <div class="challenge-arrow">›</div>
+      </a>
+
+      <a class="challenge-card" href="./05-challenge.html" id="card-05">
+        <div class="challenge-num">05</div>
+        <div class="challenge-body">
+          <div class="challenge-title">JS Console</div>
+          <div class="challenge-desc">There's a function waiting to be called.</div>
+        </div>
+        <div class="done-badge">✓</div>
+        <div class="challenge-arrow">›</div>
+      </a>
+
+      <a class="challenge-card" href="./06-challenge.html" id="card-06">
+        <div class="challenge-num">06</div>
+        <div class="challenge-body">
+          <div class="challenge-title">Form Bypass</div>
+          <div class="challenge-desc">Get into the admin panel.</div>
+        </div>
+        <div class="done-badge">✓</div>
+        <div class="challenge-arrow">›</div>
+      </a>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <section>
+      <h2>How it works</h2>
+      <div class="info-card">
+        <h3>Each challenge = a target + a flag</h3>
+        <p>You'll see a fake MegaCorp website page. Your job is to find the hidden flag — a string in the format <code>GIT{...}</code> — using only your browser's built-in tools. No special software needed.</p>
+      </div>
+      <div class="info-card">
+        <h3>Use DevTools — that's the point</h3>
+        <p>Open DevTools with <code>F12</code> (Windows/Linux) or <code>Cmd+Option+I</code> (Mac). The Elements, Console, Application, and Sources tabs are your weapons.</p>
+      </div>
+      <div class="info-card">
+        <h3>Stuck? Use the hint</h3>
+        <p>Every challenge has a hint button. It won't give you the flag — but it'll point you in the right direction. Try without it first!</p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../shared/app-intro.js"></script>
+  <script>
+    (function() {
+      var nums = ['01','02','03','04','05','06'];
+      var done = 0;
+      nums.forEach(function(n) {
+        if (localStorage.getItem('hacklab-' + n + '-done') === 'true') {
+          var card = document.getElementById('card-' + n);
+          if (card) card.classList.add('card-done');
+          var dot = document.getElementById('dot-' + n);
+          if (dot) dot.classList.add('done');
+          done++;
+        }
+      });
+      var countEl = document.getElementById('progress-count');
+      if (countEl) countEl.textContent = done + ' / 6';
+    })();
+  </script>
+</body>
+</html>
