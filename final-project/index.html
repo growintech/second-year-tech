@@ -162,16 +162,13 @@
     .timeline-table td:nth-child(2),
     .timeline-table td:nth-child(3) { color: var(--yellow); font-weight: 500; }
     .timeline-table tr:last-child td { border-bottom: none; }
-    .timeline-table tr:last-child td:first-child { font-weight: 700; color: var(--grad-start); }
-    .timeline-table tr:last-child td:nth-child(2),
-    .timeline-table tr:last-child td:nth-child(3) { color: var(--grad-start); }
 
     /* ── Rubric ── */
     .rubric-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       overflow: hidden;
     }
     .rubric-header {
@@ -194,43 +191,27 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
-    .rubric-body { padding: 16px 20px; }
-    .rubric-criterion { margin-bottom: 18px; }
-    .rubric-criterion:last-child { margin-bottom: 0; }
-    .rubric-criterion-name { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 8px; }
-    .rubric-levels { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-    .rubric-level { border-radius: var(--radius-sm); padding: 10px 12px; }
-    .rubric-level-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
-    .rubric-level-text { font-size: 13px; line-height: 1.5; color: var(--text-muted); }
-    .level-bad  { background: rgba(239,68,68,0.06);  border: 1px solid rgba(239,68,68,0.2);  }
-    .level-bad  .rubric-level-label { color: var(--red); }
-    .level-bad  .rubric-level-text  { color: #9a5050; }
-    .level-ok   { background: rgba(234,179,8,0.06);  border: 1px solid rgba(234,179,8,0.2);  }
-    .level-ok   .rubric-level-label { color: var(--yellow); }
-    .level-ok   .rubric-level-text  { color: #9a8a50; }
-    .level-great { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); }
-    .level-great .rubric-level-label { color: var(--green); }
-    .level-great .rubric-level-text  { color: #5a9070; }
+    .rubric-body { padding: 14px 20px; color: var(--text-muted); font-size: 14px; line-height: 1.7; }
 
-    /* ── Resource links ── */
-    .resource-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
-    .resource-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 11px 16px;
-      text-decoration: none;
-      color: var(--text);
-      transition: border-color 0.15s, background 0.15s;
+    /* ── Deliverables overview grid ── */
+    .deliver-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
     }
-    .resource-link:hover { border-color: rgba(0,225,255,0.3); background: rgba(0,225,255,0.04); }
-    .resource-link-name { font-size: 14px; font-weight: 500; color: #fff; }
-    .resource-link-desc { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
-    .resource-link-arrow { color: var(--text-dim); font-size: 16px; flex-shrink: 0; }
+    .deliver-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+    }
+    .deliver-item-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .deliver-item-text { color: var(--text); line-height: 1.5; }
 
     /* ── How-to collapsible cards ── */
     .howto-card {
@@ -278,8 +259,28 @@
     .howto-body p { margin-bottom: 8px; }
     .howto-body a { color: var(--grad-start); }
 
+    /* ── Resource links ── */
+    .resource-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+    .resource-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px 16px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .resource-link:hover { border-color: rgba(0,225,255,0.3); background: rgba(0,225,255,0.04); }
+    .resource-link-name { font-size: 14px; font-weight: 500; color: #fff; }
+    .resource-link-desc { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+    .resource-link-arrow { color: var(--text-dim); font-size: 16px; flex-shrink: 0; }
+
     @media (max-width: 580px) {
-      .rubric-levels { grid-template-columns: 1fr; }
+      .deliver-grid { grid-template-columns: 1fr; }
       .deadline-row { flex-direction: column; }
     }
   </style>
@@ -301,19 +302,55 @@
   <div class="hero">
     <div class="activity-badge badge-blue">🎓 Year 2 — 2025/2026</div>
     <h1>Build Your<br><span class="grad">Startup</span></h1>
-    <p class="lead">Work in pairs. Pick one of 5 tracks, analyse the problem, and build a product — from elevator pitch to a working website.</p>
+    <p class="lead">Work in pairs. Pick one of 5 tracks, analyse a real problem, and build a product — from problem tree to a live website.</p>
   </div>
 
-  <div class="callout callout-info" style="margin-bottom:40px;">
+  <div class="callout callout-info" style="margin-bottom:32px;">
     <span class="callout-icon">👥</span>
-    <strong>Pairs project.</strong>
-    <span class="callout-body">Unlike the mid-year project, this one is done in pairs. Each pair builds their own fictional startup from scratch — two pairs on the same track can arrive at completely different solutions.</span>
+    <div class="callout-body">
+      <strong>Pairs project.</strong> Each pair builds a fictional but realistic startup from scratch. Two pairs on the same track can arrive at completely different solutions. Individual JavaScript knowledge is tested separately (individual test on April 8/10).
+    </div>
   </div>
+
+  <!-- What you will deliver -->
+  <section>
+    <h2>What you will deliver</h2>
+    <div class="deliver-grid">
+      <div class="deliver-item">
+        <div class="deliver-item-icon">🌳</div>
+        <div class="deliver-item-text">Problem tree analysis + target description</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-item-icon">📝</div>
+        <div class="deliver-item-text">Problem statement + startup name</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-item-icon">📊</div>
+        <div class="deliver-item-text">Market validation data from ≥ 20 real people</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-item-icon">📑</div>
+        <div class="deliver-item-text">Pitch deck with market data &amp; competitor analysis</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-item-icon">💻</div>
+        <div class="deliver-item-text">Working website in HTML, CSS &amp; JavaScript</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-item-icon">🎤</div>
+        <div class="deliver-item-text">Oral presentation + live website demo</div>
+      </div>
+      <div class="deliver-item">
+        <div class="deliver-item-icon">📓</div>
+        <div class="deliver-item-text">Development diary — updated at each phase</div>
+      </div>
+    </div>
+  </section>
 
   <!-- The 5 Tracks -->
   <section>
     <h2>The 5 Tracks</h2>
-    <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px;">Choose one track as your starting point. Open each card to read the context, the real problem, and some questions to guide your thinking.</p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px;">Choose one track as your starting point. The tracks don't tell you what to build — they point to a problem to explore. Open each card to read the context and questions to guide your thinking.</p>
 
     <div class="track-card" id="track-1">
       <button class="track-toggle" onclick="toggleTrack('track-1')" aria-expanded="false">
@@ -393,12 +430,12 @@
         <div class="track-label">Context</div>
         <p>Late buses, missed connections, strikes or parents forced to play taxi at impossible hours. For many students, getting to school, the gym or a party is a daily logistical challenge.</p>
         <div class="track-label">The real problem</div>
-        <p>Shared mobility solutions (car sharing, rental scooters) are expensive and often off-limits to minors. Carpooling between classmates would be the obvious solution, but organising it is chaotic and leads to awkwardness ("who pays for petrol?").</p>
+        <p>Shared mobility solutions (car sharing, rental scooters) are expensive and often off-limits to minors. Carpooling between classmates would be the obvious solution, but organising it is chaotic and leads to awkwardness.</p>
         <div class="track-label">Stimulus questions</div>
         <ul>
           <li>How much time do you lose every day commuting, and how much frustration does it cause?</li>
           <li>Why is it so difficult to ask for or offer a lift to someone doing the same journey every morning?</li>
-          <li>How could you make this kind of sharing fair, organised and free from the awkwardness of asking for money?</li>
+          <li>How could you make this kind of sharing fair, organised and free from awkwardness?</li>
         </ul>
       </div>
     </div>
@@ -415,41 +452,13 @@
         <div class="track-label">Context</div>
         <p>You want to try playing bass, learn film photography, try climbing or experiment with 3D printing. But signing up for a class and buying the equipment costs hundreds of euros.</p>
         <div class="track-label">The real problem</div>
-        <p>Exploring new hobbies has a very high entry barrier — economic and organisational. This kills curiosity: if a student isn't 100% sure they'll like it, they won't even try. Meanwhile, the world is full of unused equipment gathering dust and people willing to share the basics of their passion.</p>
+        <p>Exploring new hobbies has a very high entry barrier — economic and organisational. This kills curiosity: if a student isn't 100% sure they'll like it, they won't even try. Meanwhile, the world is full of unused equipment gathering dust.</p>
         <div class="track-label">Stimulus questions</div>
         <ul>
           <li>What is a hobby you gave up on trying because it was too expensive or complicated to start?</li>
           <li>How could you lower this initial economic barrier?</li>
-          <li>How would you connect people who have the equipment and experience with people who just want to "try it for a weekend"?</li>
+          <li>How would you connect people who have equipment and experience with people who just want to "try it for a weekend"?</li>
         </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Phase overview -->
-  <section>
-    <h2>Three phases</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <h4>Problem to Solution</h4>
-          <p>Choose your track, build a Problem Tree, and write your Elevator Pitch. Define exactly who your startup is for.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <h4>Validation &amp; Pitch Deck</h4>
-          <p>Test your idea with a validation form (20+ responses), research your market with PerplexityAI, and create a 3–4 slide pitch deck.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <h4>The Website</h4>
-          <p>Build a responsive HTML/CSS/JS site for your startup, then present it live in front of the class.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -459,17 +468,16 @@
     <h2>Phase 1 — Problem to Solution</h2>
     <div class="phase-card">
       <div class="deadline-row">
-        <span class="deadline-pill">📅 Sommelier — 30 March</span>
-        <span class="deadline-pill">📅 Monti — 1 April</span>
+        <span class="deadline-pill">📅 Deadline — 3 April</span>
       </div>
       <div class="phase-body">
         <ul class="step-list">
           <li class="step-item">
             <span class="step-item-num">1</span>
             <div class="step-item-body">
-              <div class="step-item-title">Choose a track and build the Problem Tree</div>
+              <div class="step-item-title">Choose a track &amp; analyse the problem</div>
               <div class="step-item-desc">
-                Pick one of the 5 tracks. Build your Problem Tree (XMind, Miro, or pen and paper) to break the problem down and identify 2–3 root causes. Define your target audience as specifically as possible — not "young people" but a real, specific person with a real, specific problem.<br><br>
+                Pick one of the 5 tracks. Build a Problem Tree to break the problem down and identify root causes. Define your target audience (a specific person with a specific problem — not just "young people"). Analyse 2–3 possible solutions.<br><br>
                 <a href="https://www.loom.com/share/70c6057d71804a31b80c1e556cf60462" target="_blank">Watch the Problem Tree tutorial ↗</a> &nbsp;·&nbsp; <a href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=sharing" target="_blank">Browse 5 startup examples ↗</a>
               </div>
             </div>
@@ -477,9 +485,9 @@
           <li class="step-item">
             <span class="step-item-num">2</span>
             <div class="step-item-body">
-              <div class="step-item-title">Choose a solution and write the Elevator Pitch</div>
+              <div class="step-item-title">Write the Problem Statement &amp; name the startup</div>
               <div class="step-item-desc">
-                From your root causes, identify 2–3 possible solutions and pick the strongest one. Write your Elevator Pitch (max 10 lines) answering three questions: <em>What does the product do? Who uses it? What makes it different from what already exists?</em> Give your startup a name — provisional is fine.
+                Choose the best solution. Write a problem statement (max 10 lines) answering two questions: <em>What does the startup do? Who uses it?</em> Give your startup a name — provisional is fine.
               </div>
             </div>
           </li>
@@ -487,8 +495,8 @@
         <div class="deliverables">
           <div class="deliverables-label">✅ Deliver on Google Classroom</div>
           <ul>
-            <li>Problem Tree (PDF or photo) with a written description of your target audience</li>
-            <li>Written Elevator Pitch and startup name</li>
+            <li>Problem Tree (PDF or photo) + target description</li>
+            <li>Problem statement + startup name</li>
           </ul>
         </div>
       </div>
@@ -497,37 +505,33 @@
 
   <!-- Phase 2 -->
   <section>
-    <h2>Phase 2 — Validation &amp; Pitch Deck</h2>
+    <h2>Phase 2 — Form &amp; Landing Page</h2>
     <div class="phase-card">
       <div class="deadline-row">
-        <span class="deadline-pill">📅 Sommelier — 3 April</span>
-        <span class="deadline-pill">📅 Monti — 6 April</span>
+        <span class="deadline-pill">📅 Sommeiller — 8 April</span>
+        <span class="deadline-pill">📅 Monti — 10 April</span>
       </div>
       <div class="phase-body">
+        <div class="callout callout-info" style="margin:14px 0 4px;">
+          <span class="callout-icon">📝</span>
+          <div class="callout-body"><strong>Individual test on the same day.</strong> The individual JavaScript test (Sommeiller: 8 April · Monti: 10 April) covers concepts studied during the course — separate from the project work.</div>
+        </div>
         <ul class="step-list">
           <li class="step-item">
             <span class="step-item-num">1</span>
             <div class="step-item-body">
               <div class="step-item-title">Market validation form</div>
               <div class="step-item-desc">
-                Create a form (Google Forms or Tally) to test whether other people feel the problem and would use your solution. Collect <strong>at least 20 responses</strong>. Write a short comment (5–10 lines) on what you learned from the results.<br><br>
-                Before building the form, read the <em>How to build an effective validation form</em> guide below. You can also look at the <a href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=sharing" target="_blank">startup examples ↗</a> — it includes complete form examples for 5 different startups.
+                Create a form (Google Forms or Tally) to test whether other people feel the problem and would use your solution. Collect <strong>at least 20 responses</strong>. Write a short comment (5–10 lines) on what you learned from the results.
               </div>
             </div>
           </li>
           <li class="step-item">
             <span class="step-item-num">2</span>
             <div class="step-item-body">
-              <div class="step-item-title">Pitch Deck (3–4 slides)</div>
+              <div class="step-item-title">First website — landing page</div>
               <div class="step-item-desc">
-                Create a presentation on Google Slides or Canva. It must include:
-                <ol>
-                  <li><strong>Cover &amp; Problem/Target</strong> — your problem statement and who it affects</li>
-                  <li><strong>Solution</strong> — what your product does</li>
-                  <li><strong>Market &amp; Competitors</strong> — TAM/SAM/SOM data with sources + 1–2 competitors. Use PerplexityAI Deep Research. Every number must have a source.</li>
-                  <li><strong>Call to Action / Conclusion</strong> — why your idea wins</li>
-                </ol>
-                <a href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing" target="_blank">Deep Research prompt template ↗</a> &nbsp;·&nbsp; <a href="https://advertising.amazon.com/it-it/library/guides/tam-sam-som#1a" target="_blank">TAM/SAM/SOM graph example ↗</a>
+                Build the first version of your startup site in HTML, CSS and JavaScript. It must have a responsive layout, a working navbar, and clear sections that describe the startup. Also start your <strong>development diary</strong>.
               </div>
             </div>
           </li>
@@ -535,8 +539,9 @@
         <div class="deliverables">
           <div class="deliverables-label">✅ Deliver on Google Classroom</div>
           <ul>
-            <li>Link to the form, screenshot of the results, and short comment</li>
-            <li>Pitch deck (max 3–4 slides, exported as PDF)</li>
+            <li>Link to the form + screenshot of results + brief comment</li>
+            <li>First website delivery (ZIP or GitHub link)</li>
+            <li>Development diary — first version</li>
           </ul>
         </div>
       </div>
@@ -545,66 +550,109 @@
 
   <!-- Phase 3 -->
   <section>
-    <h2>Phase 3 — The Website</h2>
+    <h2>Phase 3 — Website Progress</h2>
     <div class="phase-card">
       <div class="deadline-row">
-        <span class="deadline-pill">📅 Sommelier — 8 April</span>
-        <span class="deadline-pill">📅 Monti — 10 April</span>
+        <span class="deadline-pill">📅 Sommeiller — 15 April</span>
+        <span class="deadline-pill">📅 Monti — 17 April</span>
       </div>
       <div class="phase-body">
+        <p>Advance the website. By this deadline the site must meet these JavaScript requirements:</p>
         <ul class="step-list">
           <li class="step-item">
             <span class="step-item-num">1</span>
             <div class="step-item-body">
-              <div class="step-item-title">Build the website</div>
-              <div class="step-item-desc">
-                Build a website in HTML, CSS and JavaScript. It must have a responsive layout, a working navbar, and clear sections that communicate your startup's problem, solution and product.<br><br>
-                <strong style="color:#fff;">Mandatory JavaScript requirements:</strong>
-              </div>
+              <div class="step-item-title">Countdown to launch using <code>Date()</code> and <code>setInterval()</code></div>
+              <div class="step-item-desc">Display a live countdown (days, hours, minutes, seconds) to a fictional launch date.</div>
             </div>
           </li>
-        </ul>
-
-        <div class="code-block" style="margin: 4px 0 16px;">
-          <pre><span class="cmt">// Requirement 1 — Launch countdown using Date() and setInterval()</span>
-<span class="kw">const</span> launchDate = <span class="kw">new</span> <span class="fn">Date</span>(<span class="str">'2025-12-01'</span>);
-<span class="fn">setInterval</span>(<span class="kw">function</span>() {
-  <span class="kw">const</span> diff = launchDate - <span class="kw">new</span> <span class="fn">Date</span>();
-  <span class="cmt">// calculate days, hours, minutes, seconds...</span>
-}, <span class="num">1000</span>);
-
-<span class="cmt">// Requirement 2 — At least one additional interactive feature</span>
-<span class="cmt">// e.g. contact form with alert, FAQ accordion, slider, embedded map...</span></pre>
-        </div>
-
-        <ul class="step-list" style="margin-top:0;">
           <li class="step-item">
             <span class="step-item-num">2</span>
             <div class="step-item-body">
-              <div class="step-item-title">Prepare the oral presentation</div>
-              <div class="step-item-desc">
-                Your presentation must follow this order:
-                <ol>
-                  <li><strong>Pitch Deck</strong> — problem, solution, market data</li>
-                  <li><strong>Website demo</strong> — walk through the site live and demonstrate the interactive JS feature</li>
-                  <li><strong>Q&amp;A</strong> — instructors may ask you to explain specific parts of your code</li>
-                </ol>
-                <a href="https://docs.google.com/document/u/0/d/15yfYb_NzsoJEd4fyeid9TJfXwSb2sMdCq_b93tZdjTU/edit" target="_blank">Delivery techniques guide ↗</a>
-              </div>
+              <div class="step-item-title">At least one additional interactive feature</div>
+              <div class="step-item-desc">e.g. contact form with alert, FAQ accordion, image slider, newsletter sign-up, dark mode toggle, etc.</div>
             </div>
           </li>
         </ul>
 
-        <div class="callout callout-warn">
+        <div class="callout callout-warn" style="margin-top:16px;">
           <span class="callout-icon">🤖</span>
-          <strong>AI is allowed.</strong>
-          <span class="callout-body">You can use ChatGPT, Claude, or other tools to help generate and structure your website code. However, you must be able to <strong>explain every single line of code</strong> during the oral presentation.</span>
+          <div class="callout-body">
+            <strong>AI is allowed.</strong> You can use ChatGPT, Claude, or other tools to help generate and structure the code. But you must be able to <strong>explain every single line</strong> during the presentation — if you used AI, study and understand the output first.
+          </div>
         </div>
 
         <div class="deliverables">
           <div class="deliverables-label">✅ Deliver on Google Classroom</div>
           <ul>
-            <li><code>.zip</code> folder containing all website files, or a link to GitHub Pages / JSBin</li>
+            <li>Website ZIP — second version</li>
+            <li>Development diary — second version</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final Submission -->
+  <section>
+    <h2>Final Submission</h2>
+    <div class="phase-card">
+      <div class="deadline-row">
+        <span class="deadline-pill">📅 Sommeiller — 20 April</span>
+        <span class="deadline-pill">📅 Monti — 22 April</span>
+      </div>
+      <div class="phase-body">
+        <p>Upload all final materials to Google Classroom before the deadline. This is the last chance to make changes.</p>
+        <div class="deliverables">
+          <div class="deliverables-label">✅ Deliver on Google Classroom</div>
+          <ul>
+            <li>Presentation slides</li>
+            <li>Complete website — ZIP archive</li>
+            <li>Pitch Deck — PDF</li>
+            <li>Development diary — final version</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Phase 4 — Presentation -->
+  <section>
+    <h2>Phase 4 — The Presentation</h2>
+    <div class="phase-card">
+      <div class="deadline-row">
+        <span class="deadline-pill">📅 Sommeiller — 22 April (last lesson)</span>
+        <span class="deadline-pill">📅 Monti — 24 April (last lesson)</span>
+      </div>
+      <div class="phase-body">
+        <p>You have <strong>5–7 minutes</strong> to present your startup. Use the pitch deck as visual support — don't read from it. Structure your talk:</p>
+        <ul class="step-list">
+          <li class="step-item">
+            <span class="step-item-num">1</span>
+            <div class="step-item-body">
+              <div class="step-item-title">Problem → Solution → Market</div>
+              <div class="step-item-desc">Walk through your pitch deck. Present the validation data and the competitor analysis.</div>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-item-num">2</span>
+            <div class="step-item-body">
+              <div class="step-item-title">Live website demo</div>
+              <div class="step-item-desc">Show the site running live. Demonstrate the countdown and the interactive feature. Be ready to explain the code.</div>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-item-num">3</span>
+            <div class="step-item-body">
+              <div class="step-item-title">Call to action</div>
+              <div class="step-item-desc">Close with a strong statement about why your idea wins. Then take questions from the instructors.</div>
+            </div>
+          </li>
+        </ul>
+        <div class="deliverables">
+          <div class="deliverables-label">✅ Deliver in class</div>
+          <ul>
+            <li>Oral presentation + live website demo</li>
           </ul>
         </div>
       </div>
@@ -618,36 +666,54 @@
       <table class="timeline-table">
         <thead>
           <tr>
-            <th>Phase</th>
-            <th>Sommelier</th>
-            <th>Monti</th>
+            <th>Event</th>
+            <th>Sommeiller (Wed)</th>
+            <th>Monti (Fri)</th>
             <th>What to deliver</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Phase 1 — Problem &amp; Pitch</td>
-            <td>30 March</td>
-            <td>1 April</td>
-            <td>Problem tree, target, elevator pitch</td>
+            <td>Project kickoff</td>
+            <td>27 March</td>
+            <td>—</td>
+            <td>Final project announced</td>
           </tr>
           <tr>
-            <td>Phase 2 — Validation &amp; Deck</td>
+            <td>Phase 1 — Problem to Solution</td>
             <td>3 April</td>
-            <td>6 April</td>
-            <td>Validation form (20+ responses) + Pitch Deck</td>
+            <td>—</td>
+            <td>Problem tree, target, problem statement, startup name</td>
           </tr>
           <tr>
-            <td>Phase 3 — Website</td>
+            <td>Phase 2 — Form &amp; Landing Page</td>
             <td>8 April</td>
             <td>10 April</td>
-            <td>Website .zip or link</td>
+            <td>Individual test · Validation form results · First website · First diary</td>
           </tr>
           <tr>
-            <td>Presentations</td>
-            <td>8 April</td>
-            <td>10 April</td>
-            <td>Oral presentation in class</td>
+            <td>Phase 3 — Website Progress</td>
+            <td>15 April</td>
+            <td>17 April</td>
+            <td>Guest visitors · Second website (with countdown + interactive feature) · Second diary</td>
+          </tr>
+          <tr>
+            <td>Final Submission</td>
+            <td>20 April</td>
+            <td>22 April</td>
+            <td>Slides · Complete website ZIP · Pitch Deck PDF · Final diary</td>
+          </tr>
+          <tr>
+            <td>Phase 4 — Presentations</td>
+            <td>22 April</td>
+            <td>24 April</td>
+            <td>Oral presentation + live demo (last lesson)</td>
+          </tr>
+          <tr>
+            <td>Certificates</td>
+            <td>6 May</td>
+            <td>8 May</td>
+            <td>Certificates + final feedback</td>
           </tr>
         </tbody>
       </table>
@@ -660,174 +726,34 @@
 
     <div class="rubric-card">
       <div class="rubric-header">
-        <span class="rubric-phase">Phase 1 — Problem analysis and solution</span>
-        <span class="rubric-pts">15 pts</span>
+        <span class="rubric-phase">Goals, Teamwork &amp; Creativity</span>
+        <span class="rubric-pts">40 pts</span>
       </div>
-      <div class="rubric-body">
-        <div class="rubric-criterion">
-          <div class="rubric-criterion-name">Problem &amp; Target</div>
-          <div class="rubric-levels">
-            <div class="rubric-level level-bad">
-              <div class="rubric-level-label">Insufficient · 0–5</div>
-              <div class="rubric-level-text">Shallow tree, generic target (e.g. "young people").</div>
-            </div>
-            <div class="rubric-level level-ok">
-              <div class="rubric-level-label">Sufficient · 6–10</div>
-              <div class="rubric-level-text">Tree identifies causes; target defined but not very specific.</div>
-            </div>
-            <div class="rubric-level level-great">
-              <div class="rubric-level-label">Excellent · 11–15</div>
-              <div class="rubric-level-text">Logical, deep tree. Extremely specific, real target.</div>
-            </div>
-          </div>
-        </div>
-        <div class="rubric-criterion">
-          <div class="rubric-criterion-name">Solution (Pitch)</div>
-          <div class="rubric-levels">
-            <div class="rubric-level level-bad">
-              <div class="rubric-level-label">Insufficient · 0–5</div>
-              <div class="rubric-level-text">Solution unclear or disconnected from the problem.</div>
-            </div>
-            <div class="rubric-level level-ok">
-              <div class="rubric-level-label">Sufficient · 6–10</div>
-              <div class="rubric-level-text">Solution understandable but weak differentiation.</div>
-            </div>
-            <div class="rubric-level level-great">
-              <div class="rubric-level-label">Excellent · 11–15</div>
-              <div class="rubric-level-text">Clear, differentiated solution convincingly explained in the pitch.</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="rubric-body">Depth of problem analysis, originality of the solution, quality of the problem statement and pitch deck, and how effectively the pair worked together toward a convincing idea.</div>
     </div>
 
     <div class="rubric-card">
       <div class="rubric-header">
-        <span class="rubric-phase">Phase 2 — Validation and Pitch Deck</span>
-        <span class="rubric-pts">35 pts</span>
+        <span class="rubric-phase">Guidelines</span>
+        <span class="rubric-pts">30 pts</span>
       </div>
-      <div class="rubric-body">
-        <div class="rubric-criterion">
-          <div class="rubric-criterion-name">Validation data</div>
-          <div class="rubric-levels">
-            <div class="rubric-level level-bad">
-              <div class="rubric-level-label">Insufficient · 0–11</div>
-              <div class="rubric-level-text">Fewer than 10 responses or poorly structured form. No comment.</div>
-            </div>
-            <div class="rubric-level level-ok">
-              <div class="rubric-level-label">Sufficient · 12–24</div>
-              <div class="rubric-level-text">10–19 responses. Basic comment on the data.</div>
-            </div>
-            <div class="rubric-level level-great">
-              <div class="rubric-level-label">Excellent · 25–35</div>
-              <div class="rubric-level-text">20+ responses. Critical comment showing what was learned from the feedback.</div>
-            </div>
-          </div>
-        </div>
-        <div class="rubric-criterion">
-          <div class="rubric-criterion-name">Pitch Deck</div>
-          <div class="rubric-levels">
-            <div class="rubric-level level-bad">
-              <div class="rubric-level-label">Insufficient · 0–11</div>
-              <div class="rubric-level-text">Key slides missing or no sources for data.</div>
-            </div>
-            <div class="rubric-level level-ok">
-              <div class="rubric-level-label">Sufficient · 12–24</div>
-              <div class="rubric-level-text">Slides present but visually weak. Partial market data.</div>
-            </div>
-            <div class="rubric-level level-great">
-              <div class="rubric-level-label">Excellent · 25–35</div>
-              <div class="rubric-level-text">3–4 polished slides, data with sources, clear competitor analysis.</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="rubric-body">Following the project requirements: delivering each phase on time, meeting the technical specifications (countdown, interactive feature, responsive layout), maintaining the development diary, and collecting ≥ 20 validation responses.</div>
     </div>
 
     <div class="rubric-card">
       <div class="rubric-header">
-        <span class="rubric-phase">Phase 3 — Website</span>
-        <span class="rubric-pts">35 pts</span>
+        <span class="rubric-phase">Presentation</span>
+        <span class="rubric-pts">20 pts</span>
       </div>
-      <div class="rubric-body">
-        <div class="rubric-criterion">
-          <div class="rubric-criterion-name">Structure (HTML/CSS)</div>
-          <div class="rubric-levels">
-            <div class="rubric-level level-bad">
-              <div class="rubric-level-label">Insufficient · 0–11</div>
-              <div class="rubric-level-text">Broken layout, not responsive, missing key sections.</div>
-            </div>
-            <div class="rubric-level level-ok">
-              <div class="rubric-level-label">Sufficient · 12–24</div>
-              <div class="rubric-level-text">Working site with mobile issues. Basic design.</div>
-            </div>
-            <div class="rubric-level level-great">
-              <div class="rubric-level-label">Excellent · 25–35</div>
-              <div class="rubric-level-text">Clean, fully responsive layout (Grid/Flexbox), design consistent with the startup.</div>
-            </div>
-          </div>
-        </div>
-        <div class="rubric-criterion">
-          <div class="rubric-criterion-name">JavaScript</div>
-          <div class="rubric-levels">
-            <div class="rubric-level level-bad">
-              <div class="rubric-level-label">Insufficient · 0–11</div>
-              <div class="rubric-level-text">Countdown missing or interactive feature not working.</div>
-            </div>
-            <div class="rubric-level level-ok">
-              <div class="rubric-level-label">Sufficient · 12–24</div>
-              <div class="rubric-level-text">JS present but with errors or poorly integrated.</div>
-            </div>
-            <div class="rubric-level level-great">
-              <div class="rubric-level-label">Excellent · 25–35</div>
-              <div class="rubric-level-text">Correct countdown (<code>Date()</code>) and a working, useful extra feature.</div>
-            </div>
-          </div>
-        </div>
-        <div class="rubric-criterion">
-          <div class="rubric-criterion-name">Code awareness</div>
-          <div class="rubric-levels">
-            <div class="rubric-level level-bad">
-              <div class="rubric-level-label">Insufficient · 0–11</div>
-              <div class="rubric-level-text">Student cannot explain the code they submitted.</div>
-            </div>
-            <div class="rubric-level level-ok">
-              <div class="rubric-level-label">Sufficient · 12–24</div>
-              <div class="rubric-level-text">Student understands broadly but gets lost in details.</div>
-            </div>
-            <div class="rubric-level level-great">
-              <div class="rubric-level-label">Excellent · 25–35</div>
-              <div class="rubric-level-text">Student can explain every line, including anything generated with AI.</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="rubric-body">Clarity and confidence of the oral presentation, effective use of the pitch deck (not reading from slides), live demo of the working website, and ability to handle questions from the instructors.</div>
     </div>
 
     <div class="rubric-card">
       <div class="rubric-header">
-        <span class="rubric-phase">Oral Presentation</span>
-        <span class="rubric-pts">15 pts</span>
+        <span class="rubric-phase">Code Quality</span>
+        <span class="rubric-pts">10 pts</span>
       </div>
-      <div class="rubric-body">
-        <div class="rubric-criterion">
-          <div class="rubric-criterion-name">Delivery and effectiveness</div>
-          <div class="rubric-levels">
-            <div class="rubric-level level-bad">
-              <div class="rubric-level-label">Insufficient · 0–5</div>
-              <div class="rubric-level-text">Reads from slides, goes over time, unclear.</div>
-            </div>
-            <div class="rubric-level level-ok">
-              <div class="rubric-level-label">Sufficient · 6–10</div>
-              <div class="rubric-level-text">Clear delivery but not engaging. Respects time limits.</div>
-            </div>
-            <div class="rubric-level level-great">
-              <div class="rubric-level-label">Excellent · 11–15</div>
-              <div class="rubric-level-text">Confident, no reading, live site demo, handles questions well.</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="rubric-body">Clean, readable HTML/CSS/JS. Students must be able to explain every line — including any code generated with AI. Points are lost if the code was copied without understanding.</div>
     </div>
   </section>
 
@@ -842,15 +768,29 @@
       </button>
       <div class="howto-body">
         <ul>
-          <li>
-            <strong>Ask about the problem, not the solution</strong> — at least at first.<br>
-            ❌ Wrong: "Would you use an app that helps you manage your money?"<br>
-            ✅ Right: "How often do you reach the end of the month without knowing how you spent your money?"
-          </li>
-          <li><strong>Use numerical scales</strong> for intensity questions — they give you quantifiable data you can cite.</li>
+          <li><strong>Ask about the problem, not the solution</strong> — at first.<br>
+            ❌ "Would you use an app that helps you manage your money?"<br>
+            ✅ "How often do you reach the end of the month without knowing how you spent your money?"</li>
+          <li><strong>Use numerical scales</strong> for intensity questions — they give you quantifiable data you can cite in the pitch deck.</li>
           <li><strong>Include at least one open question</strong> — open answers give you insights you'd never have thought to ask for.</li>
-          <li><strong>Briefly explain your idea before asking if people would use it</strong> — 2–3 lines about your startup, then ask.</li>
+          <li><strong>Briefly explain your idea</strong> before asking if people would use it — 2–3 lines about the startup, then ask.</li>
           <li><strong>Keep it under 8–10 questions</strong> — beyond that, people abandon the form or answer randomly.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="howto-card" id="howto-diary">
+      <button class="howto-toggle" onclick="toggleHowto('howto-diary')" aria-expanded="false">
+        <span>📓 How to write the development diary</span>
+        <i class="howto-chevron">▶</i>
+      </button>
+      <div class="howto-body">
+        <p>The development diary documents your process as you build the website. It is not a summary written at the end — update it step by step as you work.</p>
+        <ul>
+          <li><strong>What to include:</strong> what you tried to do, what tools or techniques you used, what problems you ran into, and how you solved them.</li>
+          <li><strong>If you used AI:</strong> note what prompt you gave, what the AI produced, and what you changed or didn't understand at first.</li>
+          <li><strong>Format:</strong> a Google Doc with dated entries is fine. Screenshots of your work in progress are a plus.</li>
+          <li><strong>Three deliveries:</strong> first version (Phase 2), second version (Phase 3), final version (Final Submission).</li>
         </ul>
       </div>
     </div>
@@ -861,8 +801,8 @@
         <i class="howto-chevron">▶</i>
       </button>
       <div class="howto-body">
-        <p>Use <strong>PerplexityAI Deep Research</strong> with a precise prompt to get numerical data with verifiable sources. Every number you put in the pitch deck must have a source — PerplexityAI provides them automatically.</p>
-        <p>Find the full ready-to-use template in the <a href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing" target="_blank">Deep Research prompt document ↗</a>. The output gives you TAM, SAM and SOM figures with citations — take the key numbers and their sources and put them directly into your pitch deck slides.</p>
+        <p>Use <strong>PerplexityAI Deep Research</strong> with a precise prompt to get numerical market data with verifiable sources. Every number in your pitch deck must have a source.</p>
+        <p>Find the ready-to-use prompt template in the <a href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing" target="_blank">Deep Research document ↗</a>. The output gives you TAM, SAM and SOM figures with citations — take the key numbers and put them directly into your pitch deck slides.</p>
       </div>
     </div>
   </section>
@@ -906,29 +846,8 @@
     </div>
 
     <div class="card">
-      <h3>Phase 2 — Validation &amp; Pitch Deck</h3>
+      <h3>Phase 2 — Validation &amp; Market Research</h3>
       <div class="resource-grid">
-        <a class="resource-link" href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing" target="_blank">
-          <div>
-            <div class="resource-link-name">Deep Research prompt template</div>
-            <div class="resource-link-desc">Ready-to-use PerplexityAI prompt for TAM/SAM/SOM analysis</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://advertising.amazon.com/it-it/library/guides/tam-sam-som#1a" target="_blank">
-          <div>
-            <div class="resource-link-name">TAM/SAM/SOM graph example</div>
-            <div class="resource-link-desc">Visual reference for the market size chart</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://www.perplexity.ai" target="_blank">
-          <div>
-            <div class="resource-link-name">PerplexityAI</div>
-            <div class="resource-link-desc">Market research with verifiable sources</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
         <a class="resource-link" href="https://forms.google.com" target="_blank">
           <div>
             <div class="resource-link-name">Google Forms</div>
@@ -940,6 +859,27 @@
           <div>
             <div class="resource-link-name">Tally</div>
             <div class="resource-link-desc">Alternative to Google Forms (nicer UI)</div>
+          </div>
+          <span class="resource-link-arrow">↗</span>
+        </a>
+        <a class="resource-link" href="https://www.perplexity.ai" target="_blank">
+          <div>
+            <div class="resource-link-name">PerplexityAI</div>
+            <div class="resource-link-desc">Market research with verifiable sources</div>
+          </div>
+          <span class="resource-link-arrow">↗</span>
+        </a>
+        <a class="resource-link" href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing" target="_blank">
+          <div>
+            <div class="resource-link-name">Deep Research prompt template</div>
+            <div class="resource-link-desc">Ready-to-use PerplexityAI prompt for TAM/SAM/SOM analysis</div>
+          </div>
+          <span class="resource-link-arrow">↗</span>
+        </a>
+        <a class="resource-link" href="https://advertising.amazon.com/it-it/library/guides/tam-sam-som#1a" target="_blank">
+          <div>
+            <div class="resource-link-name">TAM/SAM/SOM graph example</div>
+            <div class="resource-link-desc">Visual reference for the market size chart</div>
           </div>
           <span class="resource-link-arrow">↗</span>
         </a>
@@ -994,6 +934,11 @@
       </div>
     </div>
   </section>
+
+  <div class="callout callout-tip" style="margin-top:8px;">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">There will be a moment when it feels like too much. It's normal. Ask the instructors, use AI intelligently, collaborate — and remember why you started this course. Good luck.</div>
+  </div>
 
 </div>
 <script src="../shared/app-intro.js"></script>
