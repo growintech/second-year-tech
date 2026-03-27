@@ -1,0 +1,589 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── Override shared variables ── */
+:root {
+  --bg:         #050710;
+  --surface:    #090c17;
+  --surface-2:  #0e1220;
+  --border:     rgba(0, 255, 136, 0.07);
+  --border-2:   rgba(0, 255, 136, 0.16);
+  --text:       #b8e8c8;
+  --text-muted: #4a7a5a;
+  --text-dim:   #243530;
+  --accent:     #00ff88;
+  --accent-dim: rgba(0, 255, 136, 0.07);
+  --grad-start: #00ff88;
+  --grad-end:   #00ccff;
+  --grad:       linear-gradient(90deg, #00ff88, #00ccff);
+  --mc-red:     #cc2200;
+  --mc-red-dim: rgba(204, 34, 0, 0.1);
+  --font-mono:  'Space Mono', 'DM Mono', monospace;
+}
+
+/* ── Body: full terminal font ── */
+body {
+  font-family: var(--font-mono);
+  background: var(--bg);
+}
+
+/* ── Topbar overrides ── */
+.topbar {
+  background: rgba(5, 7, 16, 0.92);
+  border-bottom: 1px solid var(--border-2);
+  backdrop-filter: blur(12px);
+}
+.page-wrap .topbar {
+  background: rgba(5, 7, 16, 0.92);
+  border-bottom: 1px solid var(--border-2);
+}
+.topbar-lesson {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ── Hero overrides ── */
+.hero-title {
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+}
+.hero-sub {
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+/* ── Activity badge ── */
+.badge-hack {
+  display: inline-block;
+  background: var(--mc-red-dim);
+  border: 1px solid var(--mc-red);
+  color: var(--mc-red);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-family: var(--font-mono);
+}
+
+/* ── Timer HUD ── */
+.timer-hud {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 200;
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.12), 0 0 1px rgba(0, 255, 136, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  letter-spacing: 0.06em;
+}
+.timer-label {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* ── Browser window (fake target site) ── */
+.browser-window {
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 24px 0;
+  box-shadow: 0 0 32px rgba(0, 255, 136, 0.04);
+}
+.browser-chrome {
+  background: var(--surface-2);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.browser-dots { display: flex; gap: 6px; }
+.browser-dots span {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.browser-dots span:nth-child(1) { background: #ef4444; }
+.browser-dots span:nth-child(2) { background: #eab308; }
+.browser-dots span:nth-child(3) { background: #22c55e; }
+.browser-url {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+.browser-body {
+  background: var(--surface);
+  min-height: 180px;
+}
+
+/* ── MegaCorp brand components ── */
+.megacorp-header {
+  background: #0a0508;
+  border-bottom: 2px solid var(--mc-red);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.mc-logo {
+  color: var(--mc-red);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}
+.mc-name {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.mc-tagline {
+  color: #663322;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+.mc-nav {
+  display: flex;
+  gap: 16px;
+}
+.mc-nav a {
+  color: #663322;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.15s;
+}
+.mc-nav a:hover { color: var(--mc-red); }
+.megacorp-footer {
+  background: #0a0508;
+  border-top: 1px solid #2a0f0a;
+  padding: 8px 20px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #442211;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.megacorp-content {
+  padding: 20px 24px;
+}
+
+/* ── Flag panel ── */
+.flag-panel {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 24px 0;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.04);
+}
+.flag-panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+}
+.flag-panel-title::before { content: '> '; opacity: 0.5; }
+.flag-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.flag-prompt {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.flag-input {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.04em;
+}
+.flag-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.15);
+}
+.flag-input.wrong {
+  border-color: #ff3b3b;
+  animation: shake 0.3s ease;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+.flag-submit {
+  background: var(--accent);
+  color: #050710;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: opacity 0.15s, box-shadow 0.15s;
+  flex-shrink: 0;
+}
+.flag-submit:hover {
+  opacity: 0.85;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+}
+.flag-error {
+  color: #ff3b3b;
+  font-size: 12px;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+}
+.flag-error::before { content: '> '; opacity: 0.6; }
+
+/* ── Debrief (shown after solving) ── */
+.debrief {
+  background: var(--accent-dim);
+  border: 1px solid rgba(0, 255, 136, 0.22);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 24px 0;
+  display: none;
+  box-shadow: 0 0 24px rgba(0, 255, 136, 0.06);
+}
+.debrief-title {
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+.debrief-title::before { content: '> '; opacity: 0.5; }
+.debrief p {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.debrief strong { color: var(--text); }
+.next-btn {
+  display: inline-block;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 9px 18px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  transition: background 0.15s;
+}
+.next-btn:hover { background: var(--accent-dim); }
+
+/* ── Hint system ── */
+.hint-toggle {
+  background: none;
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  padding: 8px 16px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.hint-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.hint-box {
+  background: var(--surface-2);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  padding: 12px 16px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  display: none;
+  line-height: 1.7;
+}
+
+/* ── Callout overrides for hack-lab ── */
+.callout {
+  border-left: 2px solid var(--accent);
+  background: var(--accent-dim);
+}
+.callout-icon { color: var(--accent); }
+
+/* ── Results panel (index.html only) ── */
+.results-panel {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  padding: 0;
+  margin: 32px 0;
+  overflow: hidden;
+  box-shadow: 0 0 32px rgba(0, 255, 136, 0.07);
+  font-family: var(--font-mono);
+}
+.results-inner {
+  padding: 20px 24px;
+}
+.results-header {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.results-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  padding: 5px 0;
+  gap: 8px;
+}
+.results-row.done { color: var(--accent); }
+.results-row.pending { color: var(--text-dim); }
+.results-row-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+.hint-tag {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border: 1px solid var(--border-2);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+.results-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+.results-total {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.results-status-complete {
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+.results-status-partial {
+  font-size: 12px;
+  color: #eab308;
+  letter-spacing: 0.06em;
+}
+.share-prompt {
+  background: #050710;
+  border-top: 1px solid var(--border);
+  padding: 10px 24px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* ── Challenge cards (index.html) ── */
+.challenge-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+.challenge-card:hover {
+  border-color: var(--border-2);
+  background: var(--surface-2);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.04);
+}
+.challenge-card.card-done {
+  border-color: rgba(0, 255, 136, 0.28) !important;
+}
+.challenge-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 4px;
+  padding: 4px 9px;
+  flex-shrink: 0;
+  letter-spacing: 0.1em;
+}
+.challenge-body { flex: 1; min-width: 0; }
+.challenge-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+.challenge-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+.challenge-arrow {
+  color: var(--text-dim);
+  font-size: 18px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+}
+.done-badge {
+  display: none;
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-right: 4px;
+  font-family: var(--font-mono);
+}
+.card-done .done-badge { display: block; }
+
+/* ── Progress dots ── */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  font-family: var(--font-mono);
+}
+.progress-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.progress-dots { display: flex; gap: 6px; }
+.progress-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border-2);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.progress-dot.done {
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
+}
+.progress-count {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+/* ── Info cards (index.html) ── */
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+}
+.info-card h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+.info-card h3::before { content: '> '; color: var(--accent); opacity: 0.7; }
+.info-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Nav footer ── */
+.nav-footer { margin-top: 40px; }
+.nav-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.nav-btn-outline {
+  border-color: var(--border-2);
+  color: var(--text-muted);
+}
+.nav-btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Divider ── */
+.divider {
+  border-color: var(--border);
+}
+
+/* ── Section headings ── */
+section h2 {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}

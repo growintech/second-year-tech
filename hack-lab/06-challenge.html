@@ -3,227 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Challenge 6 — Form Bypass · Hack Lab · GIT</title>
+  <title>Challenge 06 — Form Bypass · Hack Lab · GIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../shared/style-intro.css">
-  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
-  <style>
-    /* Hack lab accent override */
-    :root { --accent: #22c55e; --accent-dim: #22c55e18; }
-    html.light { --accent: #16a34a; }
-
-    /* Browser window frame */
-    .browser-window {
-      border: 1px solid var(--border-2);
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 24px 0;
-    }
-    .browser-chrome {
-      background: var(--surface-2);
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-    .browser-dots { display: flex; gap: 6px; }
-    .browser-dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--border-2); }
-    .browser-dots span:nth-child(1) { background: #ef4444; }
-    .browser-dots span:nth-child(2) { background: #eab308; }
-    .browser-dots span:nth-child(3) { background: #22c55e; }
-    .browser-url {
-      flex: 1;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 4px 12px;
-      font-size: 12px;
-      color: var(--text-muted);
-      font-family: 'DM Mono', monospace;
-    }
-    .browser-body { padding: 24px; min-height: 220px; }
-
-    /* Flag panel */
-    .flag-panel {
-      background: var(--surface);
-      border: 1px solid var(--border-2);
-      border-radius: 10px;
-      padding: 20px 24px;
-      margin: 24px 0;
-    }
-    .flag-panel h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
-    .flag-input-row { display: flex; gap: 10px; }
-    .flag-input {
-      flex: 1;
-      background: var(--surface-2);
-      border: 2px solid var(--border-2);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
-      color: var(--text);
-      outline: none;
-      transition: border-color .2s;
-    }
-    .flag-input:focus { border-color: var(--accent); }
-    .flag-input.wrong { border-color: #ef4444; }
-    .flag-submit {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 14px;
-      transition: opacity .2s;
-    }
-    .flag-submit:hover { opacity: .85; }
-    .flag-error { color: #ef4444; font-size: 13px; margin-top: 8px; }
-
-    /* Debrief (hidden until solved) */
-    .debrief {
-      background: var(--accent-dim);
-      border: 1px solid #22c55e40;
-      border-radius: 10px;
-      padding: 20px 24px;
-      margin: 24px 0;
-      display: none;
-    }
-    .debrief h3 { color: var(--accent); font-size: 18px; margin-bottom: 8px; }
-    .debrief p { font-size: 14px; line-height: 1.7; margin-bottom: 12px; }
-    .debrief .next-btn {
-      display: inline-block;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    /* Hint system */
-    .hint-toggle { background: none; border: 1px solid var(--border-2); border-radius: 8px; padding: 8px 14px; color: var(--text-muted); font-size: 13px; cursor: pointer; margin-top: 12px; }
-    .hint-box { background: var(--surface-2); border-radius: 8px; padding: 12px 16px; margin-top: 8px; font-size: 13px; color: var(--text-muted); display: none; }
-  </style>
+  <link rel="stylesheet" href="./hack-lab.css">
 </head>
 <body>
-  <header class="topbar">
-    <a class="topbar-logo" href="./index.html">
-      <img src="./logo.svg" style="height:48px;width:auto;" alt="GIT">
-    </a>
-    <div class="topbar-right">
-      <span class="topbar-lesson">Hack Lab · Challenge 6 of 6</span>
-      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+<div class="timer-hud" id="timer-hud">
+  <span class="timer-label">⏱</span>
+  <span id="timer-display">00:00</span>
+</div>
+
+<header class="topbar">
+  <a class="topbar-logo" href="./index.html">
+    <img src="./logo.svg" style="height:48px;width:auto;" alt="GIT">
+  </a>
+  <div class="topbar-right">
+    <span class="topbar-lesson">HACK LAB · CHALLENGE 06 / 06</span>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <div class="badge-hack">Challenge 06 · Hack Lab</div>
+  <h1 class="hero-title">Form <span class="grad">Bypass</span></h1>
+  <p class="hero-sub">Get into MegaCorp's admin panel. The credentials are in the code.</p>
+
+  <div class="callout callout-tip">
+    <span class="callout-icon">▸</span>
+    <div class="callout-body">Read the page's JavaScript source (<code>Ctrl+U</code> or DevTools Sources tab). The login check runs in the browser — so the credentials must be in the code. Find them and log in.</div>
+  </div>
+
+  <div class="browser-window">
+    <div class="browser-chrome">
+      <div class="browser-dots"><span></span><span></span><span></span></div>
+      <div class="browser-url">https://megacorp.example/admin/login</div>
     </div>
-  </header>
-
-  <div class="page-wrap">
-    <div class="activity-badge badge-explore">Challenge 6 · Hack Lab</div>
-    <h1 class="hero-title">Form <span class="grad">Bypass</span></h1>
-    <p class="hero-sub">Find the credentials hardcoded in MegaCorp's admin login and get in.</p>
-
-    <div class="callout callout-tip">
-      <span class="callout-icon">🎯</span>
-      <div class="callout-body">Read the page's JavaScript source (<code>Ctrl+U</code> or DevTools <strong>Sources</strong> tab). The login validation is done in the browser — which means the credentials must be in the code. Find them and log in.</div>
-    </div>
-
-    <div class="browser-window">
-      <div class="browser-chrome">
-        <div class="browser-dots"><span></span><span></span><span></span></div>
-        <div class="browser-url">https://megacorp.example/admin/login</div>
+    <div class="browser-body">
+      <div class="megacorp-header">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="mc-logo">[MC]</span>
+          <span class="mc-name">MEGACORP SYSTEMS</span>
+          <span class="mc-tagline">// ADMIN PANEL</span>
+        </div>
+        <nav class="mc-nav">
+          <a href="#">HOME</a>
+          <a href="#">STATUS</a>
+          <a href="#">SUPPORT</a>
+        </nav>
       </div>
-      <div class="browser-body">
-        <div style="max-width:320px; margin:0 auto;">
-          <h2 style="font-size:20px; font-weight:700; margin-bottom:4px; text-align:center;">🔐 Admin Panel</h2>
-          <p style="font-size:13px; color:var(--text-muted); text-align:center; margin-bottom:20px;">MegaCorp Internal Access Only</p>
-          <div id="login-form">
-            <div style="margin-bottom:12px;">
-              <label style="font-size:13px; color:var(--text-muted); display:block; margin-bottom:4px;">Username</label>
-              <input type="text" id="mc-user" style="width:100%; background:var(--surface-2); border:1px solid var(--border-2); border-radius:8px; padding:10px 12px; color:var(--text); font-size:14px; outline:none;" placeholder="username">
-            </div>
-            <div style="margin-bottom:16px;">
-              <label style="font-size:13px; color:var(--text-muted); display:block; margin-bottom:4px;">Password</label>
-              <input type="password" id="mc-pass" style="width:100%; background:var(--surface-2); border:1px solid var(--border-2); border-radius:8px; padding:10px 12px; color:var(--text); font-size:14px; outline:none;" placeholder="password">
-            </div>
-            <button onclick="mcLogin()" style="width:100%; background:#22c55e; color:#fff; border:none; border-radius:8px; padding:11px; font-weight:700; cursor:pointer; font-size:14px;">Log In</button>
-            <div id="mc-error" style="color:#ef4444; font-size:13px; margin-top:8px; text-align:center;"></div>
+      <div class="megacorp-content" style="max-width:360px;margin:0 auto;padding:28px 24px;">
+        <div id="login-form-area">
+          <div style="font-size:12px;font-weight:700;color:#cc2200;font-family:'Space Mono',monospace;letter-spacing:.1em;margin-bottom:18px;text-align:center;">🔐 ADMIN LOGIN</div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:10px;color:#4a7a5a;font-family:'Space Mono',monospace;letter-spacing:.1em;margin-bottom:5px;">USERNAME</label>
+            <input type="text" id="mc-user" autocomplete="off" spellcheck="false" style="width:100%;box-sizing:border-box;background:#0e1220;border:1px solid #1a2030;border-radius:4px;padding:9px 12px;font-family:'Space Mono',monospace;font-size:13px;color:#b8e8c8;outline:none;" onkeydown="if(event.key==='Enter')mcLogin()">
           </div>
-          <div id="admin-panel" style="display:none; text-align:center; padding:20px 0;">
-            <div style="font-size:48px; margin-bottom:12px;">✅</div>
-            <div style="font-weight:700; font-size:16px; margin-bottom:8px;">Access Granted</div>
-            <div style="font-family:monospace; background:var(--surface-2); border-radius:8px; padding:12px; font-size:14px; color:#22c55e;">GIT{hardcoded_is_broken}</div>
+          <div style="margin-bottom:18px;">
+            <label style="display:block;font-size:10px;color:#4a7a5a;font-family:'Space Mono',monospace;letter-spacing:.1em;margin-bottom:5px;">PASSWORD</label>
+            <input type="password" id="mc-pass" autocomplete="off" style="width:100%;box-sizing:border-box;background:#0e1220;border:1px solid #1a2030;border-radius:4px;padding:9px 12px;font-family:'Space Mono',monospace;font-size:13px;color:#b8e8c8;outline:none;" onkeydown="if(event.key==='Enter')mcLogin()">
+          </div>
+          <button onclick="mcLogin()" style="width:100%;background:var(--mc-red);color:#fff;border:none;border-radius:4px;padding:11px;font-weight:700;font-size:11px;font-family:'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;">[ LOGIN ]</button>
+          <div id="mc-login-error" style="color:#ff3b3b;font-size:11px;font-family:'Space Mono',monospace;margin-top:8px;text-align:center;display:none;">ACCESS DENIED — INVALID CREDENTIALS</div>
+        </div>
+        <div id="admin-panel" style="display:none;">
+          <div style="text-align:center;margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:700;color:#cc2200;font-family:'Space Mono',monospace;letter-spacing:.1em;margin-bottom:8px;">✓ ACCESS GRANTED</div>
+            <div style="font-size:13px;color:#fff;font-family:'Space Mono',monospace;font-weight:700;margin-bottom:4px;">Welcome, Administrator.</div>
+          </div>
+          <div style="background:#0e1220;border:1px solid #1a2030;border-radius:6px;padding:14px 16px;margin-bottom:10px;">
+            <div style="font-size:10px;color:#4a7a5a;font-family:'Space Mono',monospace;letter-spacing:.08em;margin-bottom:6px;">ADMIN FLAG</div>
+            <div style="font-family:'Space Mono',monospace;font-size:14px;color:#00ff88;font-weight:700;letter-spacing:.04em;">GIT{hardcoded_is_broken}</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:#0e1220;border:1px solid #cc220033;border-radius:6px;padding:12px;">
+              <div style="font-size:10px;color:#663322;font-family:'Space Mono',monospace;letter-spacing:.08em;">USERS</div>
+              <div style="font-size:20px;font-weight:700;color:#fff;font-family:'Space Mono',monospace;margin-top:4px;">4,821</div>
+            </div>
+            <div style="background:#0e1220;border:1px solid #cc220033;border-radius:6px;padding:12px;">
+              <div style="font-size:10px;color:#663322;font-family:'Space Mono',monospace;letter-spacing:.08em;">SERVERS</div>
+              <div style="font-size:20px;font-weight:700;color:#cc2200;font-family:'Space Mono',monospace;margin-top:4px;">12</div>
+            </div>
           </div>
         </div>
-        <script>
-          function mcLogin() {
-            var user = document.getElementById('mc-user').value;
-            var pass = document.getElementById('mc-pass').value;
-            // TODO: move auth to server side
-            if (user === 'admin' && pass === 'megacorp2024') {
-              document.getElementById('login-form').style.display = 'none';
-              document.getElementById('admin-panel').style.display = 'block';
-            } else {
-              document.getElementById('mc-error').textContent = 'Invalid credentials.';
-            }
+      </div>
+      <script>
+        function mcLogin() {
+          var user = document.getElementById('mc-user').value;
+          var pass = document.getElementById('mc-pass').value;
+          var errEl = document.getElementById('mc-login-error');
+          if (user === 'admin' && pass === 'megacorp2024') {
+            document.getElementById('login-form-area').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            errEl.style.display = 'none';
+          } else {
+            errEl.style.display = 'block';
           }
-        </script>
-      </div>
-    </div>
-
-    <button class="hint-toggle" onclick="toggleHint()">💡 Need a hint?</button>
-    <div class="hint-box" id="hint-box">Look for an <code>if</code> statement in the JavaScript that checks a username and password. Use <code>Ctrl+U</code> to view source and search for <code>===</code> or <code>admin</code>. The credentials are the exact strings being compared against in the <code>mcLogin</code> function.</div>
-
-    <div class="flag-panel">
-      <h3>🚩 Submit Flag</h3>
-      <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Log in to the admin panel above first, then copy the flag you see and paste it here.</p>
-      <div class="flag-input-row">
-        <input type="text" class="flag-input" id="flag-input" placeholder="GIT{...}" autocomplete="off" onkeydown="if(event.key==='Enter')checkFlag()">
-        <button class="flag-submit" onclick="checkFlag()">Submit</button>
-      </div>
-      <div id="flag-error" class="flag-error"></div>
-    </div>
-
-    <div class="debrief" id="debrief">
-      <h3>🔓 Challenge solved!</h3>
-      <p>Client-side authentication is a myth. Any login that checks credentials in JavaScript running in the browser can be broken by simply reading the source code. Real authentication must happen on the server, where the client can't see the logic.</p>
-      <p><strong>The lesson:</strong> Authentication logic must run on the server. Never check passwords in browser JavaScript.</p>
-      <a href="./index.html" class="next-btn">Back to Hub →</a>
-    </div>
-
-    <div class="nav-footer">
-      <a href="./index.html" class="nav-btn nav-btn-outline">← Back to Hub</a>
+        }
+      </script>
+      <div class="megacorp-footer">© 2024 MEGACORP SYSTEMS INC. — ADMIN PANEL — AUTHORIZED PERSONNEL ONLY</div>
     </div>
   </div>
 
-  <script src="../shared/app-intro.js"></script>
-  <script>
-    if (localStorage.getItem('hacklab-06-done') === 'true') {
-      document.getElementById('debrief').style.display = 'block';
-    }
+  <button class="hint-toggle" onclick="toggleHint()">[ HINT ]</button>
+  <div class="hint-box" id="hint-box">Look for an <code>if</code> statement comparing <code>user</code> and <code>pass</code> in the JavaScript. The credentials are the exact strings. Try searching for <code>admin</code> in the page source with <code>Ctrl+U</code> then <code>Ctrl+F</code>.</div>
 
-    function toggleHint() {
-      var h = document.getElementById('hint-box');
-      h.style.display = h.style.display === 'block' ? 'none' : 'block';
-    }
+  <div class="flag-panel">
+    <div class="flag-panel-title">SUBMIT FLAG</div>
+    <div class="flag-input-row">
+      <span class="flag-prompt">$</span>
+      <input type="text" class="flag-input" id="flag-input" placeholder="GIT{...}" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')checkFlag()">
+      <button class="flag-submit" onclick="checkFlag()">[ SUBMIT ]</button>
+    </div>
+    <div id="flag-error" class="flag-error"></div>
+  </div>
 
-    function checkFlag() {
-      var val = document.getElementById('flag-input').value.trim();
-      var input = document.getElementById('flag-input');
-      var err = document.getElementById('flag-error');
-      if (val === 'GIT{hardcoded_is_broken}') {
-        localStorage.setItem('hacklab-06-done', 'true');
-        document.getElementById('debrief').style.display = 'block';
-        document.getElementById('debrief').scrollIntoView({ behavior: 'smooth' });
-        input.classList.remove('wrong');
-        err.textContent = '';
-      } else {
-        input.classList.add('wrong');
-        err.textContent = 'Wrong flag. Keep looking!';
-        setTimeout(function() { input.classList.remove('wrong'); }, 1000);
+  <div class="debrief" id="debrief">
+    <div class="debrief-title">FLAG ACCEPTED</div>
+    <p>Client-side authentication is fundamentally broken. Any login that checks credentials in JavaScript running in the browser can be bypassed by reading the source code — no hacking tools required. Real authentication must happen on the server, where the client cannot see the logic.</p>
+    <p><strong>The lesson:</strong> Authentication logic must run on the server. Never check passwords in browser JavaScript.</p>
+    <a href="./index.html" class="next-btn">[ MISSION COMPLETE ] →</a>
+  </div>
+
+  <div class="nav-footer">
+    <a href="./index.html" class="nav-btn nav-btn-outline">← BACK TO HUB</a>
+  </div>
+
+</div>
+
+<script src="../shared/app-intro.js"></script>
+<script>
+  var STEP = '06';
+  var FLAG = 'GIT{hardcoded_is_broken}';
+
+  if (!localStorage.getItem('hacklab-' + STEP + '-start')) {
+    localStorage.setItem('hacklab-' + STEP + '-start', Date.now());
+  }
+
+  var timerInterval;
+  function startTimer() {
+    timerInterval = setInterval(function() {
+      var start = parseInt(localStorage.getItem('hacklab-' + STEP + '-start'));
+      var endVal = localStorage.getItem('hacklab-' + STEP + '-end');
+      var elapsed = Math.floor(((endVal ? parseInt(endVal) : Date.now()) - start) / 1000);
+      var mm = String(Math.floor(elapsed / 60)).padStart(2, '0');
+      var ss = String(elapsed % 60).padStart(2, '0');
+      document.getElementById('timer-display').textContent = mm + ':' + ss;
+      if (endVal) clearInterval(timerInterval);
+    }, 1000);
+  }
+
+  function toggleHint() {
+    var h = document.getElementById('hint-box');
+    var showing = h.style.display === 'block';
+    h.style.display = showing ? 'none' : 'block';
+    if (!showing) localStorage.setItem('hacklab-' + STEP + '-hint', 'true');
+  }
+
+  function checkFlag() {
+    var val = document.getElementById('flag-input').value.trim();
+    var input = document.getElementById('flag-input');
+    var err = document.getElementById('flag-error');
+    if (val === FLAG) {
+      if (!localStorage.getItem('hacklab-' + STEP + '-end')) {
+        localStorage.setItem('hacklab-' + STEP + '-end', Date.now());
       }
+      localStorage.setItem('hacklab-' + STEP + '-done', 'true');
+      clearInterval(timerInterval);
+      document.getElementById('debrief').style.display = 'block';
+      document.getElementById('debrief').scrollIntoView({ behavior: 'smooth' });
+      input.classList.remove('wrong');
+      err.textContent = '';
+    } else {
+      input.classList.add('wrong');
+      err.textContent = 'Wrong flag. Keep looking.';
+      setTimeout(function() { input.classList.remove('wrong'); }, 1000);
     }
-  </script>
+  }
+
+  if (localStorage.getItem('hacklab-' + STEP + '-done') === 'true') {
+    document.getElementById('debrief').style.display = 'block';
+  }
+
+  startTimer();
+</script>
 </body>
 </html>
