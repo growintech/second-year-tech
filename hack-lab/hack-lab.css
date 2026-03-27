@@ -2,16 +2,16 @@
 
 /* ── Override shared variables ── */
 :root {
-  --bg:         #050710;
-  --surface:    #090c17;
-  --surface-2:  #0e1220;
-  --border:     rgba(0, 255, 136, 0.07);
-  --border-2:   rgba(0, 255, 136, 0.16);
-  --text:       #b8e8c8;
-  --text-muted: #4a7a5a;
-  --text-dim:   #243530;
+  --bg:         #070a0e;
+  --surface:    #0d1117;
+  --surface-2:  #141921;
+  --border:     rgba(0, 255, 136, 0.1);
+  --border-2:   rgba(0, 255, 136, 0.2);
+  --text:       #e2e8f0;
+  --text-muted: #8b9eb1;
+  --text-dim:   #4a5a6a;
   --accent:     #00ff88;
-  --accent-dim: rgba(0, 255, 136, 0.07);
+  --accent-dim: rgba(0, 255, 136, 0.05);
   --grad-start: #00ff88;
   --grad-end:   #00ccff;
   --grad:       linear-gradient(90deg, #00ff88, #00ccff);
@@ -65,6 +65,7 @@ body {
   text-transform: uppercase;
   padding: 4px 12px;
   border-radius: 4px;
+  margin-top: 24px;
   margin-bottom: 16px;
   font-family: var(--font-mono);
 }
@@ -97,11 +98,12 @@ body {
 
 /* ── Browser window (fake target site) ── */
 .browser-window {
-  border: 1px solid var(--border-2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
   overflow: hidden;
   margin: 24px 0;
-  box-shadow: 0 0 32px rgba(0, 255, 136, 0.04);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05);
+  background: #020406;
 }
 .browser-chrome {
   background: var(--surface-2);
@@ -586,4 +588,71 @@ section h2 {
   font-family: var(--font-mono);
   font-size: 16px;
   letter-spacing: 0.02em;
+}
+
+/* ── Confirmation Modal ── */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+}
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  width: 90%;
+  max-width: 420px;
+  padding: 24px;
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.1);
+}
+.modal-title {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 16px;
+  letter-spacing: 0.08em;
+}
+.modal-body {
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.modal-btn {
+  background: none;
+  border: 1px solid var(--border-2);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
+.modal-btn:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+.modal-btn-danger {
+  border-color: var(--mc-red);
+  color: var(--mc-red);
+}
+.modal-btn-danger:hover {
+  background: var(--mc-red-dim);
+  border-color: var(--mc-red);
+  color: var(--mc-red);
+  box-shadow: 0 0 10px rgba(204, 34, 0, 0.3);
 }

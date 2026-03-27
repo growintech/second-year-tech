@@ -125,6 +125,18 @@
       </div>
     </section>
 
+    <!-- Timer Confirmation Modal -->
+    <div id="confirm-modal" class="modal-overlay" style="display:none;">
+      <div class="modal">
+        <div class="modal-title">&gt; SYSTEM WARNING</div>
+        <div class="modal-body">Opening this challenge will immediately start your timer. Are you ready to proceed?</div>
+        <div class="modal-actions">
+          <button class="modal-btn" onclick="closeModal()">[ ABORT ]</button>
+          <button class="modal-btn modal-btn-danger" id="modal-confirm-btn">[ PROCEED ]</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script src="../shared/app-intro.js"></script>
@@ -205,6 +217,29 @@
 
       document.getElementById('results-panel').style.display = 'block';
     }
+  </script>
+
+  <!-- Modal Logic -->
+  <script>
+    var targetUrl = '';
+    document.querySelectorAll('.challenge-card').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        targetUrl = this.getAttribute('href');
+        document.getElementById('confirm-modal').style.display = 'flex';
+      });
+    });
+
+    function closeModal() {
+      document.getElementById('confirm-modal').style.display = 'none';
+      targetUrl = '';
+    }
+
+    document.getElementById('modal-confirm-btn').addEventListener('click', function() {
+      if (targetUrl) {
+        window.location.href = targetUrl;
+      }
+    });
   </script>
 </body>
 </html>
