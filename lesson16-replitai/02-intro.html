@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 2 — The Initial Prompt · Replit AI · GIT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    .prompt-annotated {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .prompt-annotated-header {
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .prompt-lines {
+      padding: 16px;
+      font-family: var(--font-mono, monospace);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+    .prompt-line {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .prompt-text { color: var(--text); flex: 1; }
+    .prompt-tag {
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 4px;
+      font-family: var(--font-sans, sans-serif);
+      letter-spacing: .02em;
+    }
+    .tag-goal    { background: #0061ff22; color: #0061ff; }
+    .tag-limit   { background: #e8510022; color: #c44000; }
+    .tag-files   { background: #00963222; color: #006820; }
+    .tag-server  { background: #88008822; color: #770077; }
+    @media (max-width: 540px) { .prompt-tag { display: none; } }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <img src="./logo.svg" style="height:48px;width:auto;" alt="GIT">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">JS · Year 2 · Lesson 16</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-dot"></div>
+    <div class="progress-dot active"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="activity-badge badge-explore">Step 2 · Replit AI</div>
+    <h1 class="hero-title">The <span class="grad">Initial Prompt</span></h1>
+    <p class="hero-sub">One specific prompt tells Replit to stay simple — and keeps the generated code readable.</p>
+
+    <section>
+      <p>Without guidance, Replit may generate a React app, a Node server with middleware, or other complex code. We can't understand that yet. The solution: <strong>send a precise setup prompt before anything else.</strong></p>
+
+      <p>Each line of the prompt does a specific job:</p>
+
+      <div class="prompt-annotated">
+        <div class="prompt-annotated-header">📋 Initial Replit prompt — send this first</div>
+        <div class="prompt-lines">
+          <div class="prompt-line">
+            <span class="prompt-text">Create a simple static website project, a beginner-friendly static website that runs in Replit preview using a minimal server.</span>
+            <span class="prompt-tag tag-goal">goal</span>
+          </div>
+          <div class="prompt-line">
+            <span class="prompt-text">The website itself must use ONLY plain HTML, CSS and JavaScript. No frameworks.</span>
+            <span class="prompt-tag tag-limit">constraint</span>
+          </div>
+          <div class="prompt-line">
+            <span class="prompt-text">The website must have three files: index.html&nbsp;&nbsp;style.css&nbsp;&nbsp;script.js</span>
+            <span class="prompt-tag tag-files">files</span>
+          </div>
+          <div class="prompt-line">
+            <span class="prompt-text">Put style and script in the /public folder.</span>
+            <span class="prompt-tag tag-files">files</span>
+          </div>
+          <div class="prompt-line">
+            <span class="prompt-text">Create a minimal server so the project can run in Replit preview. The server must only serve the static files.</span>
+            <span class="prompt-tag tag-server">server</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          The server is only needed so Replit can preview the site in the browser. Your HTML/CSS/JS files stay completely static — no server code goes inside them.
+        </div>
+      </div>
+
+      <h2>Why each constraint matters</h2>
+      <div class="class-switcher" id="cs-02">
+        <div class="cs-tabs">
+          <button class="cs-tab active" onclick="switchClassTab('cs-02', 0)">No frameworks</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 1)">Three named files</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 2)">/public folder</button>
+          <button class="cs-tab" onclick="switchClassTab('cs-02', 3)">Minimal server</button>
+        </div>
+        <div class="cs-content-wrap">
+          <div class="cs-pane active"><p>Without this line Replit may use React or Vue. Those frameworks add hundreds of files and concepts you haven't learned yet. <strong>Plain HTML/CSS/JS only.</strong></p></div>
+          <div class="cs-pane"><p>Naming the files explicitly prevents Replit from inventing its own structure. You will always find <code>index.html</code>, <code>style.css</code>, and <code>script.js</code> — nothing unexpected.</p></div>
+          <div class="cs-pane"><p>Replit serves static files from a public-facing folder. Putting CSS and JS in <code>/public</code> means the browser can load them directly.</p></div>
+          <div class="cs-pane"><p>A tiny server (a few lines of Node.js) is enough to make Replit's preview work. It only serves the files — it adds no logic to your website.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MINI-IDE -->
+    <div class="mini-ide-wrap">
+      <h3>▶ Try it yourself</h3>
+      <div class="mini-ide-actions">
+        <button id="run-btn" class="btn-run">▶ Run</button>
+        <span style="font-size:13px;color:var(--text-muted)">Edit the prompt below and run to see how it could look on a page.</span>
+      </div>
+      <div class="mini-editor-wrap">
+        <textarea id="mini-editor"></textarea>
+      </div>
+      <iframe id="mini-preview" class="mini-preview" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- QUIZ -->
+    <div class="quiz-section">
+      <h2>Quick Check</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Answer all questions correctly to unlock the IDE.</p>
+      <div id="quiz-container"></div>
+      <button class="quiz-check-btn" onclick="checkQuiz(2, QUIZZES_2, 'go-ide-btn', 'quiz-result')">Check Answers</button>
+      <div id="quiz-result" class="quiz-result"></div>
+    </div>
+
+    <!-- NAV FOOTER -->
+    <div class="nav-footer">
+      <a href="./01-intro.html" class="nav-btn nav-btn-outline">← Back</a>
+      <button id="go-ide-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='02-ide.html'">Enter IDE →</button>
+    </div>
+
+  </div><!-- end page-wrap -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="../shared/app-intro.js"></script>
+  <script>
+    const QUIZZES_2 = [
+      {
+        q: 'What happens if you skip the initial prompt and let Replit generate freely?',
+        opts: [
+          'Nothing — Replit always produces plain HTML',
+          'It may use React, Vue, or other frameworks you haven\'t studied',
+          'The project won\'t compile',
+          'Replit charges extra credits',
+        ],
+        correct: 1,
+      },
+      {
+        q: 'Why do we put style.css and script.js in the /public folder?',
+        opts: [
+          'It makes the files faster to download',
+          'It prevents the AI from editing them',
+          'Replit serves static files from a public-facing folder so the browser can load them',
+          'It is a JavaScript convention unrelated to Replit',
+        ],
+        correct: 2,
+      },
+      {
+        q: 'What does the minimal server do in our Replit project?',
+        opts: [
+          'It runs the quiz logic and stores scores',
+          'It only serves the static HTML, CSS and JS files',
+          'It connects to a database',
+          'It compiles JavaScript before sending it to the browser',
+        ],
+        correct: 1,
+      },
+    ];
+
+    const STARTER_2 = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Prompt</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
+    pre {
+      background: #f4f4f4;
+      border-left: 4px solid #0061ff;
+      padding: 16px;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Initial Replit Prompt</h1>
+  <pre>
+Create a simple static website project, a beginner-friendly
+static website that runs in Replit preview using a minimal server.
+The website itself must use ONLY plain HTML, CSS and JavaScript.
+No frameworks.
+The website must have three files: index.html  style.css  script.js
+Put style and script in the /public folder.
+Create a minimal server so the project can run in Replit preview.
+The server must only serve the static files.
+  </pre>
+</body>
+</html>`;
+
+    renderQuiz('quiz-container', 2, QUIZZES_2);
+    restoreQuizState(2, 'go-ide-btn');
+    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_2);
+  </script>
+</body>
+</html>

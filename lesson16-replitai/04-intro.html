@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 4 — Inspect &amp; Download · Replit AI · GIT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    .file-tree {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-family: var(--font-mono, monospace);
+      font-size: 13px;
+      line-height: 2;
+      margin: 20px 0;
+    }
+    .file-tree .dir  { color: var(--text-muted); }
+    .file-tree .file-hl { color: var(--accent, #0061ff); font-weight: 600; }
+    .file-tree .note {
+      font-family: var(--font-sans, sans-serif);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: 8px;
+    }
+    .download-steps {
+      counter-reset: dl-step;
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+    .download-steps li {
+      counter-increment: dl-step;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .download-steps li:last-child { border-bottom: none; }
+    .download-steps li::before {
+      content: counter(dl-step);
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--accent, #0061ff);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <img src="./logo.svg" style="height:48px;width:auto;" alt="GIT">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">JS · Year 2 · Lesson 16</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot active"></div>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="activity-badge badge-explore">Step 4 · Replit AI</div>
+    <h1 class="hero-title">Inspect &amp; <span class="grad">Download</span></h1>
+    <p class="hero-sub">Find your static files inside the generated project, download them, and run the site locally.</p>
+
+    <section>
+      <h2>The generated file structure</h2>
+      <p>After the agent runs, the file tree contains more than just your HTML/CSS/JS. Look for the folder with your three static files:</p>
+
+      <div class="file-tree">
+        <div class="dir">replit-project/</div>
+        <div class="dir">&nbsp;&nbsp;├── server.js<span class="note">← keeps Replit preview running (ignore)</span></div>
+        <div class="dir">&nbsp;&nbsp;├── package.json<span class="note">← Node config (ignore)</span></div>
+        <div class="dir">&nbsp;&nbsp;└── artifacts/</div>
+        <div class="dir">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── static-site/</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file-hl">├── index.html</span><span class="note">← your website</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file-hl">└── public/</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file-hl">├── style.css</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file-hl">└── script.js</span></div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          The exact folder name varies — look for the folder that contains <code>index.html</code>. That is the one to download.
+        </div>
+      </div>
+
+      <h2>Download &amp; run locally</h2>
+
+      <ol class="download-steps">
+        <li>In the file tree, right-click the folder that contains <code>index.html</code> (e.g. <code>static-site/</code>).</li>
+        <li>Select <strong>Download</strong> — Replit creates a ZIP file and your browser downloads it.</li>
+        <li>Unzip the archive. You should see <code>index.html</code> and a <code>public/</code> folder.</li>
+        <li>Double-click <code>index.html</code> — it opens directly in your browser, no server needed.</li>
+        <li>Check that the styles load and any JavaScript interactions work.</li>
+      </ol>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠</span>
+        <div class="callout-body">
+          If the page loads but styles are missing, check that <code>style.css</code> is linked correctly inside <code>&lt;head&gt;</code> and that the <code>href</code> path matches the actual file location.
+        </div>
+      </div>
+
+      <h2>The final project</h2>
+      <p>Your final project uses the same delivery format: a <strong>ZIP archive</strong> containing <code>index.html</code>, <code>style.css</code>, and <code>script.js</code>, uploaded to Classroom.</p>
+      <p>You may use AI tools to help generate code, but you must be able to read it, explain it, and modify it manually.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MINI-IDE: sample generated index.html to inspect -->
+    <div class="mini-ide-wrap">
+      <h3>▶ Inspect a generated file</h3>
+      <div class="mini-ide-actions">
+        <button id="run-btn" class="btn-run">▶ Run</button>
+        <span style="font-size:13px;color:var(--text-muted)">This is what a generated index.html might look like. Read it, then click Run.</span>
+      </div>
+      <div class="mini-editor-wrap">
+        <textarea id="mini-editor"></textarea>
+      </div>
+      <iframe id="mini-preview" class="mini-preview" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- QUIZ -->
+    <div class="quiz-section">
+      <h2>Quick Check</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Answer all questions correctly to unlock the IDE.</p>
+      <div id="quiz-container"></div>
+      <button class="quiz-check-btn" onclick="checkQuiz(4, QUIZZES_4, 'go-ide-btn', 'quiz-result')">Check Answers</button>
+      <div id="quiz-result" class="quiz-result"></div>
+    </div>
+
+    <!-- NAV FOOTER -->
+    <div class="nav-footer">
+      <a href="./03-intro.html" class="nav-btn nav-btn-outline">← Back</a>
+      <button id="go-ide-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='04-ide.html'">Enter IDE →</button>
+    </div>
+
+  </div><!-- end page-wrap -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="../shared/app-intro.js"></script>
+  <script>
+    const QUIZZES_4 = [
+      {
+        q: 'After running the initial prompt, where do your HTML/CSS/JS files usually end up?',
+        opts: [
+          'Directly in the root of the project',
+          'Inside a folder like artifacts/static-site/ containing index.html and public/',
+          'In a folder called src/',
+          'Inside the server.js file',
+        ],
+        correct: 1,
+      },
+      {
+        q: 'How do you download a specific folder from Replit?',
+        opts: [
+          'Click File → Export Project',
+          'Right-click the folder in the file tree and select Download',
+          'Use the terminal command "npm run export"',
+          'You must download the whole project, not a single folder',
+        ],
+        correct: 1,
+      },
+      {
+        q: 'After downloading and unzipping, how do you test the site without a server?',
+        opts: [
+          'Run "npm start" in the terminal',
+          'Open index.html directly in a browser by double-clicking it',
+          'Upload it to a hosting service first',
+          'You always need a server to open HTML files',
+        ],
+        correct: 1,
+      },
+    ];
+
+    const STARTER_4 = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- title is missing here -->
+  <link rel="stylesheet" href="public/style.css">
+  <style>
+    body { font-family: sans-serif; max-width: 500px; margin: 40px auto; padding: 0 16px; }
+    h1   { color: #0061ff; }
+    .card { background: #f4f8ff; border-radius: 8px; padding: 16px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Recap</h1>
+  <div class="card">
+    <strong>typeof</strong> — returns the type of a value as a string.
+    <br><code>typeof 42 → "number"</code>
+  </div>
+  <div class="card">
+    <strong>===</strong> — strict equality, checks value AND type.
+    <br><code>1 === "1" → false</code>
+  </div>
+  <div class="card">
+    <strong>Array.push()</strong> — adds an item to the end of an array.
+    <br><code>[1, 2].push(3) → [1, 2, 3]</code>
+  </div>
+  <script src="public/script.js"><\/script>
+</body>
+</html>`;
+
+    renderQuiz('quiz-container', 4, QUIZZES_4);
+    restoreQuizState(4, 'go-ide-btn');
+    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_4);
+  </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 1 — Coding Agents · Replit AI · GIT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+  <style>
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .compare-col {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .compare-col h4 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .compare-col ul {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .compare-col.agent { border-top: 3px solid var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <img src="./logo.svg" style="height:48px;width:auto;" alt="GIT">
+    </a>
+    <div class="topbar-right">
+      <span class="topbar-lesson">JS · Year 2 · Lesson 16</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-dot active"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+    <div class="progress-dot"></div>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="activity-badge badge-explore">Step 1 · Replit AI</div>
+    <h1 class="hero-title">What is a <span class="grad">Coding Agent?</span></h1>
+    <p class="hero-sub">Understand how AI coding agents differ from chatbots — and why Replit needs special instructions.</p>
+
+    <section>
+      <p>You've already seen AI tools that answer questions. A <strong>coding agent</strong> goes further: it reads your project files, writes new ones, and runs commands — all inside a real development environment.</p>
+
+      <div class="compare-grid">
+        <div class="compare-col">
+          <h4>💬 Chatbot</h4>
+          <ul>
+            <li>Answers questions in text</li>
+            <li>Can suggest code snippets</li>
+            <li>Does not touch your files</li>
+            <li>You copy-paste the output</li>
+          </ul>
+        </div>
+        <div class="compare-col agent">
+          <h4>🤖 Coding Agent</h4>
+          <ul>
+            <li>Reads and writes project files</li>
+            <li>Creates folders and structure</li>
+            <li>Runs commands, installs tools</li>
+            <li>Shows a live preview directly</li>
+          </ul>
+        </div>
+      </div>
+
+      <p><strong>The developer's role does not disappear.</strong> Your job is still to give clear instructions, read the generated code, and check that it makes sense.</p>
+
+      <h2>What is Replit?</h2>
+      <p><strong>Replit</strong> is a browser-based development environment with a built-in AI coding agent. By default it generates projects using modern frameworks — things like React or Node.js — which are powerful but complex.</p>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠</span>
+        <div class="callout-body">
+          <strong>For this course</strong> we only use plain HTML, CSS, and JavaScript. Without a clear initial prompt, Replit will generate code you can't understand yet.
+        </div>
+      </div>
+
+      <p>In the next step you'll learn how to write a <strong>setup prompt</strong> that constrains Replit to produce simple, readable files.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MINI-IDE -->
+    <div class="mini-ide-wrap">
+      <h3>▶ Try it yourself</h3>
+      <div class="mini-ide-actions">
+        <button id="run-btn" class="btn-run">▶ Run</button>
+        <span style="font-size:13px;color:var(--text-muted)">This is what a generated recap site might look like. Edit and run.</span>
+      </div>
+      <div class="mini-editor-wrap">
+        <textarea id="mini-editor"></textarea>
+      </div>
+      <iframe id="mini-preview" class="mini-preview" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- QUIZ -->
+    <div class="quiz-section">
+      <h2>Quick Check</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Answer all questions correctly to move to the next step.</p>
+      <div id="quiz-container"></div>
+      <button class="quiz-check-btn" onclick="checkQuiz(1, QUIZZES_1, 'go-next-btn', 'quiz-result')">Check Answers</button>
+      <div id="quiz-result" class="quiz-result"></div>
+    </div>
+
+    <!-- NAV FOOTER -->
+    <div class="nav-footer">
+      <a href="./index.html" class="nav-btn nav-btn-outline">← Back</a>
+      <button id="go-next-btn" class="nav-btn nav-btn-disabled" disabled onclick="window.location='02-intro.html'">Next: The Prompt →</button>
+    </div>
+
+  </div><!-- end page-wrap -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="../shared/app-intro.js"></script>
+  <script>
+    const QUIZZES_1 = [
+      {
+        q: 'What can a coding agent do that a regular chatbot cannot?',
+        opts: [
+          'Answer questions about programming',
+          'Read and write files inside your project',
+          'Display syntax-highlighted code',
+          'Translate code between languages',
+        ],
+        correct: 1,
+      },
+      {
+        q: 'Why do we need to give Replit a specific setup prompt before starting?',
+        opts: [
+          'Because Replit charges extra without one',
+          'To choose a colour theme for the editor',
+          'To stop it generating complex frameworks we haven\'t studied',
+          'Because Replit can\'t generate JavaScript otherwise',
+        ],
+        correct: 2,
+      },
+      {
+        q: 'When using an AI coding agent, what is still YOUR job as a developer?',
+        opts: [
+          'Nothing — the agent handles everything',
+          'Only running the code',
+          'Give clear instructions, read the output, and check the code',
+          'Only writing CSS',
+        ],
+        correct: 2,
+      },
+    ];
+
+    const STARTER_1 = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Recap</title>
+  <style>
+    body { font-family: sans-serif; max-width: 500px; margin: 40px auto; padding: 0 16px; }
+    button { padding: 8px 16px; margin: 4px; cursor: pointer; border-radius: 4px; border: 1px solid #ccc; }
+    #result { margin-top: 16px; font-weight: bold; color: #0061ff; display: none; }
+  </style>
+</head>
+<body>
+  <h1>Data Types Quiz</h1>
+  <p>What does <code>typeof 42</code> return?</p>
+  <button onclick="check('number')">number</button>
+  <button onclick="check('string')">string</button>
+  <button onclick="check('boolean')">boolean</button>
+  <p id="result"></p>
+  <script>
+    function check(answer) {
+      var result = document.getElementById('result');
+      result.style.display = 'block';
+      result.textContent = answer === 'number'
+        ? '✅ Correct! typeof 42 returns "number".'
+        : '❌ Try again.';
+    }
+  <\/script>
+</body>
+</html>`;
+
+    renderQuiz('quiz-container', 1, QUIZZES_1);
+    restoreQuizState(1, 'go-next-btn');
+    initMiniIDE('mini-editor', 'mini-preview', 'run-btn', STARTER_1);
+  </script>
+</body>
+</html>

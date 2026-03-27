@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 2 IDE — The Initial Prompt · Replit AI · GIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+  <link rel="stylesheet" href="../shared/style-ide.css">
+</head>
+<body>
+
+<!-- Starter code: a broken prompt — students must rewrite it with the correct constraints -->
+<script type="text/html" id="starter-code"><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Replit Prompt</title>
+</head>
+<body>
+  <h1>My Initial Replit Prompt</h1>
+  <p>This is the prompt I will paste into Replit before starting.</p>
+
+  <!-- Step 2: Rewrite the prompt inside the <pre> below. -->
+  <!-- It must mention: HTML, CSS, JavaScript, No frameworks    -->
+  <!-- It must name:   index.html, style.css, script.js        -->
+  <!-- It must include: /public folder                         -->
+
+  <pre id="prompt">
+Create a modern web app.
+Use React for the frontend.
+Make it look great with animations.
+  </pre>
+</body>
+</html>
+</script>
+
+<div id="shell">
+
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <a class="topbar-logo" href="./index.html">
+      <img src="./logo.svg" style="height:32px;width:auto;" alt="GIT">
+    </a>
+    <div class="topbar-breadcrumbs">
+      <span class="breadcrumb-dots">... /</span>
+      <a href="../../index.html" class="breadcrumb-link desktop-only">Lesson 16</a>
+      <span class="breadcrumb-sep desktop-only">/</span>
+      <a href="02-intro.html" class="breadcrumb-link desktop-only">Initial Prompt</a>
+      <span class="breadcrumb-sep desktop-only">/</span>
+      <span class="breadcrumb-current">Step 2 &mdash; IDE</span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="pills-group">
+      <button class="pill-btn pill-active" id="pill-instructions" onclick="togglePanel('instructions')">Instructions</button>
+      <button class="pill-btn pill-active" id="pill-editor" onclick="togglePanel('editor')">Editor</button>
+      <button class="pill-btn" id="pill-console" onclick="toggleConsolePanel()">Console</button>
+      <button class="pill-btn pill-active" id="pill-preview" onclick="togglePanel('preview')">Preview</button>
+    </div>
+    <div class="topbar-spacer"></div>
+    <button class="topbar-btn" onclick="toggleLayout()" id="layout-btn">⊞ Split</button>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+
+    <!-- INSTRUCTIONS -->
+    <div id="panel-instructions">
+      <div class="instruction-badge">Step 2 — The Initial Prompt</div>
+      <h2>Fix the Replit Prompt</h2>
+      <p>The prompt in the starter code will make Replit generate a React app. You need to rewrite it so the result is a plain HTML/CSS/JS website.</p>
+      <ul>
+        <li>Find the <code>&lt;pre id="prompt"&gt;</code> element in the HTML</li>
+        <li>Replace its content with a correct initial prompt</li>
+        <li>The prompt must mention <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong></li>
+        <li>It must say <strong>No frameworks</strong></li>
+        <li>It must name the three files: <strong>index.html</strong>, <strong>style.css</strong>, <strong>script.js</strong></li>
+        <li>It must include the <strong>/public</strong> folder for CSS and JS</li>
+      </ul>
+      <div class="hints-section">
+        <button class="hints-toggle" onclick="toggleHints(this)">💡 Hints <span>▶</span></button>
+        <div class="hints-body">
+          <div class="hint-item revealed">Hint 1: Start with "Create a simple static website project..." and remove any mention of React or animations.</div>
+          <div class="hint-item">Hint 2: Add a line: "The website itself must use ONLY plain HTML, CSS and JavaScript. No frameworks."</div>
+          <div class="hint-item">Hint 3: Add a line naming the three files, then "Put style and script in the /public folder."</div>
+          <button class="reveal-btn" onclick="revealNextHint(this)">Show next hint →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="drag-handle" id="drag-1" data-panel-a="panel-instructions" data-panel-b="panel-editor-console"></div>
+
+    <!-- EDITOR + CONSOLE -->
+    <div id="panel-editor-console">
+      <div id="panel-editor">
+        <div class="editor-tabs">
+          <button class="editor-tab active" id="tab-html" onclick="switchTab('html')">
+            <span>index.html</span>
+          </button>
+          <button class="editor-tab" id="tab-js" onclick="switchTab('js')">
+            <span>script.js</span>
+          </button>
+          <div class="editor-actions">
+            <button class="btn-check" onclick="runCheck()">✓ Check</button>
+            <button class="btn-run-ide" onclick="runPreview()">▶ Run</button>
+          </div>
+        </div>
+        <div class="editor-wrap">
+          <textarea id="code-editor"></textarea>
+        </div>
+        <div id="check-result"></div>
+      </div>
+      <div id="panel-console" class="hidden">
+        <div class="console-header" onclick="toggleConsoleExpand()">
+          <span>Console</span>
+          <span class="console-chevron" id="console-chevron">▼</span>
+        </div>
+        <div class="console-body" id="console-body">
+          <div class="console-msg" data-default>No output yet.</div>
+          <div id="console-input-row">
+            <span id="console-prompt">&gt;</span>
+            <input type="text" id="console-input" placeholder="Type JavaScript and press Enter..." autocomplete="off">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drag-handle" id="drag-2" data-panel-a="panel-editor-console" data-panel-b="panel-preview"></div>
+
+    <!-- PREVIEW -->
+    <div id="panel-preview">
+      <div class="preview-header">Preview</div>
+      <iframe id="preview-frame" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+
+  </div><!-- end main -->
+
+  <!-- IDE NAV -->
+  <div id="ide-nav">
+    <a href="./02-intro.html" class="ide-nav-btn">← Theory</a>
+    <button id="next-btn" class="ide-nav-btn ide-nav-btn-disabled" disabled title="Complete the check above to unlock the next step." onclick="goNext()">Next Step →</button>
+  </div>
+
+  <div id="status-bar">
+    <div class="status-left">
+      <span>Replit AI</span>
+      <span id="status-lang">HTML</span>
+      <span>Step 2 &mdash; Initial Prompt</span>
+    </div>
+    <div class="status-right">
+      <span>JS &middot; Year 2</span>
+    </div>
+  </div>
+
+</div><!-- end shell -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/html-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/javascript-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closetag.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+<script>
+  window.IDE_STEP = 2;
+  window.IDE_NEXT_URL = './03-intro.html';
+  window.validateStep = function(step, code) {
+    var failures = [];
+    function check(cond, msg) { if (!cond) failures.push(msg); }
+    if (step === 2) {
+      var lower = code.toLowerCase();
+      check(lower.includes('html'), 'Mention "HTML" in your prompt.');
+      check(lower.includes('css'), 'Mention "CSS" in your prompt.');
+      check(lower.includes('javascript'), 'Mention "JavaScript" in your prompt.');
+      check(lower.includes('framework'), 'Add "No frameworks" to your prompt.');
+      check(code.includes('index.html'), 'Name the file "index.html" in your prompt.');
+      check(code.includes('style.css'), 'Name the file "style.css" in your prompt.');
+      check(code.includes('script.js'), 'Name the file "script.js" in your prompt.');
+      check(code.includes('/public'), 'Specify the "/public" folder in your prompt.');
+    }
+    return failures;
+  };
+</script>
+<script src="../shared/app-ide.js"></script>
+</body>
+</html>
