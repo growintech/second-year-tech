@@ -2,6 +2,9 @@
 /* Fonts loaded via <link> in each HTML file:                                 */
 /* Barlow Condensed 700/800 (headings) + DM Mono 400/500 (everything else)   */
 
+/* Prevent display:flex/grid on auth bar elements from overriding [hidden] */
+[hidden] { display: none !important; }
+
 :root {
   --cyan:         #00E1FF;
   --blue:         #0061FF;
@@ -223,7 +226,7 @@ html.light .navbar { background: rgba(240, 244, 248, 0.92); }
   background: rgba(0, 0, 0, 0.72);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  z-index: 200;
+  z-index: 10000;
   align-items: center;
   justify-content: center;
   padding: 1rem;
