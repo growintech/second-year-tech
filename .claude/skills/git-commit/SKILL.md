@@ -178,3 +178,4 @@ Before running `git commit`, Claude Code must:
 
 Do not run `git commit -m "..."` silently. Always show the message first.
 Always push after committing — do not ask for a separate confirmation.
+Never include a "Co-Authored-By: Claude" footer in commit messages.
