@@ -1,0 +1,518 @@
+/* ── Terminal Run — game-specific styles ────────────────────────────────── */
+/* Extends games.css. Never overrides --bg, --cyan, --blue, --grad, --text. */
+
+/* ── Layout ──────────────────────────────────────────────────────────────── */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  background: var(--bg);
+  font-family: 'DM Mono', monospace;
+  color: var(--text);
+  user-select: none;
+}
+
+.full-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Start screen ────────────────────────────────────────────────────────── */
+.screen-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.screen-prompt {
+  font-size: 0.75rem;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.screen-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 10vw, 6rem);
+  line-height: 0.9;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 1.5rem;
+}
+
+.screen-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.key-hints {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.key-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+kbd {
+  display: inline-block;
+  padding: 0.1em 0.4em;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 3px;
+  color: var(--cyan);
+}
+
+.start-cta {
+  font-size: 0.8rem;
+  color: var(--cyan);
+  letter-spacing: 0.08em;
+  animation: blink-text 1.2s step-end infinite;
+}
+
+@keyframes blink-text {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.blink-cursor {
+  animation: blink-text 1s step-end infinite;
+  -webkit-text-fill-color: var(--cyan);
+}
+
+/* ── HUD ─────────────────────────────────────────────────────────────────── */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  background: linear-gradient(to bottom, rgba(10, 12, 16, 0.95), rgba(10, 12, 16, 0.8));
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.hud-item {
+  color: var(--text-muted);
+}
+
+#score-display {
+  color: var(--cyan);
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(0, 225, 255, 0.4);
+}
+
+.powerup-banner {
+  flex: 1;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--green);
+  opacity: 0;
+  transition: opacity 0.2s;
+  letter-spacing: 0.06em;
+}
+
+.powerup-banner.visible {
+  opacity: 1;
+}
+
+.hud-shield {
+  color: var(--green);
+}
+
+/* ── Game world ──────────────────────────────────────────────────────────── */
+#game-world {
+  position: absolute;
+  inset: 0;
+  top: 40px; /* below HUD */
+  overflow: hidden;
+}
+
+/* Scrolling code background */
+#code-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.code-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-size: 0.7rem;
+  color: var(--text);
+  opacity: 0.04;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: scroll-code linear infinite;
+}
+
+@keyframes scroll-code {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Ground line */
+#ground-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--border-2);
+  box-shadow: 0 0 6px rgba(0, 225, 255, 0.2);
+  pointer-events: none;
+}
+
+#speed-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 200px,
+    rgba(255, 255, 255, 0.02) 200px,
+    rgba(255, 255, 255, 0.02) 201px
+  );
+  animation: speed-lines-anim linear infinite;
+}
+
+@keyframes speed-lines-anim {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-200px); }
+}
+
+/* Entities layer */
+#entities {
+  position: absolute;
+  inset: 0;
+}
+
+/* ── Player ──────────────────────────────────────────────────────────────── */
+.player {
+  position: absolute;
+  font-family: 'DM Mono', monospace;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--cyan);
+  text-shadow: 0 0 12px rgba(0, 225, 255, 0.7);
+  line-height: 1;
+  transition: color 0.1s;
+  transform-origin: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  /* Position set by JS */
+}
+
+.player.ducking {
+  font-size: 1.2rem;
+  color: var(--blue);
+  text-shadow: 0 0 8px rgba(0, 97, 255, 0.6);
+  width: 40px;
+  height: 20px;
+}
+
+/* ── Trail & Particles ───────────────────────────────────────────────────── */
+.player-trail {
+  position: absolute;
+  font-family: 'DM Mono', monospace;
+  font-size: 2rem;
+  color: var(--cyan);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 5;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.particle {
+  position: absolute;
+  pointer-events: none;
+  font-family: 'DM Mono', monospace;
+  font-weight: bold;
+  z-index: 15;
+}
+
+/* ── Screen effects ──────────────────────────────────────────────────────── */
+.shake {
+  animation: screen-shake 0.15s ease-in-out;
+}
+
+@keyframes screen-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-4px, 4px); }
+  40% { transform: translate(4px, -4px); }
+  60% { transform: translate(-4px, -4px); }
+  80% { transform: translate(4px, 4px); }
+}
+
+.glitch-flash {
+  position: fixed;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  z-index: 9999;
+  pointer-events: none;
+  animation: glitch-flash-anim 0.2s ease-out;
+}
+
+@keyframes glitch-flash-anim {
+  0% { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+
+/* ── Obstacles ───────────────────────────────────────────────────────────── */
+.obstacle {
+  position: absolute;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Ground obstacles (SyntaxError, undefined, NaN) — jump over */
+.obstacle-normal {
+  font-size: 1.1rem;
+  color: #ef4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.obstacle-small {
+  font-size: 0.85rem;
+  color: #f97316;
+  text-shadow: 0 0 8px rgba(249, 115, 22, 0.4);
+}
+
+/* Low obstacle (· ;) — duck under */
+.obstacle-low {
+  font-size: 0.85rem;
+  color: #eab308;
+  text-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+  /* Wide underline to make it read as a bar/beam */
+  border-bottom: 2px solid rgba(234, 179, 8, 0.3);
+  padding: 0 0.5rem;
+}
+
+/* Tall obstacle (∞ LOOP) — needs power-up */
+.obstacle-tall {
+  font-size: 1.1rem;
+  color: #ef4444;
+  text-shadow: 0 0 16px rgba(239, 68, 68, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-left: 2px solid rgba(239, 68, 68, 0.4);
+  border-right: 2px solid rgba(239, 68, 68, 0.4);
+  padding: 0 0.5rem;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(239, 68, 68, 0.03),
+    rgba(239, 68, 68, 0.03) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+/* ── Power-ups ───────────────────────────────────────────────────────────── */
+.powerup {
+  position: absolute;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+  pointer-events: none;
+  animation: powerup-pulse 1.5s ease-in-out infinite;
+}
+
+.powerup-cyan {
+  color: var(--cyan);
+  background: rgba(0, 225, 255, 0.08);
+  box-shadow: 0 0 10px rgba(0, 225, 255, 0.3);
+}
+
+.powerup-green {
+  color: var(--green);
+  background: rgba(34, 197, 94, 0.08);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+.powerup-yellow {
+  color: var(--yellow);
+  background: rgba(234, 179, 8, 0.08);
+  box-shadow: 0 0 10px rgba(234, 179, 8, 0.3);
+}
+
+@keyframes powerup-pulse {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50%       { opacity: 0.7; transform: translateY(-4px); }
+}
+
+/* ── Screen flash (appended to body by JS) ───────────────────────────────── */
+.screen-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  animation: flash-fade 0.3s ease-out forwards;
+}
+
+.flash-red    { background: rgba(239, 68, 68, 0.35); }
+.flash-cyan   { background: rgba(0, 225, 255, 0.2); }
+.flash-green  { background: rgba(34, 197, 94, 0.2); }
+.flash-yellow { background: rgba(234, 179, 8, 0.2); }
+
+@keyframes flash-fade {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ── Game over screen ────────────────────────────────────────────────────── */
+.game-over-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.game-over-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 3.5rem;
+  color: var(--text);
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.final-score-row {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.final-score-value {
+  font-size: 2rem;
+  color: var(--cyan);
+  font-weight: 500;
+  margin-left: 0.5rem;
+  text-shadow: 0 0 12px rgba(0, 225, 255, 0.5);
+}
+
+.rank-display {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  min-height: 1.2em;
+}
+
+/* Top board */
+.top-board {
+  flex: 1;
+}
+
+.top-board-header {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.top-board-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.top-row {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+  font-family: 'DM Mono', monospace;
+  white-space: pre;
+}
+
+.top-row.my-score {
+  color: var(--cyan);
+}
+
+.loading-text {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  animation: blink-text 1s step-end infinite;
+}
+
+/* Actions */
+.game-over-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  color: var(--text-muted);
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--cyan);
+  color: var(--text);
+}
+
+/* ── Debugger active indicator ───────────────────────────────────────────── */
+.player.debugger-armed {
+  color: var(--cyan);
+  text-shadow: 0 0 20px rgba(0, 225, 255, 1), 0 0 40px rgba(0, 225, 255, 0.5);
+}

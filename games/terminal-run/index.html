@@ -4,25 +4,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terminal Run — GIT Games</title>
-  <link rel="stylesheet" href="../shared/games.css">
+  <!-- Theme init -->
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light')</script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/games.css">
+  <link rel="stylesheet" href="./terminal-run.css">
 </head>
 <body>
 
-  <div class="auth-bar">
-    <a href="/games/index.html" class="auth-bar-brand" style="text-decoration:none;">GIT Games</a>
+  <!-- ── Start screen ──────────────────────────────────────────────────────── -->
+  <div id="start-screen" class="full-screen">
+    <div class="screen-content">
+      <div class="screen-prompt">&gt; TERMINAL_RUN_v1.0_</div>
+      <h1 class="screen-title">TERMINAL<br>RUN<span class="blink-cursor">_</span></h1>
+      <p class="screen-sub">You are a cursor running through live code.<br>Jump over errors. Duck under warnings. Survive.</p>
+      <div class="key-hints">
+        <span class="key-hint"><kbd>SPACE</kbd> / <kbd>↑</kbd> — JUMP</span>
+        <span class="key-hint"><kbd>↓</kbd> — DUCK</span>
+      </div>
+      <div class="start-cta">&gt; PRESS ANY KEY TO START _</div>
+    </div>
   </div>
 
-  <header class="hero">
-    <h1>Terminal Run</h1>
-    <p>Game coming soon.</p>
-  </header>
+  <!-- ── Game container ─────────────────────────────────────────────────────── -->
+  <div id="game-container" class="full-screen" hidden>
 
+    <!-- HUD strip at top -->
+    <div id="hud">
+      <div id="speed-display" class="hud-item">SPEED: 1.0×</div>
+      <div id="powerup-banner" class="powerup-banner" aria-live="polite"></div>
+      <div id="shield-display" class="hud-item hud-shield" hidden>◈ SHIELD</div>
+      <div id="score-display" class="hud-item">DIST: 00000</div>
+    </div>
+
+    <!-- Game world — all gameplay happens here -->
+    <div id="game-world">
+      <!-- Faint scrolling code background for depth -->
+      <div id="code-bg" aria-hidden="true"></div>
+      <div id="speed-lines" aria-hidden="true"></div>
+
+      <!-- Ground line -->
+      <div id="ground-line" aria-hidden="true"></div>
+
+      <!-- Player + obstacles + power-ups (all absolutely positioned) -->
+      <div id="entities">
+        <div id="player" class="player">_</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Game over overlay ──────────────────────────────────────────────────── -->
+  <div id="game-over-screen" class="full-screen" hidden>
+    <div class="game-over-card panel">
+      <div class="screen-prompt">&gt; GAME_OVER_</div>
+      <h2 class="game-over-title">GAME OVER</h2>
+
+      <div class="final-score-row">
+        YOUR DIST: <span id="final-score" class="final-score-value">00000</span>
+      </div>
+
+      <div id="rank-display" class="rank-display">SUBMITTING SCORE...</div>
+
+      <div class="top-board">
+        <div class="top-board-header">── TOP 10: TERMINAL_RUN ─────────────────</div>
+        <div id="top-board-rows" class="top-board-rows"></div>
+      </div>
+
+      <div class="game-over-actions">
+        <button id="btn-play-again" class="btn-cta">[ PLAY AGAIN ]</button>
+        <a href="/games/index.html" class="btn-secondary">[ BACK TO HUB ]</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load shared libs before game.js so GIT_AUTH and GIT_LEADERBOARD are defined -->
   <script src="../shared/auth.js"></script>
+  <script src="../shared/leaderboard.js"></script>
+
+  <!-- game.js registers window.initGame as a classic script (no ES module exports) -->
+  <script src="./game.js"></script>
+
+  <!-- Auth gate: redirect if not authed, then boot the game with the profile -->
   <script>
-    const { requireAuth } = window.GIT_AUTH
-    requireAuth()
-    // game bootstrap will go here
+    (async () => {
+      const { requireAuth } = window.GIT_AUTH
+      const profile = await requireAuth()
+      if (profile) window.initGame(profile)
+    })()
   </script>
 
 </body>
