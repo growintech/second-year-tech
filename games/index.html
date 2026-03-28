@@ -4,124 +4,191 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GIT Games</title>
+  <!-- Theme init — must run before body renders to prevent flash -->
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./shared/games.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- ── Auth bar ──────────────────────────────────────────────────────────── -->
-  <div class="auth-bar">
-    <span class="auth-bar-brand">GIT Games</span>
+  <!-- ── Navbar ────────────────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <a href="../index.html" class="navbar-logo" aria-label="Grow in Tech — lessons hub">
+      <img src="../shared/logo.svg" height="36" alt="Grow in Tech">
+    </a>
 
-    <div id="bar-user" class="auth-bar-user" hidden>
-      <div class="avatar"><span id="avatar-initial"></span></div>
-      <span id="user-info" class="user-info"></span>
-      <button id="btn-logout" class="btn-logout">Log out</button>
+    <div class="navbar-nav">
+      <a href="#game-cards" class="nav-link">&gt; GAMES_HUB</a>
+      <a href="#leaderboard-section" class="nav-link">&gt; LEADERBOARD_</a>
+      <a href="#standings-section" class="nav-link">&gt; STANDINGS_</a>
     </div>
 
-    <div id="bar-guest" class="auth-bar-guest">
-      <button id="btn-open-modal" class="btn-login">Log in to play</button>
+    <div class="navbar-right">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+
+      <!-- Logged in -->
+      <div id="bar-user" class="nav-auth-user" hidden>
+        <span class="nav-user-badge">
+          <span class="school-code" id="avatar-initial"></span>&nbsp;<span id="user-info"></span>
+        </span>
+        <button id="btn-logout" class="nav-btn">LOGOUT</button>
+      </div>
+
+      <!-- Logged out -->
+      <div id="bar-guest" class="nav-auth-guest">
+        <button id="btn-open-modal" class="nav-btn-cta">[ LOG IN ]</button>
+      </div>
     </div>
-  </div>
+  </nav>
 
   <!-- ── Auth overlay ──────────────────────────────────────────────────────── -->
   <div id="auth-overlay" class="auth-overlay" role="dialog" aria-modal="true" aria-label="Authentication">
     <div class="auth-modal">
 
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <div class="modal-prompt">&gt; AUTH_</div>
+      <div class="modal-title" id="modal-title">LOG IN</div>
+
       <div class="auth-tabs" id="auth-tabs-bar">
-        <button class="auth-tab active" data-tab="login">Log in</button>
-        <button class="auth-tab" data-tab="register">Register</button>
+        <button class="auth-tab active" data-tab="login">LOG IN</button>
+        <button class="auth-tab" data-tab="register">REGISTER</button>
       </div>
 
       <!-- Login panel -->
       <div id="panel-login">
         <form id="form-login" novalidate>
-          <input id="login-email"    type="email"    placeholder="Email"    autocomplete="email"            required>
-          <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required>
+          <label class="input-label" for="login-email">EMAIL_ADDRESS</label>
+          <input id="login-email"    type="email"    placeholder="you@example.com" autocomplete="email"            required>
+          <label class="input-label" for="login-password">PASSWORD</label>
+          <input id="login-password" type="password" placeholder="••••••••"        autocomplete="current-password" required>
           <div class="auth-error" id="login-error"></div>
-          <button type="submit" class="btn-cta">Log in →</button>
+          <button type="submit" class="btn-cta">[ LOG IN → ]</button>
         </form>
-        <button id="btn-forgot" class="btn-forgot">Forgot password?</button>
+        <button id="btn-forgot" class="btn-forgot">FORGOT PASSWORD?</button>
       </div>
 
       <!-- Register panel -->
       <div id="panel-register" hidden>
         <form id="form-register" novalidate>
-          <input id="register-email"    type="email"    placeholder="Email"             autocomplete="email"        required>
-          <input id="register-password" type="password" placeholder="Password (min 6 chars)" autocomplete="new-password" required>
+          <label class="input-label" for="register-email">EMAIL_ADDRESS</label>
+          <input id="register-email"    type="email"    placeholder="you@example.com"     autocomplete="email"        required>
+          <label class="input-label" for="register-password">PASSWORD</label>
+          <input id="register-password" type="password" placeholder="Min 6 characters"    autocomplete="new-password" required>
           <div class="auth-error" id="register-error"></div>
-          <button type="submit" class="btn-cta">Register →</button>
+          <button type="submit" class="btn-cta">[ CREATE ACCOUNT → ]</button>
         </form>
       </div>
 
       <!-- Verify panel -->
       <div id="panel-verify" class="auth-verify" hidden>
-        <h3>Check your inbox</h3>
-        <p>We sent a confirmation link to your email. Click it to activate your account, then come back and log in.</p>
+        <div class="verify-icon">✉</div>
+        <h3>CHECK YOUR INBOX</h3>
+        <p>We sent a verification link to</p>
+        <p class="verify-email" id="verify-email"></p>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem">
+          Click the link in that email to activate your account, then come back and log in.
+        </p>
+        <button class="resend-btn" id="btn-resend" disabled>[ RESEND IN 60s ]</button>
       </div>
 
     </div>
   </div>
 
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-  <header class="hero">
-    <h1>GIT Games</h1>
-    <p>Play hard. Debug harder.</p>
+  <header class="hero" id="hero">
+    <div class="hero-prompt">&gt; GIT_GAMES_v1.0_</div>
+    <h1 class="hero-title">PLAY HARD.<br>DEBUG HARDER.<span class="blink-cursor">_</span></h1>
   </header>
 
   <main>
 
     <!-- ── Game cards ──────────────────────────────────────────────────────── -->
-    <section class="game-cards">
+    <section class="game-cards" id="game-cards">
 
-      <div class="game-card" id="card-hacking-sim">
-        <div class="game-icon">🔐</div>
-        <h3>Hacking Sim</h3>
-        <p>Race against the clock to breach the MegaCorp terminal. The faster you hack, the higher your score.</p>
-        <span class="personal-best"></span>
-        <button class="btn-play" data-href="./hacking-sim/index.html" disabled title="Log in to play">Play →</button>
+      <div class="game-card panel" id="card-hacking-sim">
+        <div class="card-header">[ HACKING_SIM ]</div>
+        <div class="card-body">
+          <p class="card-desc">Race against the clock to breach the MegaCorp terminal. The faster you hack, the higher your score.</p>
+          <span class="personal-best"></span>
+        </div>
+        <button class="btn-play" data-href="./hacking-sim/index.html" disabled title="Log in to play">
+          [ PLAY → ]
+        </button>
       </div>
 
-      <div class="game-card" id="card-terminal-run">
-        <div class="game-icon">⚡</div>
-        <h3>Terminal Run</h3>
-        <p>Type commands to outrun the firewall. Every keystroke counts in this shell-speed challenge.</p>
-        <span class="personal-best"></span>
-        <button class="btn-play" data-href="./terminal-run/index.html" disabled title="Log in to play">Play →</button>
+      <div class="game-card panel" id="card-terminal-run">
+        <div class="card-header">[ TERMINAL_RUN ]</div>
+        <div class="card-body">
+          <p class="card-desc">Type commands to outrun the firewall. Every keystroke counts in this shell-speed challenge.</p>
+          <span class="personal-best"></span>
+        </div>
+        <button class="btn-play" data-href="./terminal-run/index.html" disabled title="Log in to play">
+          [ PLAY → ]
+        </button>
       </div>
 
     </section>
 
     <!-- ── Leaderboard ─────────────────────────────────────────────────────── -->
-    <section class="leaderboard-section">
-      <h2>Leaderboard</h2>
+    <section class="leaderboard-section" id="leaderboard-section">
+      <div class="section-header">
+        <span class="section-prompt">&gt; LEADERBOARD_</span>
+        <span class="section-rule" aria-hidden="true">────────────────────────────────────────────────────────────</span>
+      </div>
       <div class="leaderboard-tabs">
-        <button class="leaderboard-tab active" data-game="">All</button>
-        <button class="leaderboard-tab" data-game="hacking-sim">Hacking Sim</button>
-        <button class="leaderboard-tab" data-game="terminal-run">Terminal Run</button>
+        <button class="leaderboard-tab active" data-game="">[ALL]</button>
+        <button class="leaderboard-tab" data-game="hacking-sim">[HACKING_SIM]</button>
+        <button class="leaderboard-tab" data-game="terminal-run">[TERMINAL_RUN]</button>
       </div>
       <div class="leaderboard-widget">
         <div id="leaderboard-rows">
-          <div class="leaderboard-empty">Loading…</div>
+          <div class="leaderboard-empty">&gt; LOADING_</div>
         </div>
       </div>
     </section>
 
     <!-- ── School standings ────────────────────────────────────────────────── -->
-    <section class="school-standings-section">
-      <h2>School standings</h2>
+    <section class="school-standings-section" id="standings-section">
+      <div class="section-header">
+        <span class="section-prompt">&gt; SCHOOL_STANDINGS_</span>
+        <span class="section-rule" aria-hidden="true">────────────────────────────────────────────────────────────</span>
+      </div>
       <div class="school-standings" id="school-standings">
-        <div class="leaderboard-empty">Loading…</div>
+        <div class="leaderboard-empty">&gt; LOADING_</div>
       </div>
     </section>
 
   </main>
 
+  <!-- ── Footer ────────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <span>&gt;&gt; Grow in Tech — Net@ Program</span>
+    <span class="footer-center">GIT_GAMES_v1.0 // <span id="footer-year"></span></span>
+    <span class="footer-right">lessons.growintech.it</span>
+  </footer>
+
   <script type="module">
-    import { getSession, getProfile, login, register, logout, resetPassword } from './shared/auth.js'
+    import { getSession, getProfile, login, register, logout, resetPassword, db } from './shared/auth.js'
     import { getLeaderboard, getPersonalBest, getSchoolStandings } from './shared/leaderboard.js'
+
+    // ── Theme toggle ─────────────────────────────────────────────────────────
+    const themeBtn = document.getElementById('theme-toggle')
+    function syncThemeBtn() {
+      themeBtn.textContent = document.documentElement.classList.contains('light') ? '☀️' : '🌙'
+    }
+    syncThemeBtn()
+    themeBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light')
+      const isLight = document.documentElement.classList.contains('light')
+      localStorage.setItem('git-theme', isLight ? 'light' : 'dark')
+      syncThemeBtn()
+    })
+
+    // ── Footer year ──────────────────────────────────────────────────────────
+    document.getElementById('footer-year').textContent = new Date().getFullYear()
 
     // ── State ────────────────────────────────────────────────────────────────
     let session = null
@@ -155,8 +222,8 @@
       const barGuest = document.getElementById('bar-guest')
 
       if (session && profile) {
-        document.getElementById('avatar-initial').textContent = profile.nickname[0].toUpperCase()
-        document.getElementById('user-info').textContent = `${profile.nickname} · ${profile.school_code}`
+        document.getElementById('avatar-initial').textContent = `[${profile.school_code}]`
+        document.getElementById('user-info').textContent = profile.nickname
         barUser.hidden  = false
         barGuest.hidden = true
       } else {
@@ -166,13 +233,12 @@
     }
 
     document.getElementById('btn-logout').addEventListener('click', () => logout())
-
     document.getElementById('btn-open-modal').addEventListener('click', () => openModal('login'))
 
     // ── Query params ─────────────────────────────────────────────────────────
     function handleQueryParams() {
       const p = new URLSearchParams(location.search)
-      if (p.has('verify'))    openModal('verify')
+      if (p.has('verify'))     openModal('verify')
       else if (p.has('login')) openModal('login')
     }
 
@@ -193,27 +259,62 @@
       document.getElementById('panel-login').hidden    = tab !== 'login'
       document.getElementById('panel-register').hidden = tab !== 'register'
       document.getElementById('panel-verify').hidden   = true
+      document.getElementById('modal-title').textContent = tab === 'login' ? 'LOG IN' : 'CREATE ACCOUNT'
       document.querySelectorAll('.auth-tab').forEach(btn =>
         btn.classList.toggle('active', btn.dataset.tab === tab))
     }
 
-    function showVerify() {
+    function showVerify(email = '') {
       document.getElementById('panel-login').hidden    = true
       document.getElementById('panel-register').hidden = true
       document.getElementById('panel-verify').hidden   = false
+      document.getElementById('modal-title').textContent = 'CHECK INBOX'
       document.querySelectorAll('.auth-tab').forEach(btn => btn.classList.remove('active'))
+      if (email) document.getElementById('verify-email').textContent = email
+      startResendCountdown()
     }
 
     function clearErrors() {
       document.querySelectorAll('.auth-error').forEach(el => { el.textContent = ''; el.style.color = '' })
     }
 
-    // Close on backdrop click
+    // Close on backdrop click or ✕ button
     overlay.addEventListener('click', e => { if (e.target === overlay) closeModal() })
+    document.getElementById('modal-close').addEventListener('click', () => closeModal())
 
     // Tab buttons
     document.querySelectorAll('.auth-tab').forEach(btn =>
       btn.addEventListener('click', () => showTab(btn.dataset.tab)))
+
+    // ── Resend countdown ─────────────────────────────────────────────────────
+    let resendTimer = null
+
+    function startResendCountdown() {
+      clearInterval(resendTimer)
+      let seconds = 60
+      const btn = document.getElementById('btn-resend')
+      btn.disabled = true
+      btn.textContent = `[ RESEND IN ${seconds}s ]`
+      resendTimer = setInterval(() => {
+        seconds--
+        if (seconds <= 0) {
+          clearInterval(resendTimer)
+          btn.disabled = false
+          btn.textContent = '[ RESEND EMAIL ]'
+        } else {
+          btn.textContent = `[ RESEND IN ${seconds}s ]`
+        }
+      }, 1000)
+    }
+
+    document.getElementById('btn-resend').addEventListener('click', async () => {
+      const email = document.getElementById('verify-email').textContent
+      if (!email) return
+      try {
+        await db.auth.resend({ type: 'signup', email })
+      } catch { /* best-effort */ }
+      startResendCountdown()
+    })
 
     // ── Login form ───────────────────────────────────────────────────────────
     document.getElementById('form-login').addEventListener('submit', async e => {
@@ -252,12 +353,13 @@
       e.preventDefault()
       const errEl = document.getElementById('register-error')
       errEl.textContent = ''
+      const email = document.getElementById('register-email').value
       try {
         await register({
-          email:    document.getElementById('register-email').value,
+          email,
           password: document.getElementById('register-password').value,
         })
-        showVerify()
+        showVerify(email)
       } catch (err) {
         errEl.textContent = err.message
       }
@@ -271,12 +373,15 @@
         if (session && profile) {
           btn.removeAttribute('disabled')
           btn.removeAttribute('title')
+          btn.textContent = '[ PLAY → ]'
         } else if (session && !profile) {
           btn.setAttribute('disabled', '')
           btn.setAttribute('title', 'Complete your profile to play')
+          btn.textContent = '[ COMPLETE PROFILE ]'
         } else {
           btn.setAttribute('disabled', '')
           btn.setAttribute('title', 'Log in to play')
+          btn.textContent = '[ LOG IN TO PLAY ]'
         }
       })
     }
@@ -293,7 +398,7 @@
       })
     })
 
-    // ── Leaderboard ──────────────────────────────────────────────────────────
+    // ── Leaderboard tabs ─────────────────────────────────────────────────────
     document.querySelectorAll('.leaderboard-tab').forEach(btn => {
       btn.addEventListener('click', async () => {
         document.querySelectorAll('.leaderboard-tab').forEach(b => b.classList.remove('active'))
@@ -305,7 +410,7 @@
 
     async function loadLeaderboard() {
       const container = document.getElementById('leaderboard-rows')
-      container.innerHTML = '<div class="leaderboard-empty">Loading…</div>'
+      container.innerHTML = '<div class="leaderboard-empty">&gt; LOADING_</div>'
       try {
         let rows = []
         if (activeGame) {
@@ -332,14 +437,15 @@
     function renderLeaderboard(rows) {
       const container = document.getElementById('leaderboard-rows')
       if (!rows.length) {
-        container.innerHTML = '<div class="leaderboard-empty">No scores yet — be the first!</div>'
+        container.innerHTML = '<div class="leaderboard-empty">&gt; NO_SCORES_YET_<span class="blink-cursor">_</span></div>'
         return
       }
       container.innerHTML = rows.map(row => {
-        const pub        = row.profiles_public || {}
-        const rankClass  = row.rank <= 3 ? `rank-${row.rank}` : ''
-        const tied       = rows.filter(r => r.rank === row.rank).length > 1
-        const rankLabel  = tied ? `Tied #${row.rank}` : `#${row.rank}`
+        const pub       = row.profiles_public || {}
+        const rankClass = row.rank <= 3 ? `rank-${row.rank}` : ''
+        const tied      = rows.filter(r => r.rank === row.rank).length > 1
+        const rankNum   = String(row.rank).padStart(2, '0')
+        const rankLabel = tied ? `~${rankNum}` : `#${rankNum}`
         return `
           <div class="leaderboard-row ${rankClass}">
             <span class="rank-num">${rankLabel}</span>
@@ -356,11 +462,12 @@
       try {
         const standings = await getSchoolStandings({})
         if (!standings.length) {
-          container.innerHTML = '<div class="leaderboard-empty">No standings yet.</div>'
+          container.innerHTML = '<div class="leaderboard-empty">&gt; NO_STANDINGS_YET_</div>'
           return
         }
-        container.innerHTML = standings.map(s => `
-          <div class="school-card">
+        container.innerHTML = standings.map((s, i) => `
+          <div class="school-card panel">
+            ${i === 0 ? '<span class="leading-badge">★ LEADING</span>' : ''}
             <span class="school-badge">${esc(s.school_code)}</span>
             <div class="school-score">${s.total_score.toLocaleString()}</div>
             <div class="school-players">${s.player_count} ${s.player_count === 1 ? 'player' : 'players'}</div>
@@ -373,9 +480,9 @@
     // ── Personal bests ───────────────────────────────────────────────────────
     async function loadPersonalBests() {
       await Promise.all(GAMES.map(async ({ id, cardId }) => {
-        const pb  = await getPersonalBest({ gameId: id })
-        const el  = document.querySelector(`#${cardId} .personal-best`)
-        if (el) el.textContent = pb ? `Your best: ${pb.score.toLocaleString()}` : 'No score yet'
+        const pb = await getPersonalBest({ gameId: id })
+        const el = document.querySelector(`#${cardId} .personal-best`)
+        if (el) el.textContent = pb ? `BEST: ${pb.score.toLocaleString()}` : 'BEST: ----'
       }))
     }
 
