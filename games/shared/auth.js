@@ -14,13 +14,22 @@
   // Load Supabase CDN before any script — in <head> of every HTML file:
   // <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  const { createClient } = supabase
+  const { createClient } = window.supabase || { 
+    createClient: () => ({ 
+      auth: { getSession: async () => ({ data: { session: null } }) }, 
+      from: () => ({ select: () => ({ eq: () => ({ single: async () => ({ data: null, error: { message: 'Supabase not loaded' } }) }) }) }) 
+    }) 
+  }
   const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
   // Returns the active session or null
   async function getSession() {
-    const { data: { session } } = await db.auth.getSession()
-    return session
+    try {
+      const { data: { session } } = await db.auth.getSession()
+      return session
+    } catch (e) {
+      return null
+    }
   }
 
   // Returns the current user's own profile row or null
@@ -28,24 +37,32 @@
   async function getProfile() {
     const session = await getSession()
     if (!session) return null
-    const { data, error } = await db
-      .from('profiles')
-      .select('id, nickname, school_code, school_code_updated_at, first_name, last_name, age')
-      .eq('id', session.user.id)
-      .single()
-    if (error) return null
-    return data
+    try {
+      const { data, error } = await db
+        .from('profiles')
+        .select('id, nickname, school_code, school_code_updated_at, first_name, last_name, age')
+        .eq('id', session.user.id)
+        .single()
+      if (error) return null
+      return data
+    } catch (e) {
+      return null
+    }
   }
 
   // Returns true if the nickname is not taken by another user.
   async function isNicknameAvailable(nickname, currentUserId = null) {
-    const { data, error } = await db
-      .from('profiles')
-      .select('id')
-      .eq('nickname', nickname)
-    if (error || !data || data.length === 0) return true
-    if (currentUserId && data[0].id === currentUserId) return true
-    return false
+    try {
+      const { data, error } = await db
+        .from('profiles')
+        .select('id')
+        .eq('nickname', nickname)
+      if (error || !data || data.length === 0) return true
+      if (currentUserId && data[0].id === currentUserId) return true
+      return false
+    } catch (e) {
+      return true
+    }
   }
 
   // Creates the profile row on first login (called from profile.html)
@@ -106,7 +123,7 @@
   // Logs out and redirects to games hub
   async function logout() {
     await db.auth.signOut()
-    window.location.href = '/games/index.html'
+    window.location.href = getBaseGamesPath() + 'index.html'
   }
 
   // Sends a password reset email
@@ -115,24 +132,44 @@
     if (error) throw new Error(error.message)
   }
 
+  // Helper to get the correct relative path to the /games/ directory
+  function getBaseGamesPath() {
+    const path = window.location.pathname
+    if (path.includes('/terminal-run/') || path.includes('/hacking-sim/')) {
+      return '../'
+    }
+    return './'
+  }
+
   // Auth gate — call at the top of every game page
   async function requireAuth() {
+    const params = new URLSearchParams(window.location.search)
+    const isLocal = window.location.protocol === 'file:' || 
+                    window.location.hostname === 'localhost' || 
+                    window.location.hostname === '127.0.0.1'
+    
+    // Explicit guest mode or implicit guest mode for local development
+    const guestMode = params.has('guest') || (isLocal && !window.supabase)
+
     const session = await getSession()
 
     if (!session) {
+      if (guestMode) {
+        return { id: 'guest', nickname: 'Guest', school_code: '??' }
+      }
       sessionStorage.setItem('git_redirect_after_auth', window.location.pathname)
-      window.location.href = '/games/index.html?login=1'
+      window.location.href = getBaseGamesPath() + 'index.html?login=1'
       return
     }
 
     if (!session.user.email_confirmed_at) {
-      window.location.href = '/games/index.html?verify=1'
+      window.location.href = getBaseGamesPath() + 'index.html?verify=1'
       return
     }
 
     const profile = await getProfile()
     if (!profile) {
-      window.location.href = '/games/profile.html'
+      window.location.href = getBaseGamesPath() + 'profile.html'
       return
     }
 

@@ -7,8 +7,16 @@
   async function submitScore({ gameId, score, metadata = {} }) {
     score = Math.max(0, score)
     const session = await getSession()
-    if (!session) throw new Error('No active session.')
-    const { error } = await getDb()
+    if (!session) {
+      console.warn('No active session. Score not submitted.')
+      return
+    }
+    const db = getDb()
+    if (!db) {
+      console.warn('Supabase not available. Score not submitted.')
+      return
+    }
+    const { error } = await db
       .from('scores')
       .insert({ user_id: session.user.id, game_id: gameId, score, metadata })
     if (error) {
