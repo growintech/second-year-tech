@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile — GIT Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="./shared/games.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- ── Auth bar ──────────────────────────────────────────────────────────── -->
+  <div class="auth-bar">
+    <a href="./index.html" class="auth-bar-brand" style="text-decoration:none;">GIT Games</a>
+
+    <div id="bar-user" class="auth-bar-user" hidden>
+      <div class="avatar"><span id="avatar-initial"></span></div>
+      <span id="user-info" class="user-info"></span>
+      <button id="btn-logout" class="btn-logout">Log out</button>
+    </div>
+
+    <div id="bar-guest" class="auth-bar-guest" hidden>
+      <!-- logged-out state is unreachable on this page; requireAuth redirects first -->
+    </div>
+  </div>
+
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+  <header class="hero">
+    <h1 id="hero-title">Set up your profile</h1>
+    <p id="hero-sub">Choose a nickname and fill in your info to start playing.</p>
+  </header>
+
+  <!-- ── Profile form ──────────────────────────────────────────────────────── -->
+  <main class="profile-page">
+    <form id="profile-form" class="profile-form" novalidate>
+
+      <fieldset>
+        <legend>Personal info</legend>
+
+        <label for="first-name">First name</label>
+        <input id="first-name" name="first_name" type="text" placeholder="Ada" autocomplete="given-name" required>
+
+        <label for="last-name">Last name</label>
+        <input id="last-name" name="last_name" type="text" placeholder="Lovelace" autocomplete="family-name" required>
+
+        <label for="age">Age</label>
+        <input id="age" name="age" type="number" min="13" max="25" placeholder="16" required>
+      </fieldset>
+
+      <fieldset>
+        <legend>Game identity</legend>
+
+        <label for="nickname">Nickname <span style="color:var(--text-muted);font-weight:400">(3–20 chars, a-z 0-9 _ -)</span></label>
+        <div class="nickname-field">
+          <input id="nickname" name="nickname" type="text"
+            pattern="[a-zA-Z0-9_\-]{3,20}"
+            placeholder="h4ck3r_pro"
+            autocomplete="off"
+            required>
+          <span id="nickname-status" class="nickname-status"></span>
+        </div>
+
+        <label for="school-code">School &amp; year</label>
+        <select id="school-code" name="school_code" required>
+          <option value="" disabled selected>Select your school…</option>
+        </select>
+      </fieldset>
+
+      <div class="form-error" id="form-error"></div>
+
+      <button type="submit" id="btn-submit" class="btn-submit">Save and start playing →</button>
+
+    </form>
+  </main>
+
+  <script type="module">
+    import {
+      getSession, getProfile, saveProfile, updateProfile,
+      isNicknameAvailable, logout, SCHOOLS,
+    } from './shared/auth.js'
+
+    // ── State ────────────────────────────────────────────────────────────────
+    let isEditMode = false
+    let currentProfile = null
+    let nicknameTimer = null
+
+    // ── Init ─────────────────────────────────────────────────────────────────
+    async function init() {
+      const session = await getSession()
+      if (!session) {
+        window.location.href = '/games/index.html'
+        return
+      }
+
+      currentProfile = await getProfile()
+      isEditMode = currentProfile !== null
+
+      populateSchools()
+
+      if (isEditMode) {
+        document.getElementById('hero-title').textContent = 'Edit your profile'
+        document.getElementById('hero-sub').textContent   = 'Update your info or change your nickname.'
+        document.getElementById('btn-submit').textContent = 'Save changes →'
+        prefillForm()
+        handleSchoolCodeDisable()
+
+        // Auth bar: show logged-in state
+        document.getElementById('avatar-initial').textContent = currentProfile.nickname[0].toUpperCase()
+        document.getElementById('user-info').textContent      = `${currentProfile.nickname} · ${currentProfile.school_code}`
+        document.getElementById('bar-user').hidden = false
+      }
+    }
+
+    // ── School select ────────────────────────────────────────────────────────
+    function populateSchools() {
+      const select = document.getElementById('school-code')
+      SCHOOLS.forEach(({ code, label }) => {
+        const opt   = document.createElement('option')
+        opt.value   = code
+        opt.textContent = label
+        select.appendChild(opt)
+      })
+    }
+
+    // ── Pre-fill (edit mode) ─────────────────────────────────────────────────
+    function prefillForm() {
+      document.getElementById('first-name').value  = currentProfile.first_name  || ''
+      document.getElementById('last-name').value   = currentProfile.last_name   || ''
+      document.getElementById('age').value         = currentProfile.age          || ''
+      document.getElementById('nickname').value    = currentProfile.nickname     || ''
+      document.getElementById('school-code').value = currentProfile.school_code  || ''
+    }
+
+    // ── School code disable (edit mode) ─────────────────────────────────────
+    function handleSchoolCodeDisable() {
+      if (!currentProfile.school_code_updated_at) return
+      const updatedYear = new Date(currentProfile.school_code_updated_at).getFullYear()
+      const currentYear = new Date().getFullYear()
+      if (updatedYear === currentYear) {
+        const select = document.getElementById('school-code')
+        select.disabled = true
+        select.title    = `Editable once per school year — next change available in ${currentYear + 1}`
+      }
+    }
+
+    // ── Nickname availability check (debounced 400 ms) ────────────────────────
+    document.getElementById('nickname').addEventListener('input', e => {
+      const statusEl = document.getElementById('nickname-status')
+      const val = e.target.value.trim()
+
+      clearTimeout(nicknameTimer)
+
+      if (!val || val.length < 3) { statusEl.textContent = ''; return }
+
+      statusEl.textContent = '⏳'
+      statusEl.style.color = 'var(--text-muted)'
+
+      nicknameTimer = setTimeout(async () => {
+        const userId    = isEditMode ? currentProfile.id : null
+        const available = await isNicknameAvailable(val, userId)
+        statusEl.textContent = available ? '✓' : '✗'
+        statusEl.style.color = available ? 'var(--brand-start)' : 'var(--error)'
+      }, 400)
+    })
+
+    // ── Form submission ──────────────────────────────────────────────────────
+    document.getElementById('profile-form').addEventListener('submit', async e => {
+      e.preventDefault()
+
+      const errEl = document.getElementById('form-error')
+      const btn   = document.getElementById('btn-submit')
+      errEl.textContent = ''
+      btn.disabled      = true
+      btn.textContent   = 'Saving…'
+
+      const payload = {
+        firstName:  document.getElementById('first-name').value.trim(),
+        lastName:   document.getElementById('last-name').value.trim(),
+        age:        parseInt(document.getElementById('age').value, 10),
+        nickname:   document.getElementById('nickname').value.trim(),
+        schoolCode: document.getElementById('school-code').value,
+      }
+
+      try {
+        if (isEditMode) {
+          await updateProfile(payload)
+        } else {
+          await saveProfile(payload)
+        }
+
+        // Restore game context saved by requireAuth() before redirecting away
+        const dest = sessionStorage.getItem('git_redirect_after_auth')
+        sessionStorage.removeItem('git_redirect_after_auth')
+        window.location.href = dest || '/games/index.html'
+
+      } catch (err) {
+        errEl.textContent = err.message
+        btn.disabled      = false
+        btn.textContent   = isEditMode ? 'Save changes →' : 'Save and start playing →'
+      }
+    })
+
+    // ── Logout ───────────────────────────────────────────────────────────────
+    document.getElementById('btn-logout').addEventListener('click', () => logout())
+
+    init()
+  </script>
+
+</body>
+</html>
