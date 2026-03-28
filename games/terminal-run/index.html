@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal Run — GIT Games</title>
+  <link rel="stylesheet" href="../shared/games.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="auth-bar">
+    <a href="/games/index.html" class="auth-bar-brand" style="text-decoration:none;">GIT Games</a>
+  </div>
+
+  <header class="hero">
+    <h1>Terminal Run</h1>
+    <p>Game coming soon.</p>
+  </header>
+
+  <script type="module">
+    import { requireAuth } from '../shared/auth.js'
+    await requireAuth()
+    // game bootstrap will go here
+  </script>
+
+</body>
+</html>
