@@ -170,9 +170,11 @@
     <span class="footer-right">lessons.growintech.it</span>
   </footer>
 
-  <script type="module">
-    import { getSession, getProfile, login, register, logout, resetPassword, db } from './shared/auth.js'
-    import { getLeaderboard, getPersonalBest, getSchoolStandings } from './shared/leaderboard.js'
+  <script src="./shared/auth.js"></script>
+  <script src="./shared/leaderboard.js"></script>
+  <script>
+    const { getSession, getProfile, login, register, logout, resetPassword, db } = window.GIT_AUTH
+    const { getLeaderboard, getPersonalBest, getSchoolStandings } = window.GIT_LEADERBOARD
 
     // ── Theme toggle ─────────────────────────────────────────────────────────
     const themeBtn = document.getElementById('theme-toggle')
@@ -224,6 +226,11 @@
       if (session && profile) {
         document.getElementById('avatar-initial').textContent = `[${profile.school_code}]`
         document.getElementById('user-info').textContent = profile.nickname
+        barUser.hidden  = false
+        barGuest.hidden = true
+      } else if (session) {
+        document.getElementById('avatar-initial').textContent = ''
+        document.getElementById('user-info').textContent = 'SET UP PROFILE →'
         barUser.hidden  = false
         barGuest.hidden = true
       } else {
@@ -375,8 +382,8 @@
           btn.removeAttribute('title')
           btn.textContent = '[ PLAY → ]'
         } else if (session && !profile) {
-          btn.setAttribute('disabled', '')
-          btn.setAttribute('title', 'Complete your profile to play')
+          btn.removeAttribute('disabled')
+          btn.removeAttribute('title')
           btn.textContent = '[ COMPLETE PROFILE ]'
         } else {
           btn.setAttribute('disabled', '')

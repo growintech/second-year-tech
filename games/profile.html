@@ -95,11 +95,12 @@
     </div>
   </main>
 
-  <script type="module">
-    import {
+  <script src="./shared/auth.js"></script>
+  <script>
+    const {
       getSession, getProfile, saveProfile, updateProfile,
       isNicknameAvailable, logout, SCHOOLS,
-    } from './shared/auth.js'
+    } = window.GIT_AUTH
 
     // ── Theme toggle ─────────────────────────────────────────────────────────
     const themeBtn = document.getElementById('theme-toggle')

@@ -18,9 +18,10 @@
     <p>Game coming soon.</p>
   </header>
 
-  <script type="module">
-    import { requireAuth } from '../shared/auth.js'
-    await requireAuth()
+  <script src="../shared/auth.js"></script>
+  <script>
+    const { requireAuth } = window.GIT_AUTH
+    requireAuth()
     // game bootstrap will go here
   </script>
 
