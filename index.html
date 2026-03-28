@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lezioni — Grow in Tech · Anno 2</title>
-  <meta name="description" content="Materiali delle lezioni di JavaScript per il secondo anno — Grow in Tech.">
+  <title>Lessons — Grow in Tech · Year 2</title>
+  <meta name="description" content="JavaScript lesson materials for the second year — Grow in Tech.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
   <script>
     if (localStorage.getItem('git-theme') === 'light') document.documentElement.classList.add('light');
   </script>
@@ -17,8 +20,8 @@
       --bg: #0a0c10;
       --surface: #13161d;
       --surface-2: #1b1f28;
-      --border: rgba(255,255,255,0.07);
-      --border-2: rgba(255,255,255,0.13);
+      --border: rgba(255, 255, 255, 0.07);
+      --border-2: rgba(255, 255, 255, 0.13);
       --text: #e8eaf0;
       --text-muted: #7a8099;
       --text-dim: #4a5070;
@@ -30,34 +33,49 @@
       --red: #ef4444;
       --radius: 12px;
     }
+
     html.light {
       --bg: #f4f5f8;
       --surface: #ffffff;
       --surface-2: #eef0f5;
-      --border: rgba(0,0,0,0.08);
-      --border-2: rgba(0,0,0,0.13);
+      --border: rgba(0, 0, 0, 0.08);
+      --border-2: rgba(0, 0, 0, 0.13);
       --text: #0f1117;
       --text-muted: #5a6070;
       --text-dim: #9aa0b0;
     }
 
     /* ── Reset ─────────────────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
     }
-    a { color: inherit; text-decoration: none; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     /* ── Topbar ─────────────────────────────────────────────────────────── */
     .topbar {
       position: sticky;
       top: 0;
       z-index: 100;
-      height: 56px;
+      height: 76px;
       display: flex;
       align-items: center;
       padding: 0 clamp(1rem, 4vw, 2.5rem);
@@ -65,19 +83,30 @@
       border-bottom: 1px solid var(--border-2);
       gap: 12px;
     }
+
     .topbar-logo {
       display: flex;
       align-items: center;
       height: 48px;
       flex-shrink: 0;
     }
-    .topbar-logo svg { height: 48px; width: auto; }
+
+    .topbar-logo svg {
+      height: 48px;
+      width: auto;
+    }
+
     .topbar-label {
       font-size: 13px;
       font-weight: 500;
+      text-align: right;
       color: var(--text-muted);
     }
-    .topbar-spacer { flex: 1; }
+
+    .topbar-spacer {
+      flex: 1;
+    }
+
     .theme-toggle {
       padding: 6px 10px;
       border-radius: 8px;
@@ -88,13 +117,17 @@
       cursor: pointer;
       transition: background 0.15s;
     }
-    .theme-toggle:hover { background: var(--surface-2); }
+
+    .theme-toggle:hover {
+      background: var(--surface-2);
+    }
 
     /* ── Hero ───────────────────────────────────────────────────────────── */
     .hero {
-      padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 3rem);
+      padding: clamp(2.5rem, 4vw, 4.5rem) clamp(1rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 3rem);
       max-width: 900px;
     }
+
     .hero-eyebrow {
       font-size: 11px;
       font-weight: 700;
@@ -103,18 +136,21 @@
       color: var(--text-dim);
       margin-bottom: 10px;
     }
+
     .hero-title {
       font-size: clamp(2rem, 5vw, 3.2rem);
       font-weight: 700;
       line-height: 1.1;
       letter-spacing: -0.02em;
     }
+
     .hero-title .grad {
       background: var(--grad);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
     .hero-sub {
       margin-top: 10px;
       font-size: clamp(0.95rem, 2vw, 1.1rem);
@@ -122,6 +158,7 @@
       max-width: 56ch;
       line-height: 1.6;
     }
+
     .hero-bar {
       margin-top: 20px;
       height: 4px;
@@ -134,6 +171,7 @@
     .lessons-section {
       padding: 0 clamp(1rem, 4vw, 2.5rem) clamp(3rem, 6vw, 5rem);
     }
+
     .section-label {
       font-size: 11px;
       font-weight: 700;
@@ -142,6 +180,7 @@
       color: var(--text-dim);
       margin-bottom: 16px;
     }
+
     .lessons-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -162,21 +201,31 @@
       animation: card-in 0.4s ease forwards;
       animation-delay: var(--delay, 0ms);
     }
+
     @keyframes card-in {
-      to { opacity: 1; transform: translateY(0); }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
     .lesson-card:not(.lesson-card--soon):hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
       border-color: var(--border-2);
     }
+
     .lesson-card--soon {
       opacity: 0;
       animation-name: card-in-soon;
       pointer-events: none;
     }
+
     @keyframes card-in-soon {
-      to { opacity: 0.35; transform: translateY(0); }
+      to {
+        opacity: 0.35;
+        transform: translateY(0);
+      }
     }
 
     .card-accent {
@@ -184,6 +233,7 @@
       background: var(--accent, var(--grad-start));
       flex-shrink: 0;
     }
+
     .card-body {
       padding: 14px 16px 18px;
       flex: 1;
@@ -191,6 +241,7 @@
       flex-direction: column;
       gap: 4px;
     }
+
     .card-number {
       font-size: 1.9rem;
       font-weight: 700;
@@ -199,12 +250,14 @@
       color: var(--accent, var(--grad-start));
       font-family: 'DM Mono', monospace;
     }
+
     .card-title {
       font-size: 0.85rem;
       font-weight: 600;
       line-height: 1.35;
       color: var(--text);
     }
+
     .card-badge {
       margin-top: auto;
       padding-top: 8px;
@@ -216,10 +269,21 @@
     }
 
     /* Accent color variants */
-    .accent-cyan   { --accent: var(--grad-start); }
-    .accent-blue   { --accent: var(--grad-end); }
-    .accent-green  { --accent: var(--green); }
-    .accent-yellow { --accent: var(--yellow); }
+    .accent-cyan {
+      --accent: var(--grad-start);
+    }
+
+    .accent-blue {
+      --accent: var(--grad-end);
+    }
+
+    .accent-green {
+      --accent: var(--green);
+    }
+
+    .accent-yellow {
+      --accent: var(--yellow);
+    }
 
     /* ── Footer ─────────────────────────────────────────────────────────── */
     .site-footer {
@@ -231,44 +295,40 @@
       font-size: 12px;
       color: var(--text-dim);
     }
-    .site-footer svg { height: 28px; width: auto; opacity: 0.5; }
+
+    .site-footer svg {
+      height: 28px;
+      width: auto;
+      opacity: 0.5;
+    }
   </style>
 </head>
+
 <body>
 
   <!-- Topbar -->
   <header class="topbar">
-    <a href="./" class="topbar-logo" aria-label="Grow in Tech home">
-      <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="lg_root" x1="68" y1="100" x2="232" y2="200" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#00E1FF"/>
-            <stop offset="100%" stop-color="#0061FF"/>
-          </linearGradient>
-        </defs>
-        <path d="M115.463 180.713C115.463 180.998 115.372 181.23 115.189 181.412C115.007 181.593 114.772 181.683 114.485 181.683H96.091C95.804 181.683 95.5692 181.593 95.3866 181.412C95.2039 181.23 95.1126 180.998 95.1126 180.713V176.251C95.1126 175.966 95.2039 175.733 95.3866 175.552C95.5692 175.371 95.804 175.28 96.091 175.28H97.5782C96.7694 174.608 96.091 173.728 95.5431 172.642C94.9952 171.555 94.7212 170.275 94.7212 168.8C94.7212 167.3 95.0604 165.98 95.7388 164.842C96.4171 163.678 97.4216 162.772 98.7522 162.126C100.057 161.453 101.661 161.117 103.566 161.117H114.485C114.772 161.117 115.007 161.22 115.189 161.427C115.372 161.608 115.463 161.828 115.463 162.087V166.976C115.463 167.235 115.372 167.468 115.189 167.675C115.007 167.856 114.772 167.946 114.485 167.946H103.801C102.575 167.946 101.635 168.244 100.983 168.839C100.305 169.408 99.9655 170.262 99.9655 171.4C99.9655 172.461 100.305 173.314 100.983 173.961C101.635 174.582 102.575 174.892 103.801 174.892H114.485C114.772 174.892 115.007 174.996 115.189 175.203C115.372 175.384 115.463 175.604 115.463 175.862V180.713Z" fill="url(#lg_root)"/>
-        <path d="M115.463 192.991C115.463 193.276 115.372 193.508 115.189 193.69C115.007 193.871 114.772 193.961 114.485 193.961H96.091C95.804 193.961 95.5692 193.871 95.3866 193.69C95.2039 193.508 95.1126 193.276 95.1126 192.991V188.412C95.1126 188.153 95.2039 187.934 95.3866 187.752C95.5692 187.545 95.804 187.442 96.091 187.442H114.485C114.772 187.442 115.007 187.545 115.189 187.752C115.372 187.934 115.463 188.153 115.463 188.412V192.991ZM92.1774 193.03C92.1774 193.314 92.0861 193.547 91.9035 193.728C91.7208 193.909 91.486 194 91.199 194H87.7159C87.4289 194 87.1941 193.909 87.0115 193.728C86.8028 193.547 86.6984 193.314 86.6984 193.03V188.412C86.6984 188.128 86.8028 187.895 87.0115 187.714C87.1941 187.507 87.4289 187.403 87.7159 187.403H91.199C91.486 187.403 91.7208 187.507 91.9035 187.714C92.0861 187.895 92.1774 188.128 92.1774 188.412V193.03Z" fill="url(#lg_root)"/>
-        <path d="M192.342 152.919C191.69 152.919 191.212 152.768 190.907 152.466C190.603 152.164 190.364 151.776 190.19 151.302L180.797 121.358C180.71 121.142 180.667 120.927 180.667 120.711C180.667 120.323 180.819 120 181.123 119.741C181.428 119.439 181.776 119.288 182.167 119.288H188.885C189.451 119.288 189.885 119.439 190.19 119.741C190.538 120.043 190.755 120.344 190.842 120.646L196.321 139.143L202.192 120.711C202.278 120.409 202.474 120.107 202.779 119.806C203.126 119.461 203.605 119.288 204.214 119.288H208.518C209.127 119.288 209.584 119.461 209.888 119.806C210.236 120.107 210.454 120.409 210.54 120.711L216.411 139.143L221.89 120.646C221.977 120.344 222.173 120.043 222.477 119.741C222.825 119.439 223.281 119.288 223.847 119.288H230.565C230.956 119.288 231.283 119.439 231.543 119.741C231.848 120 232 120.323 232 120.711C232 120.927 231.978 121.142 231.935 121.358L222.542 151.302C222.412 151.776 222.173 152.164 221.825 152.466C221.52 152.768 221.042 152.919 220.39 152.919H214.519C213.911 152.919 213.432 152.768 213.084 152.466C212.736 152.164 212.497 151.776 212.367 151.302L206.366 133.581L200.365 151.302C200.235 151.776 199.996 152.164 199.648 152.466C199.3 152.768 198.821 152.919 198.213 152.919H192.342Z" fill="url(#lg_root)"/>
-        <path d="M160.138 153.566C156.486 153.566 153.398 152.983 150.876 151.819C148.398 150.655 146.484 148.995 145.136 146.839C143.832 144.641 143.092 142.032 142.918 139.014C142.875 138.152 142.853 137.181 142.853 136.103C142.853 134.982 142.875 134.012 142.918 133.193C143.092 130.132 143.875 127.523 145.267 125.368C146.658 123.212 148.593 121.552 151.072 120.388C153.594 119.223 156.616 118.641 160.138 118.641C163.704 118.641 166.726 119.223 169.205 120.388C171.727 121.552 173.684 123.212 175.075 125.368C176.467 127.523 177.249 130.132 177.423 133.193C177.467 134.012 177.489 134.982 177.489 136.103C177.489 137.181 177.467 138.152 177.423 139.014C177.249 142.032 176.488 144.641 175.14 146.839C173.836 148.995 171.923 150.655 169.4 151.819C166.922 152.983 163.834 153.566 160.138 153.566ZM160.138 145.675C162.095 145.675 163.508 145.093 164.378 143.929C165.291 142.765 165.813 141.019 165.943 138.69C165.987 138.044 166.009 137.181 166.009 136.103C166.009 135.026 165.987 134.163 165.943 133.517C165.813 131.231 165.291 129.507 164.378 128.343C163.508 127.135 162.095 126.532 160.138 126.532C158.225 126.532 156.812 127.135 155.899 128.343C154.985 129.507 154.485 131.231 154.398 133.517C154.355 134.163 154.333 135.026 154.333 136.103C154.333 137.181 154.355 138.044 154.398 138.69C154.485 141.019 154.985 142.765 155.899 143.929C156.812 145.093 158.225 145.675 160.138 145.675Z" fill="url(#lg_root)"/>
-        <path d="M68.5667 153.566C64.784 153.566 61.5624 152.983 58.8982 151.819C56.2774 150.655 54.2549 148.995 52.8286 146.839C51.4456 144.641 50.6627 142.032 50.48 139.014C50.4366 138.152 50.415 137.181 50.415 136.103C50.415 134.982 50.4366 134.012 50.48 133.193C50.6627 130.132 51.4673 127.523 52.8937 125.368C54.3634 123.212 56.408 121.552 59.0288 120.388C61.6496 119.223 64.8712 118.641 68.7401 118.641C72.1756 118.641 75.1139 119.18 77.5548 120.259C79.9957 121.337 81.8878 122.954 83.2274 125.109C84.6104 127.221 85.3499 129.808 85.4366 132.869V133.154H79.6095C79.1527 133.154 78.8263 133.063 78.6303 132.882C78.4343 132.7 78.3146 132.362 78.2713 131.866C78.0319 130.055 77.3793 128.671 76.3135 127.714C75.291 126.757 73.8647 126.279 72.0343 126.279C69.9467 126.279 68.3253 126.9 67.1728 128.141C66.0637 129.382 65.4543 131.228 65.3459 133.679C65.3025 134.369 65.2808 135.197 65.2808 136.161C65.2808 137.082 65.3025 137.887 65.3459 138.576C65.4543 141.07 66.0637 142.938 67.1728 144.179C68.3253 145.42 69.9467 146.041 72.0343 146.041C73.8213 146.041 75.2476 145.585 76.3135 144.671C77.3793 143.714 78.0319 142.33 78.2713 140.519L78.3363 140.013C78.4013 139.56 78.5426 139.243 78.7603 139.062C78.9997 138.88 79.3478 138.789 79.8045 138.789H85.3716V138.829C85.3716 142.021 84.5887 144.693 83.0228 146.848C81.4569 149.003 79.3261 150.62 76.6319 151.698C73.9378 152.777 70.9128 153.566 68.5667 153.566Z" fill="url(#lg_root)"/>
-      </svg>
+    <a href="index.html" class="topbar-logo" aria-label="Grow in Tech home">
+      <img src="./shared/logo.svg" alt="Grow in Tech" style="height:28px;width:auto;">
     </a>
-    <span class="topbar-label">JS · Anno 2</span>
     <div class="topbar-spacer"></div>
-    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Cambia tema">🌙</button>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span class="topbar-label">JS · Year 2</span>
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+    </div>
   </header>
 
   <!-- Hero -->
   <section class="hero">
     <p class="hero-eyebrow">Grow in Tech — Coding Education</p>
-    <h1 class="hero-title">Materiali delle<br><span class="grad">lezioni</span></h1>
-    <p class="hero-sub">Secondo anno — JavaScript. Clicca su una lezione per iniziare.</p>
+    <h1 class="hero-title">Lesson<br><span class="grad">Materials</span></h1>
+    <p class="hero-sub">Second year — JavaScript. Click on a lesson to start.</p>
     <div class="hero-bar" aria-hidden="true"></div>
   </section>
 
   <!-- Lessons grid -->
   <main class="lessons-section">
-    <p class="section-label">Lezioni disponibili</p>
+    <p class="section-label">Available lessons</p>
     <div class="lessons-grid" id="lessons-grid">
 
       <!-- 01 -->
@@ -276,8 +336,8 @@
         <div class="card-accent"></div>
         <div class="card-body">
           <div class="card-number">01</div>
-          <div class="card-title">Introduzione a JavaScript</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-title">Introduction to JavaScript</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -287,7 +347,7 @@
         <div class="card-body">
           <div class="card-number">02</div>
           <div class="card-title">Identity Card</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -296,8 +356,8 @@
         <div class="card-accent"></div>
         <div class="card-body">
           <div class="card-number">03</div>
-          <div class="card-title">Tipi di dati e if/else</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-title">Data types and if/else</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -307,7 +367,7 @@
         <div class="card-body">
           <div class="card-number">04</div>
           <div class="card-title">Guess the Number</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -316,8 +376,8 @@
         <div class="card-accent"></div>
         <div class="card-body">
           <div class="card-number">05</div>
-          <div class="card-title">Input e numeri random</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-title">Input and random numbers</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -326,8 +386,8 @@
         <div class="card-accent"></div>
         <div class="card-body">
           <div class="card-number">06</div>
-          <div class="card-title">Funzioni e condizioni</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-title">Functions and conditions</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -336,8 +396,8 @@
         <div class="card-accent"></div>
         <div class="card-body">
           <div class="card-number">07</div>
-          <div class="card-title">Operatori booleani</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-title">Boolean operators</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -347,7 +407,7 @@
         <div class="card-body">
           <div class="card-number">08</div>
           <div class="card-title">Whac-A-Mole / parte 1</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -357,7 +417,7 @@
         <div class="card-body">
           <div class="card-number">09</div>
           <div class="card-title">Whac-A-Mole / parte 2</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -367,7 +427,7 @@
         <div class="card-body">
           <div class="card-number">10</div>
           <div class="card-title">—</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -377,7 +437,7 @@
         <div class="card-body">
           <div class="card-number">11</div>
           <div class="card-title">To-Do List</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -387,7 +447,7 @@
         <div class="card-body">
           <div class="card-number">12</div>
           <div class="card-title">JSON e localStorage</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -396,8 +456,8 @@
         <div class="card-accent"></div>
         <div class="card-body">
           <div class="card-number">13</div>
-          <div class="card-title">Slideshow di immagini</div>
-          <div class="card-badge">prossimamente</div>
+          <div class="card-title">Image slideshow</div>
+          <div class="card-badge">coming soon</div>
         </div>
       </div>
 
@@ -406,7 +466,7 @@
         <div class="card-accent"></div>
         <div class="card-body">
           <div class="card-number">14</div>
-          <div class="card-title">Date e countdown</div>
+          <div class="card-title">Dates and countdown</div>
         </div>
       </a>
 
@@ -428,7 +488,7 @@
         </div>
       </a>
 
-       <!-- Final Project — available -->
+      <!-- Final Project — available -->
       <a class="lesson-card accent-green" href="./final-project/">
         <div class="card-accent"></div>
         <div class="card-body">
@@ -451,17 +511,26 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true">
       <defs>
         <linearGradient id="lg_footer" x1="68" y1="100" x2="232" y2="200" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#00E1FF"/>
-          <stop offset="100%" stop-color="#0061FF"/>
+          <stop offset="0%" stop-color="#00E1FF" />
+          <stop offset="100%" stop-color="#0061FF" />
         </linearGradient>
       </defs>
-      <path d="M115.463 180.713C115.463 180.998 115.372 181.23 115.189 181.412C115.007 181.593 114.772 181.683 114.485 181.683H96.091C95.804 181.683 95.5692 181.593 95.3866 181.412C95.2039 181.23 95.1126 180.998 95.1126 180.713V176.251C95.1126 175.966 95.2039 175.733 95.3866 175.552C95.5692 175.371 95.804 175.28 96.091 175.28H97.5782C96.7694 174.608 96.091 173.728 95.5431 172.642C94.9952 171.555 94.7212 170.275 94.7212 168.8C94.7212 167.3 95.0604 165.98 95.7388 164.842C96.4171 163.678 97.4216 162.772 98.7522 162.126C100.057 161.453 101.661 161.117 103.566 161.117H114.485C114.772 161.117 115.007 161.22 115.189 161.427C115.372 161.608 115.463 161.828 115.463 162.087V166.976C115.463 167.235 115.372 167.468 115.189 167.675C115.007 167.856 114.772 167.946 114.485 167.946H103.801C102.575 167.946 101.635 168.244 100.983 168.839C100.305 169.408 99.9655 170.262 99.9655 171.4C99.9655 172.461 100.305 173.314 100.983 173.961C101.635 174.582 102.575 174.892 103.801 174.892H114.485C114.772 174.892 115.007 174.996 115.189 175.203C115.372 175.384 115.463 175.604 115.463 175.862V180.713Z" fill="url(#lg_footer)"/>
-      <path d="M115.463 192.991C115.463 193.276 115.372 193.508 115.189 193.69C115.007 193.871 114.772 193.961 114.485 193.961H96.091C95.804 193.961 95.5692 193.871 95.3866 193.69C95.2039 193.508 95.1126 193.276 95.1126 192.991V188.412C95.1126 188.153 95.2039 187.934 95.3866 187.752C95.5692 187.545 95.804 187.442 96.091 187.442H114.485C114.772 187.442 115.007 187.545 115.189 187.752C115.372 187.934 115.463 188.153 115.463 188.412V192.991ZM92.1774 193.03C92.1774 193.314 92.0861 193.547 91.9035 193.728C91.7208 193.909 91.486 194 91.199 194H87.7159C87.4289 194 87.1941 193.909 87.0115 193.728C86.8028 193.547 86.6984 193.314 86.6984 193.03V188.412C86.6984 188.128 86.8028 187.895 87.0115 187.714C87.1941 187.507 87.4289 187.403 87.7159 187.403H91.199C91.486 187.403 91.7208 187.507 91.9035 187.714C92.0861 187.895 92.1774 188.128 92.1774 188.412V193.03Z" fill="url(#lg_footer)"/>
-      <path d="M192.342 152.919C191.69 152.919 191.212 152.768 190.907 152.466C190.603 152.164 190.364 151.776 190.19 151.302L180.797 121.358C180.71 121.142 180.667 120.927 180.667 120.711C180.667 120.323 180.819 120 181.123 119.741C181.428 119.439 181.776 119.288 182.167 119.288H188.885C189.451 119.288 189.885 119.439 190.19 119.741C190.538 120.043 190.755 120.344 190.842 120.646L196.321 139.143L202.192 120.711C202.278 120.409 202.474 120.107 202.779 119.806C203.126 119.461 203.605 119.288 204.214 119.288H208.518C209.127 119.288 209.584 119.461 209.888 119.806C210.236 120.107 210.454 120.409 210.54 120.711L216.411 139.143L221.89 120.646C221.977 120.344 222.173 120.043 222.477 119.741C222.825 119.439 223.281 119.288 223.847 119.288H230.565C230.956 119.288 231.283 119.439 231.543 119.741C231.848 120 232 120.323 232 120.711C232 120.927 231.978 121.142 231.935 121.358L222.542 151.302C222.412 151.776 222.173 152.164 221.825 152.466C221.52 152.768 221.042 152.919 220.39 152.919H214.519C213.911 152.919 213.432 152.768 213.084 152.466C212.736 152.164 212.497 151.776 212.367 151.302L206.366 133.581L200.365 151.302C200.235 151.776 199.996 152.164 199.648 152.466C199.3 152.768 198.821 152.919 198.213 152.919H192.342Z" fill="url(#lg_footer)"/>
-      <path d="M160.138 153.566C156.486 153.566 153.398 152.983 150.876 151.819C148.398 150.655 146.484 148.995 145.136 146.839C143.832 144.641 143.092 142.032 142.918 139.014C142.875 138.152 142.853 137.181 142.853 136.103C142.853 134.982 142.875 134.012 142.918 133.193C143.092 130.132 143.875 127.523 145.267 125.368C146.658 123.212 148.593 121.552 151.072 120.388C153.594 119.223 156.616 118.641 160.138 118.641C163.704 118.641 166.726 119.223 169.205 120.388C171.727 121.552 173.684 123.212 175.075 125.368C176.467 127.523 177.249 130.132 177.423 133.193C177.467 134.012 177.489 134.982 177.489 136.103C177.489 137.181 177.467 138.152 177.423 139.014C177.249 142.032 176.488 144.641 175.14 146.839C173.836 148.995 171.923 150.655 169.4 151.819C166.922 152.983 163.834 153.566 160.138 153.566ZM160.138 145.675C162.095 145.675 163.508 145.093 164.378 143.929C165.291 142.765 165.813 141.019 165.943 138.69C165.987 138.044 166.009 137.181 166.009 136.103C166.009 135.026 165.987 134.163 165.943 133.517C165.813 131.231 165.291 129.507 164.378 128.343C163.508 127.135 162.095 126.532 160.138 126.532C158.225 126.532 156.812 127.135 155.899 128.343C154.985 129.507 154.485 131.231 154.398 133.517C154.355 134.163 154.333 135.026 154.333 136.103C154.333 137.181 154.355 138.044 154.398 138.69C154.485 141.019 154.985 142.765 155.899 143.929C156.812 145.093 158.225 145.675 160.138 145.675Z" fill="url(#lg_footer)"/>
+      <path
+        d="M115.463 180.713C115.463 180.998 115.372 181.23 115.189 181.412C115.007 181.593 114.772 181.683 114.485 181.683H96.091C95.804 181.683 95.5692 181.593 95.3866 181.412C95.2039 181.23 95.1126 180.998 95.1126 180.713V176.251C95.1126 175.966 95.2039 175.733 95.3866 175.552C95.5692 175.371 95.804 175.28 96.091 175.28H97.5782C96.7694 174.608 96.091 173.728 95.5431 172.642C94.9952 171.555 94.7212 170.275 94.7212 168.8C94.7212 167.3 95.0604 165.98 95.7388 164.842C96.4171 163.678 97.4216 162.772 98.7522 162.126C100.057 161.453 101.661 161.117 103.566 161.117H114.485C114.772 161.117 115.007 161.22 115.189 161.427C115.372 161.608 115.463 161.828 115.463 162.087V166.976C115.463 167.235 115.372 167.468 115.189 167.675C115.007 167.856 114.772 167.946 114.485 167.946H103.801C102.575 167.946 101.635 168.244 100.983 168.839C100.305 169.408 99.9655 170.262 99.9655 171.4C99.9655 172.461 100.305 173.314 100.983 173.961C101.635 174.582 102.575 174.892 103.801 174.892H114.485C114.772 174.892 115.007 174.996 115.189 175.203C115.372 175.384 115.463 175.604 115.463 175.862V180.713Z"
+        fill="url(#lg_footer)" />
+      <path
+        d="M115.463 192.991C115.463 193.276 115.372 193.508 115.189 193.69C115.007 193.871 114.772 193.961 114.485 193.961H96.091C95.804 193.961 95.5692 193.871 95.3866 193.69C95.2039 193.508 95.1126 193.276 95.1126 192.991V188.412C95.1126 188.153 95.2039 187.934 95.3866 187.752C95.5692 187.545 95.804 187.442 96.091 187.442H114.485C114.772 187.442 115.007 187.545 115.189 187.752C115.372 187.934 115.463 188.153 115.463 188.412V192.991ZM92.1774 193.03C92.1774 193.314 92.0861 193.547 91.9035 193.728C91.7208 193.909 91.486 194 91.199 194H87.7159C87.4289 194 87.1941 193.909 87.0115 193.728C86.8028 193.547 86.6984 193.314 86.6984 193.03V188.412C86.6984 188.128 86.8028 187.895 87.0115 187.714C87.1941 187.507 87.4289 187.403 87.7159 187.403H91.199C91.486 187.403 91.7208 187.507 91.9035 187.714C92.0861 187.895 92.1774 188.128 92.1774 188.412V193.03Z"
+        fill="url(#lg_footer)" />
+      <path
+        d="M192.342 152.919C191.69 152.919 191.212 152.768 190.907 152.466C190.603 152.164 190.364 151.776 190.19 151.302L180.797 121.358C180.71 121.142 180.667 120.927 180.667 120.711C180.667 120.323 180.819 120 181.123 119.741C181.428 119.439 181.776 119.288 182.167 119.288H188.885C189.451 119.288 189.885 119.439 190.19 119.741C190.538 120.043 190.755 120.344 190.842 120.646L196.321 139.143L202.192 120.711C202.278 120.409 202.474 120.107 202.779 119.806C203.126 119.461 203.605 119.288 204.214 119.288H208.518C209.127 119.288 209.584 119.461 209.888 119.806C210.236 120.107 210.454 120.409 210.54 120.711L216.411 139.143L221.89 120.646C221.977 120.344 222.173 120.043 222.477 119.741C222.825 119.439 223.281 119.288 223.847 119.288H230.565C230.956 119.288 231.283 119.439 231.543 119.741C231.848 120 232 120.323 232 120.711C232 120.927 231.978 121.142 231.935 121.358L222.542 151.302C222.412 151.776 222.173 152.164 221.825 152.466C221.52 152.768 221.042 152.919 220.39 152.919H214.519C213.911 152.919 213.432 152.768 213.084 152.466C212.736 152.164 212.497 151.776 212.367 151.302L206.366 133.581L200.365 151.302C200.235 151.776 199.996 152.164 199.648 152.466C199.3 152.768 198.821 152.919 198.213 152.919H192.342Z"
+        fill="url(#lg_footer)" />
+      <path
+        d="M160.138 153.566C156.486 153.566 153.398 152.983 150.876 151.819C148.398 150.655 146.484 148.995 145.136 146.839C143.832 144.641 143.092 142.032 142.918 139.014C142.875 138.152 142.853 137.181 142.853 136.103C142.853 134.982 142.875 134.012 142.918 133.193C143.092 130.132 143.875 127.523 145.267 125.368C146.658 123.212 148.593 121.552 151.072 120.388C153.594 119.223 156.616 118.641 160.138 118.641C163.704 118.641 166.726 119.223 169.205 120.388C171.727 121.552 173.684 123.212 175.075 125.368C176.467 127.523 177.249 130.132 177.423 133.193C177.467 134.012 177.489 134.982 177.489 136.103C177.489 137.181 177.467 138.152 177.423 139.014C177.249 142.032 176.488 144.641 175.14 146.839C173.836 148.995 171.923 150.655 169.4 151.819C166.922 152.983 163.834 153.566 160.138 153.566ZM160.138 145.675C162.095 145.675 163.508 145.093 164.378 143.929C165.291 142.765 165.813 141.019 165.943 138.69C165.987 138.044 166.009 137.181 166.009 136.103C166.009 135.026 165.987 134.163 165.943 133.517C165.813 131.231 165.291 129.507 164.378 128.343C163.508 127.135 162.095 126.532 160.138 126.532C158.225 126.532 156.812 127.135 155.899 128.343C154.985 129.507 154.485 131.231 154.398 133.517C154.355 134.163 154.333 135.026 154.333 136.103C154.333 137.181 154.355 138.044 154.398 138.69C154.485 141.019 154.985 142.765 155.899 143.929C156.812 145.093 158.225 145.675 160.138 145.675Z"
+        fill="url(#lg_footer)" />
     </svg>
     <span>Grow in Tech &copy; 2025</span>
   </footer>
@@ -487,4 +556,5 @@
     })();
   </script>
 </body>
+
 </html>
