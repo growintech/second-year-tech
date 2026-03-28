@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIT Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="./shared/games.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- ── Auth bar ──────────────────────────────────────────────────────────── -->
+  <div class="auth-bar">
+    <span class="auth-bar-brand">GIT Games</span>
+
+    <div id="bar-user" class="auth-bar-user" hidden>
+      <div class="avatar"><span id="avatar-initial"></span></div>
+      <span id="user-info" class="user-info"></span>
+      <button id="btn-logout" class="btn-logout">Log out</button>
+    </div>
+
+    <div id="bar-guest" class="auth-bar-guest">
+      <button id="btn-open-modal" class="btn-login">Log in to play</button>
+    </div>
+  </div>
+
+  <!-- ── Auth overlay ──────────────────────────────────────────────────────── -->
+  <div id="auth-overlay" class="auth-overlay" role="dialog" aria-modal="true" aria-label="Authentication">
+    <div class="auth-modal">
+
+      <div class="auth-tabs" id="auth-tabs-bar">
+        <button class="auth-tab active" data-tab="login">Log in</button>
+        <button class="auth-tab" data-tab="register">Register</button>
+      </div>
+
+      <!-- Login panel -->
+      <div id="panel-login">
+        <form id="form-login" novalidate>
+          <input id="login-email"    type="email"    placeholder="Email"    autocomplete="email"            required>
+          <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required>
+          <div class="auth-error" id="login-error"></div>
+          <button type="submit" class="btn-cta">Log in →</button>
+        </form>
+        <button id="btn-forgot" class="btn-forgot">Forgot password?</button>
+      </div>
+
+      <!-- Register panel -->
+      <div id="panel-register" hidden>
+        <form id="form-register" novalidate>
+          <input id="register-email"    type="email"    placeholder="Email"             autocomplete="email"        required>
+          <input id="register-password" type="password" placeholder="Password (min 6 chars)" autocomplete="new-password" required>
+          <div class="auth-error" id="register-error"></div>
+          <button type="submit" class="btn-cta">Register →</button>
+        </form>
+      </div>
+
+      <!-- Verify panel -->
+      <div id="panel-verify" class="auth-verify" hidden>
+        <h3>Check your inbox</h3>
+        <p>We sent a confirmation link to your email. Click it to activate your account, then come back and log in.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+  <header class="hero">
+    <h1>GIT Games</h1>
+    <p>Play hard. Debug harder.</p>
+  </header>
+
+  <main>
+
+    <!-- ── Game cards ──────────────────────────────────────────────────────── -->
+    <section class="game-cards">
+
+      <div class="game-card" id="card-hacking-sim">
+        <div class="game-icon">🔐</div>
+        <h3>Hacking Sim</h3>
+        <p>Race against the clock to breach the MegaCorp terminal. The faster you hack, the higher your score.</p>
+        <span class="personal-best"></span>
+        <button class="btn-play" data-href="./hacking-sim/index.html" disabled title="Log in to play">Play →</button>
+      </div>
+
+      <div class="game-card" id="card-terminal-run">
+        <div class="game-icon">⚡</div>
+        <h3>Terminal Run</h3>
+        <p>Type commands to outrun the firewall. Every keystroke counts in this shell-speed challenge.</p>
+        <span class="personal-best"></span>
+        <button class="btn-play" data-href="./terminal-run/index.html" disabled title="Log in to play">Play →</button>
+      </div>
+
+    </section>
+
+    <!-- ── Leaderboard ─────────────────────────────────────────────────────── -->
+    <section class="leaderboard-section">
+      <h2>Leaderboard</h2>
+      <div class="leaderboard-tabs">
+        <button class="leaderboard-tab active" data-game="">All</button>
+        <button class="leaderboard-tab" data-game="hacking-sim">Hacking Sim</button>
+        <button class="leaderboard-tab" data-game="terminal-run">Terminal Run</button>
+      </div>
+      <div class="leaderboard-widget">
+        <div id="leaderboard-rows">
+          <div class="leaderboard-empty">Loading…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── School standings ────────────────────────────────────────────────── -->
+    <section class="school-standings-section">
+      <h2>School standings</h2>
+      <div class="school-standings" id="school-standings">
+        <div class="leaderboard-empty">Loading…</div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module">
+    import { getSession, getProfile, login, register, logout, resetPassword } from './shared/auth.js'
+    import { getLeaderboard, getPersonalBest, getSchoolStandings } from './shared/leaderboard.js'
+
+    // ── State ────────────────────────────────────────────────────────────────
+    let session = null
+    let profile = null
+    let activeGame = null  // null = all games
+
+    const GAMES = [
+      { id: 'hacking-sim',  cardId: 'card-hacking-sim'  },
+      { id: 'terminal-run', cardId: 'card-terminal-run' },
+    ]
+
+    // ── Init ─────────────────────────────────────────────────────────────────
+    async function init() {
+      session = await getSession()
+      if (session?.user?.email_confirmed_at) {
+        profile = await getProfile()
+      }
+
+      updateAuthBar()
+      handleQueryParams()
+      updatePlayButtons()
+
+      await Promise.all([loadLeaderboard(), loadStandings()])
+
+      if (session && profile) await loadPersonalBests()
+    }
+
+    // ── Auth bar ─────────────────────────────────────────────────────────────
+    function updateAuthBar() {
+      const barUser  = document.getElementById('bar-user')
+      const barGuest = document.getElementById('bar-guest')
+
+      if (session && profile) {
+        document.getElementById('avatar-initial').textContent = profile.nickname[0].toUpperCase()
+        document.getElementById('user-info').textContent = `${profile.nickname} · ${profile.school_code}`
+        barUser.hidden  = false
+        barGuest.hidden = true
+      } else {
+        barUser.hidden  = true
+        barGuest.hidden = false
+      }
+    }
+
+    document.getElementById('btn-logout').addEventListener('click', () => logout())
+
+    document.getElementById('btn-open-modal').addEventListener('click', () => openModal('login'))
+
+    // ── Query params ─────────────────────────────────────────────────────────
+    function handleQueryParams() {
+      const p = new URLSearchParams(location.search)
+      if (p.has('verify'))    openModal('verify')
+      else if (p.has('login')) openModal('login')
+    }
+
+    // ── Modal ────────────────────────────────────────────────────────────────
+    const overlay = document.getElementById('auth-overlay')
+
+    function openModal(tab = 'login') {
+      overlay.classList.add('open')
+      tab === 'verify' ? showVerify() : showTab(tab)
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open')
+      clearErrors()
+    }
+
+    function showTab(tab) {
+      document.getElementById('panel-login').hidden    = tab !== 'login'
+      document.getElementById('panel-register').hidden = tab !== 'register'
+      document.getElementById('panel-verify').hidden   = true
+      document.querySelectorAll('.auth-tab').forEach(btn =>
+        btn.classList.toggle('active', btn.dataset.tab === tab))
+    }
+
+    function showVerify() {
+      document.getElementById('panel-login').hidden    = true
+      document.getElementById('panel-register').hidden = true
+      document.getElementById('panel-verify').hidden   = false
+      document.querySelectorAll('.auth-tab').forEach(btn => btn.classList.remove('active'))
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.auth-error').forEach(el => { el.textContent = ''; el.style.color = '' })
+    }
+
+    // Close on backdrop click
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal() })
+
+    // Tab buttons
+    document.querySelectorAll('.auth-tab').forEach(btn =>
+      btn.addEventListener('click', () => showTab(btn.dataset.tab)))
+
+    // ── Login form ───────────────────────────────────────────────────────────
+    document.getElementById('form-login').addEventListener('submit', async e => {
+      e.preventDefault()
+      const errEl = document.getElementById('login-error')
+      errEl.textContent = ''
+      errEl.style.color = ''
+      try {
+        await login({
+          email:    document.getElementById('login-email').value,
+          password: document.getElementById('login-password').value,
+        })
+        window.location.reload()
+      } catch (err) {
+        errEl.textContent = err.message
+      }
+    })
+
+    // ── Forgot password ──────────────────────────────────────────────────────
+    document.getElementById('btn-forgot').addEventListener('click', async () => {
+      const email = document.getElementById('login-email').value.trim()
+      const errEl = document.getElementById('login-error')
+      errEl.style.color = ''
+      if (!email) { errEl.textContent = 'Enter your email above first.'; return }
+      try {
+        await resetPassword(email)
+        errEl.style.color = 'var(--brand-start)'
+        errEl.textContent = 'Password reset email sent — check your inbox.'
+      } catch (err) {
+        errEl.textContent = err.message
+      }
+    })
+
+    // ── Register form ────────────────────────────────────────────────────────
+    document.getElementById('form-register').addEventListener('submit', async e => {
+      e.preventDefault()
+      const errEl = document.getElementById('register-error')
+      errEl.textContent = ''
+      try {
+        await register({
+          email:    document.getElementById('register-email').value,
+          password: document.getElementById('register-password').value,
+        })
+        showVerify()
+      } catch (err) {
+        errEl.textContent = err.message
+      }
+    })
+
+    // ── Play buttons ─────────────────────────────────────────────────────────
+    function updatePlayButtons() {
+      GAMES.forEach(({ cardId }) => {
+        const card = document.getElementById(cardId)
+        const btn  = card.querySelector('.btn-play')
+        if (session && profile) {
+          btn.removeAttribute('disabled')
+          btn.removeAttribute('title')
+        } else if (session && !profile) {
+          btn.setAttribute('disabled', '')
+          btn.setAttribute('title', 'Complete your profile to play')
+        } else {
+          btn.setAttribute('disabled', '')
+          btn.setAttribute('title', 'Log in to play')
+        }
+      })
+    }
+
+    document.querySelectorAll('.btn-play').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!session) {
+          openModal('login')
+        } else if (!profile) {
+          window.location.href = '/games/profile.html'
+        } else {
+          window.location.href = btn.dataset.href
+        }
+      })
+    })
+
+    // ── Leaderboard ──────────────────────────────────────────────────────────
+    document.querySelectorAll('.leaderboard-tab').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        document.querySelectorAll('.leaderboard-tab').forEach(b => b.classList.remove('active'))
+        btn.classList.add('active')
+        activeGame = btn.dataset.game || null
+        await loadLeaderboard()
+      })
+    })
+
+    async function loadLeaderboard() {
+      const container = document.getElementById('leaderboard-rows')
+      container.innerHTML = '<div class="leaderboard-empty">Loading…</div>'
+      try {
+        let rows = []
+        if (activeGame) {
+          rows = await getLeaderboard({ gameId: activeGame, limit: 20 })
+        } else {
+          // All games: fetch both, merge, sort by score desc, re-rank
+          const [hackRows, termRows] = await Promise.all([
+            getLeaderboard({ gameId: 'hacking-sim',  limit: 20 }),
+            getLeaderboard({ gameId: 'terminal-run', limit: 20 }),
+          ])
+          rows = [...hackRows, ...termRows].sort((a, b) => b.score - a.score).slice(0, 20)
+          let rank = 1
+          rows.forEach((row, i) => {
+            if (i > 0 && row.score < rows[i - 1].score) rank = i + 1
+            row.rank = rank
+          })
+        }
+        renderLeaderboard(rows)
+      } catch {
+        container.innerHTML = '<div class="leaderboard-empty">Could not load leaderboard.</div>'
+      }
+    }
+
+    function renderLeaderboard(rows) {
+      const container = document.getElementById('leaderboard-rows')
+      if (!rows.length) {
+        container.innerHTML = '<div class="leaderboard-empty">No scores yet — be the first!</div>'
+        return
+      }
+      container.innerHTML = rows.map(row => {
+        const pub        = row.profiles_public || {}
+        const rankClass  = row.rank <= 3 ? `rank-${row.rank}` : ''
+        const tied       = rows.filter(r => r.rank === row.rank).length > 1
+        const rankLabel  = tied ? `Tied #${row.rank}` : `#${row.rank}`
+        return `
+          <div class="leaderboard-row ${rankClass}">
+            <span class="rank-num">${rankLabel}</span>
+            <span class="nickname">${esc(pub.nickname || '—')}</span>
+            <span class="school-badge">${esc(pub.school_code || '—')}</span>
+            <span class="score">${row.score.toLocaleString()}</span>
+          </div>`
+      }).join('')
+    }
+
+    // ── School standings ─────────────────────────────────────────────────────
+    async function loadStandings() {
+      const container = document.getElementById('school-standings')
+      try {
+        const standings = await getSchoolStandings({})
+        if (!standings.length) {
+          container.innerHTML = '<div class="leaderboard-empty">No standings yet.</div>'
+          return
+        }
+        container.innerHTML = standings.map(s => `
+          <div class="school-card">
+            <span class="school-badge">${esc(s.school_code)}</span>
+            <div class="school-score">${s.total_score.toLocaleString()}</div>
+            <div class="school-players">${s.player_count} ${s.player_count === 1 ? 'player' : 'players'}</div>
+          </div>`).join('')
+      } catch {
+        container.innerHTML = '<div class="leaderboard-empty">Could not load standings.</div>'
+      }
+    }
+
+    // ── Personal bests ───────────────────────────────────────────────────────
+    async function loadPersonalBests() {
+      await Promise.all(GAMES.map(async ({ id, cardId }) => {
+        const pb  = await getPersonalBest({ gameId: id })
+        const el  = document.querySelector(`#${cardId} .personal-best`)
+        if (el) el.textContent = pb ? `Your best: ${pb.score.toLocaleString()}` : 'No score yet'
+      }))
+    }
+
+    // ── Utility ──────────────────────────────────────────────────────────────
+    function esc(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+    }
+
+    init()
+  </script>
+
+</body>
+</html>
