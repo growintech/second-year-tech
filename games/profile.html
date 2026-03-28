@@ -4,75 +4,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile — GIT Games</title>
+  <!-- Theme init — must run before body renders to prevent flash -->
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./shared/games.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- ── Auth bar ──────────────────────────────────────────────────────────── -->
-  <div class="auth-bar">
-    <a href="./index.html" class="auth-bar-brand" style="text-decoration:none;">GIT Games</a>
+  <!-- ── Navbar ────────────────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <a href="../index.html" class="navbar-logo" aria-label="Grow in Tech — lessons hub">
+      <img src="../shared/logo.svg" height="36" alt="Grow in Tech">
+    </a>
 
-    <div id="bar-user" class="auth-bar-user" hidden>
-      <div class="avatar"><span id="avatar-initial"></span></div>
-      <span id="user-info" class="user-info"></span>
-      <button id="btn-logout" class="btn-logout">Log out</button>
+    <div class="navbar-nav">
+      <a href="./index.html" class="nav-link">&gt; GAMES_HUB</a>
     </div>
 
-    <div id="bar-guest" class="auth-bar-guest" hidden>
-      <!-- logged-out state is unreachable on this page; requireAuth redirects first -->
+    <div class="navbar-right">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+
+      <!-- Logged in (edit mode) -->
+      <div id="bar-user" class="nav-auth-user" hidden>
+        <span class="nav-user-badge">
+          <span class="school-code" id="avatar-initial"></span>&nbsp;<span id="user-info"></span>
+        </span>
+        <button id="btn-logout" class="nav-btn">LOGOUT</button>
+      </div>
+
+      <!-- Logged out — unreachable; requireAuth() redirects before this page loads -->
+      <div id="bar-guest" class="nav-auth-guest" hidden></div>
     </div>
-  </div>
+  </nav>
 
-  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-  <header class="hero">
-    <h1 id="hero-title">Set up your profile</h1>
-    <p id="hero-sub">Choose a nickname and fill in your info to start playing.</p>
-  </header>
+  <!-- ── Centered profile card ─────────────────────────────────────────────── -->
+  <main class="profile-main">
+    <div class="profile-card panel">
 
-  <!-- ── Profile form ──────────────────────────────────────────────────────── -->
-  <main class="profile-page">
-    <form id="profile-form" class="profile-form" novalidate>
+      <div class="card-top-prompt" id="card-mode-prompt">&gt; PROFILE_SETUP_</div>
+      <!-- hero-title and hero-sub kept in DOM for JS compat; hidden visually -->
+      <h1 id="hero-title" class="card-title">Set up your profile</h1>
+      <p  id="hero-sub"   class="card-sub">Choose a nickname and fill in your info to start playing.</p>
 
-      <fieldset>
-        <legend>Personal info</legend>
+      <form id="profile-form" class="profile-form" novalidate>
 
-        <label for="first-name">First name</label>
-        <input id="first-name" name="first_name" type="text" placeholder="Ada" autocomplete="given-name" required>
+        <fieldset>
+          <legend>Personal info</legend>
 
-        <label for="last-name">Last name</label>
-        <input id="last-name" name="last_name" type="text" placeholder="Lovelace" autocomplete="family-name" required>
+          <label for="first-name">FIRST NAME</label>
+          <input id="first-name" name="first_name" type="text" placeholder="Ada" autocomplete="given-name" required>
 
-        <label for="age">Age</label>
-        <input id="age" name="age" type="number" min="13" max="25" placeholder="16" required>
-      </fieldset>
+          <label for="last-name">LAST NAME</label>
+          <input id="last-name" name="last_name" type="text" placeholder="Lovelace" autocomplete="family-name" required>
 
-      <fieldset>
-        <legend>Game identity</legend>
+          <label for="age">AGE</label>
+          <input id="age" name="age" type="number" min="13" max="25" placeholder="16" required>
+        </fieldset>
 
-        <label for="nickname">Nickname <span style="color:var(--text-muted);font-weight:400">(3–20 chars, a-z 0-9 _ -)</span></label>
-        <div class="nickname-field">
-          <input id="nickname" name="nickname" type="text"
-            pattern="[a-zA-Z0-9_\-]{3,20}"
-            placeholder="h4ck3r_pro"
-            autocomplete="off"
-            required>
-          <span id="nickname-status" class="nickname-status"></span>
-        </div>
+        <fieldset>
+          <legend>Game identity</legend>
 
-        <label for="school-code">School &amp; year</label>
-        <select id="school-code" name="school_code" required>
-          <option value="" disabled selected>Select your school…</option>
-        </select>
-      </fieldset>
+          <label for="nickname">NICKNAME <span style="-webkit-text-fill-color:var(--text-dim);color:var(--text-dim)">(3–20 chars, a-z 0-9 _ -)</span></label>
+          <div class="nickname-field">
+            <input id="nickname" name="nickname" type="text"
+              pattern="[a-zA-Z0-9_\-]{3,20}"
+              placeholder="h4ck3r_pro"
+              autocomplete="off"
+              required>
+            <span id="nickname-status" class="nickname-status"></span>
+          </div>
 
-      <div class="form-error" id="form-error"></div>
+          <label for="school-code">SCHOOL &amp; YEAR</label>
+          <select id="school-code" name="school_code" required>
+            <option value="" disabled selected>SELECT YOUR SCHOOL…</option>
+          </select>
+          <span class="school-locked-label" id="school-locked-label" hidden></span>
+        </fieldset>
 
-      <button type="submit" id="btn-submit" class="btn-submit">Save and start playing →</button>
+        <div class="form-error" id="form-error"></div>
 
-    </form>
+        <button type="submit" id="btn-submit" class="btn-submit">[ SAVE AND START PLAYING → ]</button>
+
+      </form>
+
+      <a href="/games/index.html" class="back-link">← BACK TO HUB</a>
+
+    </div>
   </main>
 
   <script type="module">
@@ -80,6 +100,19 @@
       getSession, getProfile, saveProfile, updateProfile,
       isNicknameAvailable, logout, SCHOOLS,
     } from './shared/auth.js'
+
+    // ── Theme toggle ─────────────────────────────────────────────────────────
+    const themeBtn = document.getElementById('theme-toggle')
+    function syncThemeBtn() {
+      themeBtn.textContent = document.documentElement.classList.contains('light') ? '☀️' : '🌙'
+    }
+    syncThemeBtn()
+    themeBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light')
+      const isLight = document.documentElement.classList.contains('light')
+      localStorage.setItem('git-theme', isLight ? 'light' : 'dark')
+      syncThemeBtn()
+    })
 
     // ── State ────────────────────────────────────────────────────────────────
     let isEditMode = false
@@ -100,15 +133,16 @@
       populateSchools()
 
       if (isEditMode) {
+        document.getElementById('card-mode-prompt').textContent = '> EDIT_PROFILE_'
         document.getElementById('hero-title').textContent = 'Edit your profile'
         document.getElementById('hero-sub').textContent   = 'Update your info or change your nickname.'
-        document.getElementById('btn-submit').textContent = 'Save changes →'
+        document.getElementById('btn-submit').textContent = '[ SAVE CHANGES → ]'
         prefillForm()
         handleSchoolCodeDisable()
 
         // Auth bar: show logged-in state
-        document.getElementById('avatar-initial').textContent = currentProfile.nickname[0].toUpperCase()
-        document.getElementById('user-info').textContent      = `${currentProfile.nickname} · ${currentProfile.school_code}`
+        document.getElementById('avatar-initial').textContent = `[${currentProfile.school_code}]`
+        document.getElementById('user-info').textContent      = currentProfile.nickname
         document.getElementById('bar-user').hidden = false
       }
     }
@@ -139,9 +173,12 @@
       const updatedYear = new Date(currentProfile.school_code_updated_at).getFullYear()
       const currentYear = new Date().getFullYear()
       if (updatedYear === currentYear) {
-        const select = document.getElementById('school-code')
-        select.disabled = true
-        select.title    = `Editable once per school year — next change available in ${currentYear + 1}`
+        const select     = document.getElementById('school-code')
+        const lockedLbl  = document.getElementById('school-locked-label')
+        select.disabled  = true
+        select.title     = `Editable once per school year — next change available in ${currentYear + 1}`
+        lockedLbl.textContent = `[LOCKED UNTIL ${currentYear + 1}]`
+        lockedLbl.hidden = false
       }
     }
 
@@ -154,14 +191,14 @@
 
       if (!val || val.length < 3) { statusEl.textContent = ''; return }
 
-      statusEl.textContent = '⏳'
+      statusEl.textContent = '...'
       statusEl.style.color = 'var(--text-muted)'
 
       nicknameTimer = setTimeout(async () => {
         const userId    = isEditMode ? currentProfile.id : null
         const available = await isNicknameAvailable(val, userId)
-        statusEl.textContent = available ? '✓' : '✗'
-        statusEl.style.color = available ? 'var(--brand-start)' : 'var(--error)'
+        statusEl.textContent = available ? '✓ AVAILABLE' : '✗ TAKEN'
+        statusEl.style.color = available ? 'var(--green)' : 'var(--error)'
       }, 400)
     })
 
@@ -173,7 +210,7 @@
       const btn   = document.getElementById('btn-submit')
       errEl.textContent = ''
       btn.disabled      = true
-      btn.textContent   = 'Saving…'
+      btn.textContent   = '[ SAVING… ]'
 
       const payload = {
         firstName:  document.getElementById('first-name').value.trim(),
@@ -198,7 +235,7 @@
       } catch (err) {
         errEl.textContent = err.message
         btn.disabled      = false
-        btn.textContent   = isEditMode ? 'Save changes →' : 'Save and start playing →'
+        btn.textContent   = isEditMode ? '[ SAVE CHANGES → ]' : '[ SAVE AND START PLAYING → ]'
       }
     })
 
