@@ -23,12 +23,13 @@
           <button class="school-toggle-btn" data-school="sommeiller">Sommeiller</button>
           <button class="school-toggle-btn" data-school="monti">Monti</button>
         </div>
+        <button class="tour-btn" id="tour-btn" aria-label="Page tour" title="Replay page tour">❓</button>
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
       </div>
     </header>
 
     <!-- Countdown -->
-    <div class="lesson-countdown">
+    <div class="lesson-countdown" id="tour-countdown">
       <div class="lesson-countdown-label" id="fp-cd-label">Select your school to see the countdown</div>
       <div class="lesson-countdown-units">
         <div class="lc-unit">
@@ -54,7 +55,7 @@
     </div>
 
     <!-- Hero -->
-    <div class="hero">
+    <div class="hero" id="tour-hero">
       <div class="activity-badge badge-blue">🎓 Year 2 — 2025/2026</div>
       <h1>Build Your<br><span class="grad">Startup</span></h1>
       <p class="lead">Work in pairs. Pick one of 5 tracks, analyse a real problem, and build a product — from problem
@@ -71,7 +72,7 @@
     </div>
 
     <!-- Project Phases — navigation cards -->
-    <section>
+    <section id="tour-phases">
       <h2>Project Phases</h2>
       <div class="phase-nav">
         <a class="phase-nav-card" href="01-problem-to-solution.html">
@@ -109,7 +110,7 @@
     </section>
 
     <!-- Phase Overview (brief summaries) -->
-    <section>
+    <section id="tour-overview">
       <h2>Phase Overview</h2>
 
       <div class="phase-card">
@@ -173,7 +174,7 @@
     </section>
 
     <!-- Timeline -->
-    <section>
+    <section id="tour-timeline">
       <h2>Timeline</h2>
       <div class="card" style="padding:0;overflow:hidden;">
         <table class="timeline-table">
@@ -234,7 +235,7 @@
     </section>
 
     <!-- Grading Rubric -->
-    <section>
+    <section id="tour-rubric">
       <h2>Grading Rubric — 100 points</h2>
 
       <div class="rubric-card">
@@ -277,7 +278,7 @@
     </section>
 
     <!-- How-to guides -->
-    <section>
+    <section id="tour-howto">
       <h2>How-to guides</h2>
 
       <div class="howto-card" id="howto-form">
@@ -340,7 +341,7 @@
     </section>
 
     <!-- Resources -->
-    <section>
+    <section id="tour-resources">
       <h2>Resources</h2>
 
       <div class="card">
