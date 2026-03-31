@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 2 — Form &amp; Landing Page — Final Project 2026</title>
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <link rel="stylesheet" href="fp-styles.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <a class="topbar-logo" href="../index.html">
+      <img style="height:48px;width:auto;" src="../shared/logo.svg" alt="Grow in Tech">
+    </a>
+    <div class="topbar-right">
+      <div class="school-toggle" id="school-toggle">
+        <button class="school-toggle-btn" data-school="sommeiller">Sommeiller</button>
+        <button class="school-toggle-btn" data-school="monti">Monti</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <a class="fp-back" href="index.html">← Back to Final Project Overview</a>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot active"></div>
+    <div class="progress-bar-dot"></div>
+    <div class="progress-bar-dot"></div>
+  </div>
+
+  <!-- Phase 2 Countdown -->
+  <div class="lesson-countdown phase-countdown" data-phase="2">
+    <div class="phase-cd-label">Deadline — Phase 2</div>
+    <div class="lesson-countdown-units">
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-days">--</span>
+        <span class="lc-lbl">Days</span>
+      </div>
+      <span class="lc-sep">:</span>
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-hours">--</span>
+        <span class="lc-lbl">Hours</span>
+      </div>
+      <span class="lc-sep">:</span>
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-minutes">--</span>
+        <span class="lc-lbl">Min</span>
+      </div>
+      <span class="lc-sep">:</span>
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-seconds">--</span>
+        <span class="lc-lbl">Sec</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="activity-badge badge-blue">Phase 2 of 4</div>
+    <h1>Form &amp; <span class="grad">Landing Page</span></h1>
+    <p class="lead">Prove that the problem exists with real data, then build the first version of your startup website.</p>
+  </div>
+
+  <!-- Deadline -->
+  <div class="phase-card">
+    <div class="deadline-row">
+      <span class="deadline-pill">📅 Deadline — <span data-date-sommeiller="Sommeiller: 8 April" data-date-monti="Monti: 10 April">8 / 10 April</span></span>
+    </div>
+    <div class="phase-body">
+      <p>This phase has two parallel tracks: market validation (form) and the first version of your website. Start both early — don't leave either to the last day.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-warn" style="margin-bottom:32px;">
+    <span class="callout-icon">📝</span>
+    <div class="callout-body">
+      <strong>Individual test on the same day.</strong> On <span data-date-sommeiller="8 April (Sommeiller)" data-date-monti="10 April (Monti)">the deadline date</span>, you will take an individual JavaScript test in class. It covers concepts studied during the course and is separate from the project work. Study for it independently.
+    </div>
+  </div>
+
+  <!-- Step 1: Validation -->
+  <section>
+    <h2>Step 1 — Market Validation Form</h2>
+
+    <div class="card">
+      <h3>Create the form</h3>
+      <p>Use <a href="https://forms.google.com" target="_blank" style="color:var(--grad-start)">Google Forms</a> or <a href="https://tally.so" target="_blank" style="color:var(--grad-start)">Tally</a> to create a validation survey. The goal is to understand whether other people actually feel the problem you identified in Phase 1.</p>
+
+      <ul class="step-list" style="margin-top:14px;">
+        <li class="step-item">
+          <span class="step-item-num">1</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Start with the problem — not the solution</div>
+            <div class="step-item-desc">Ask about the person's experience with the problem before you mention your idea. Example: "How often do you feel you've lost control of your screen time?" — not "Would you use our app?"</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">2</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Use scales and multiple-choice questions</div>
+            <div class="step-item-desc">Numerical scales (1–5) give you quantifiable data you can cite in the pitch deck. Mix them with a few multiple-choice questions for variety.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">3</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Include at least one open question</div>
+            <div class="step-item-desc">Open answers often reveal insights you never thought to ask about. Something like: "What's the most frustrating thing about [topic]?"</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">4</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Introduce your idea, then ask about it</div>
+            <div class="step-item-desc">Write 2–3 lines explaining your startup concept, then ask: "Would you use something like this? Why or why not?"</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">5</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Collect at least 20 responses</div>
+            <div class="step-item-desc">Share the form with classmates, friends, family. The more diverse the respondents, the better. <strong>20 is the minimum.</strong></div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="callout callout-tip" style="margin-top:16px;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body"><strong>Keep it short.</strong> Stay under 8–10 questions. Beyond that, people abandon the form or answer randomly — and your data becomes useless.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:8px;">
+      <h3>Analyse the results</h3>
+      <p>Once you have your 20+ responses, write a brief comment (5–10 lines) on what you learned. Focus on:</p>
+      <ul style="padding-left:18px;margin-top:8px;">
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Did people confirm the problem exists?</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Were there any surprises in the responses?</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">How many said they would use your solution?</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Did you change anything about your idea based on the feedback?</li>
+      </ul>
+      <p style="margin-top:8px;">Take screenshots of the key charts from Google Forms / Tally — you'll need them for the delivery and for your pitch deck later.</p>
+    </div>
+  </section>
+
+  <!-- Step 2: Website -->
+  <section>
+    <h2>Step 2 — First Website (Landing Page)</h2>
+
+    <div class="card">
+      <h3>Build the first version of your startup site</h3>
+      <p>This is the first delivery of your website. It doesn't need to be complete, but it must demonstrate that you can build a real page with HTML, CSS and JavaScript.</p>
+
+      <ul class="step-list" style="margin-top:14px;">
+        <li class="step-item">
+          <span class="step-item-num">1</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Responsive layout</div>
+            <div class="step-item-desc">The page must look good on both desktop and mobile. Use CSS media queries or a framework like Bootstrap.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">2</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Working navbar</div>
+            <div class="step-item-desc">A navigation bar at the top of the page that links to different sections. It should be responsive (hamburger menu on mobile is a plus, but not required).</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">3</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Clear sections</div>
+            <div class="step-item-desc">The page should describe your startup clearly: the problem, the solution, how it works, and who it's for. Think of it as a real startup landing page.</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="callout callout-info" style="margin-top:16px;">
+        <span class="callout-icon">🚀</span>
+        <div class="callout-body"><strong>Don't wait for perfection.</strong> The website evolves over three deliveries. This first version is about structure and content. You'll add the countdown and interactive features in Phase 3.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:8px;">
+      <h3>Start the development diary</h3>
+      <p>Create a Google Doc and start documenting your process as you build the website. This is the <strong>first of three diary deliveries</strong>.</p>
+      <ul style="padding-left:18px;margin-top:8px;">
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">What you tried to do</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">What tools or techniques you used</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Problems you ran into and how you solved them</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">If you used AI: what prompt you gave, what it produced, what you changed</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Deliverables -->
+  <section>
+    <h2>Deliverables — Phase 2</h2>
+    <div class="deliverables">
+      <div class="deliverables-label">✅ Upload to Google Classroom by <span data-date-sommeiller="8 April" data-date-monti="10 April">8/10 April</span></div>
+      <ul>
+        <li>Link to the validation form</li>
+        <li>Screenshot of results + brief comment (5–10 lines)</li>
+        <li>First website delivery (ZIP file or GitHub link)</li>
+        <li>Development diary — first version</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Nav footer -->
+  <div class="nav-footer">
+    <a class="nav-btn nav-btn-outline" href="01-problem-to-solution.html">← Phase 1</a>
+    <a class="nav-btn nav-btn-primary" href="03-website-progress.html">Phase 3 →</a>
+  </div>
+
+</div>
+<script src="../shared/app-intro.js"></script>
+<script src="fp-shared.js"></script>
+</body>
+</html>

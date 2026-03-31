@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 4 — Final &amp; Presentation — Final Project 2026</title>
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <link rel="stylesheet" href="fp-styles.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <a class="topbar-logo" href="../index.html">
+      <img style="height:48px;width:auto;" src="../shared/logo.svg" alt="Grow in Tech">
+    </a>
+    <div class="topbar-right">
+      <div class="school-toggle" id="school-toggle">
+        <button class="school-toggle-btn" data-school="sommeiller">Sommeiller</button>
+        <button class="school-toggle-btn" data-school="monti">Monti</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <a class="fp-back" href="index.html">← Back to Final Project Overview</a>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot active"></div>
+  </div>
+
+  <!-- Phase 4 Countdown -->
+  <div class="lesson-countdown phase-countdown" data-phase="4">
+    <div class="phase-cd-label">Deadline — Final Submission</div>
+    <div class="lesson-countdown-units">
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-days">--</span>
+        <span class="lc-lbl">Days</span>
+      </div>
+      <span class="lc-sep">:</span>
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-hours">--</span>
+        <span class="lc-lbl">Hours</span>
+      </div>
+      <span class="lc-sep">:</span>
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-minutes">--</span>
+        <span class="lc-lbl">Min</span>
+      </div>
+      <span class="lc-sep">:</span>
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-seconds">--</span>
+        <span class="lc-lbl">Sec</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="activity-badge badge-blue">Phase 4 of 4</div>
+    <h1>Final Submission &amp; <span class="grad">Presentation</span></h1>
+    <p class="lead">Upload all your final materials, then present your startup to the class and instructors.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- PART A: Final Submission                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="phase-card">
+    <div class="deadline-row">
+      <span class="deadline-pill">📅 Final Submission — <span data-date-sommeiller="Sommeiller: 20 April" data-date-monti="Monti: 22 April">20 / 22 April</span></span>
+    </div>
+    <div class="phase-body">
+      <p>This is the hard deadline for all materials. After this date, no changes can be made. Upload everything to Google Classroom before 23:59.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>Final Submission — What to Upload</h2>
+
+    <div class="card">
+      <p>Review, polish, and upload all of the following materials. Make sure everything is complete and clearly labelled.</p>
+
+      <ul class="step-list" style="margin-top:14px;">
+        <li class="step-item">
+          <span class="step-item-num">1</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Presentation slides</div>
+            <div class="step-item-desc">The slides you will use during your oral presentation. Use Google Slides, Canva, or PowerPoint. Upload as PDF or share a link.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">2</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Complete website — ZIP archive</div>
+            <div class="step-item-desc">The final version of your startup website with all HTML, CSS, JS files. Make sure it works when opened from the ZIP (no broken links, no missing images). Test by unzipping to a new folder and opening <code>index.html</code>.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">3</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Pitch Deck — PDF</div>
+            <div class="step-item-desc">Your pitch deck must include: problem analysis, target audience, solution description, validation data (from the form), market research (TAM/SAM/SOM with sources), competitor analysis, and a closing call-to-action.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">4</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Development diary — final version</div>
+            <div class="step-item-desc">The complete diary documenting your entire development process across all phases. This is the third and final delivery.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Deliverables — Final Submission</h2>
+    <div class="deliverables">
+      <div class="deliverables-label">✅ Upload to Google Classroom by <span data-date-sommeiller="20 April" data-date-monti="22 April">20/22 April</span> at 23:59</div>
+      <ul>
+        <li>Presentation slides (PDF or link)</li>
+        <li>Complete website — ZIP archive</li>
+        <li>Pitch Deck — PDF</li>
+        <li>Development diary — final version</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- PART B: Presentation Day                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="phase-card">
+    <div class="deadline-row">
+      <span class="deadline-pill">🎤 Presentation Day — <span data-date-sommeiller="Sommeiller: 22 April (last lesson)" data-date-monti="Monti: 24 April (last lesson)">22 / 24 April</span></span>
+    </div>
+    <div class="phase-body">
+      <p>This is the last lesson of the course. You will present your startup in front of the class and instructors. This is your moment to show everything you've built.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>The Presentation — 5 to 7 Minutes</h2>
+
+    <div class="card">
+      <h3>Structure your talk</h3>
+      <p>You have <strong>5–7 minutes</strong> to present. Use the pitch deck as visual support — <strong>do not read from the slides</strong>. Structure your talk in three clear parts:</p>
+
+      <ul class="step-list" style="margin-top:14px;">
+        <li class="step-item">
+          <span class="step-item-num">1</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Problem → Solution → Market</div>
+            <div class="step-item-desc">Walk through your pitch deck. Present the problem you identified, your solution, the validation data from the form, and your market research (TAM/SAM/SOM, competitors). Make it compelling — you're pitching an idea.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">2</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Live website demo</div>
+            <div class="step-item-desc">Open your website and show it running live. Demonstrate the countdown, the interactive feature, the responsive layout. Be ready to explain the code behind each feature.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">3</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Call to action + Q&amp;A</div>
+            <div class="step-item-desc">Close with a strong statement about why your startup idea wins. Then take questions from the instructors — they may ask about your code, your design choices, or your market analysis.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-top:8px;">
+      <h3>Presentation tips</h3>
+      <ul style="padding-left:18px;margin-top:8px;">
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>Rehearse out loud</strong> at least twice — timing yourself. 5 minutes goes faster than you think.</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>Split the talk between both partners.</strong> Both of you must speak. Decide in advance who covers which section.</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>Test the website before presentation day.</strong> Open it on the classroom computer, make sure nothing is broken.</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>If they ask about your code</strong> — explain the logic step by step. Don't panic. If you built it (or studied the AI-generated code), you'll be fine.</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>Don't read from slides.</strong> Use them as visual support. Look at the audience, not the screen.</li>
+      </ul>
+
+      <div class="callout callout-tip" style="margin-top:12px;">
+        <span class="callout-icon">📖</span>
+        <div class="callout-body"><strong>Need help presenting?</strong> Read the <a href="https://docs.google.com/document/u/0/d/15yfYb_NzsoJEd4fyeid9TJfXwSb2sMdCq_b93tZdjTU/edit" target="_blank" style="color:var(--grad-start)">Delivery techniques guide ↗</a> for tips on how to present effectively in front of the class.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Deliverables — Presentation Day</h2>
+    <div class="deliverables">
+      <div class="deliverables-label">✅ Deliver in class on <span data-date-sommeiller="22 April" data-date-monti="24 April">22/24 April</span></div>
+      <ul>
+        <li>Oral presentation using your pitch deck (5–7 minutes)</li>
+        <li>Live demo of the working website</li>
+        <li>Answer questions from the instructors</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Certificates -->
+  <section>
+    <h2>After the Presentations</h2>
+    <div class="card">
+      <h3>Certificates — <span data-date-sommeiller="6 May (Sommeiller)" data-date-monti="8 May (Monti)">6 / 8 May</span></h3>
+      <p>The course ends with a final session where you will receive your certificates and hear concluding feedback on the technical part of the programme. This is not a deadline — just a celebration of everything you've achieved.</p>
+    </div>
+  </section>
+
+  <!-- Closing -->
+  <div class="callout callout-tip" style="margin-top:8px;">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">The Final Project is not homework. It's the first time you build something of your own from scratch — from idea to code, from problem to solution. There will be a moment when it feels like too much. It's normal. Ask the instructors, use AI intelligently, collaborate — and remember why you started this course. Good luck.</div>
+  </div>
+
+  <!-- Nav footer -->
+  <div class="nav-footer">
+    <a class="nav-btn nav-btn-outline" href="03-website-progress.html">← Phase 3</a>
+    <a class="nav-btn nav-btn-primary" href="index.html">Overview →</a>
+  </div>
+
+</div>
+<script src="../shared/app-intro.js"></script>
+<script src="fp-shared.js"></script>
+</body>
+</html>

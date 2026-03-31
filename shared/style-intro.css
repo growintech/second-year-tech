@@ -340,6 +340,8 @@ section h2::after {
   color: #c9d1e0;
   padding: 16px 20px;
   overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .code-block .copy-btn {
@@ -761,6 +763,34 @@ html.light .topbar {
 
 html.light .page-wrap .topbar {
   background: rgba(244, 246, 251, 0.88);
+}
+
+html.light .code-block {
+  background: #edf0f7;
+  border-color: rgba(0,0,0,0.12);
+}
+
+html.light .code-block pre {
+  color: #1a1d2e;
+}
+
+html.light .code-block .copy-btn {
+  background: #fff;
+  border-color: rgba(0,0,0,0.14);
+  color: #5a6080;
+}
+
+html.light .code-block .copy-btn:hover {
+  border-color: rgba(0,80,204,0.4);
+  color: #1a1d2e;
+}
+
+/* Links in light mode — use a visible blue instead of near-invisible cyan */
+html.light a[style*="--grad-start"],
+html.light .callout a,
+html.light .step-item-desc a,
+html.light .howto-body a {
+  color: #0055cc !important;
 }
 
 /* ── Topbar right group ── */

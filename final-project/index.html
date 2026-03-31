@@ -1,959 +1,503 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Final Project 2026 — Grow in Tech</title>
   <link rel="stylesheet" href="../shared/style-intro.css">
-  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
-  <style>
-    /* ── Track cards ── */
-    .track-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-    .track-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      cursor: pointer;
-      user-select: none;
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-      gap: 12px;
-    }
-    .track-toggle:hover { background: var(--surface-2); }
-    .track-toggle-left { display: flex; align-items: center; gap: 12px; }
-    .track-num {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--grad-start);
-      background: rgba(0,225,255,0.08);
-      border: 1px solid rgba(0,225,255,0.2);
-      border-radius: 6px;
-      padding: 2px 8px;
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-    .track-name { font-size: 15px; font-weight: 600; color: #fff; }
-    .track-chevron {
-      font-style: normal;
-      font-size: 12px;
-      color: var(--text-muted);
-      transition: transform 0.2s;
-      flex-shrink: 0;
-    }
-    .track-card.open .track-chevron { transform: rotate(90deg); }
-    .track-body { display: none; padding: 4px 20px 20px; }
-    .track-card.open .track-body { display: block; }
-    .track-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin: 14px 0 5px;
-    }
-    .track-body p { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
-    .track-body ul { padding-left: 20px; margin: 0; }
-    .track-body li { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 4px; }
-
-    /* ── Phase cards ── */
-    .phase-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 16px;
-      overflow: hidden;
-    }
-    .phase-body { padding: 4px 24px 22px; }
-    .phase-body p { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
-
-    /* ── Deadline pills ── */
-    .deadline-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      padding: 16px 24px 0;
-    }
-    .deadline-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: rgba(234,179,8,0.08);
-      border: 1px solid rgba(234,179,8,0.25);
-      color: var(--yellow);
-    }
-
-    /* ── Step list inside phase ── */
-    .step-list { margin: 14px 0 0; padding-left: 0; list-style: none; }
-    .step-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
-    .step-item:last-child { margin-bottom: 0; }
-    .step-item-num {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--grad-start);
-      background: rgba(0,225,255,0.08);
-      border: 1px solid rgba(0,225,255,0.2);
-      border-radius: 50%;
-      width: 26px;
-      height: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .step-item-body { flex: 1; }
-    .step-item-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
-    .step-item-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; }
-    .step-item-desc a { color: var(--grad-start); }
-    .step-item-desc ol,
-    .step-item-desc ul { margin-top: 6px; padding-left: 18px; }
-    .step-item-desc li { margin-bottom: 4px; }
-
-    /* ── Deliverables box ── */
-    .deliverables {
-      background: rgba(34,197,94,0.05);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: var(--radius-sm);
-      padding: 14px 18px;
-      margin-top: 16px;
-    }
-    .deliverables-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 8px;
-    }
-    .deliverables ul { padding-left: 18px; margin: 0; }
-    .deliverables li { color: #5a9070; font-size: 14px; line-height: 1.7; margin-bottom: 2px; }
-
-    /* ── Timeline table ── */
-    .timeline-table { width: 100%; border-collapse: collapse; }
-    .timeline-table th, .timeline-table td {
-      padding: 10px 16px;
-      font-size: 14px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-    .timeline-table th {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-    .timeline-table td { color: var(--text); }
-    .timeline-table td:nth-child(2),
-    .timeline-table td:nth-child(3) { color: var(--yellow); font-weight: 500; }
-    .timeline-table tr:last-child td { border-bottom: none; }
-
-    /* ── Rubric ── */
-    .rubric-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-    .rubric-header {
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .rubric-phase { font-size: 15px; font-weight: 600; color: #fff; }
-    .rubric-pts {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--grad-start);
-      background: rgba(0,225,255,0.08);
-      border: 1px solid rgba(0,225,255,0.2);
-      border-radius: 999px;
-      padding: 2px 12px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .rubric-body { padding: 14px 20px; color: var(--text-muted); font-size: 14px; line-height: 1.7; }
-
-    /* ── Deliverables overview grid ── */
-    .deliver-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 16px 0;
-    }
-    .deliver-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 14px;
-    }
-    .deliver-item-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-    .deliver-item-text { color: var(--text); line-height: 1.5; }
-
-    /* ── How-to collapsible cards ── */
-    .howto-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-    .howto-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      cursor: pointer;
-      user-select: none;
-      font-weight: 600;
-      font-size: 15px;
-      color: var(--text);
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-      gap: 8px;
-    }
-    .howto-toggle:hover { background: var(--surface-2); }
-    .howto-chevron {
-      font-style: normal;
-      font-size: 12px;
-      color: var(--text-muted);
-      transition: transform 0.2s;
-      flex-shrink: 0;
-    }
-    .howto-card.open .howto-chevron { transform: rotate(90deg); }
-    .howto-body {
-      display: none;
-      padding: 4px 20px 20px;
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-    .howto-card.open .howto-body { display: block; }
-    .howto-body ul { margin: 8px 0 0; padding-left: 20px; }
-    .howto-body li { margin-bottom: 10px; }
-    .howto-body p { margin-bottom: 8px; }
-    .howto-body a { color: var(--grad-start); }
-
-    /* ── Resource links ── */
-    .resource-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
-    .resource-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 11px 16px;
-      text-decoration: none;
-      color: var(--text);
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .resource-link:hover { border-color: rgba(0,225,255,0.3); background: rgba(0,225,255,0.04); }
-    .resource-link-name { font-size: 14px; font-weight: 500; color: #fff; }
-    .resource-link-desc { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
-    .resource-link-arrow { color: var(--text-dim); font-size: 16px; flex-shrink: 0; }
-
-    @media (max-width: 580px) {
-      .deliver-grid { grid-template-columns: 1fr; }
-      .deadline-row { flex-direction: column; }
-    }
-  </style>
+  <link rel="stylesheet" href="fp-styles.css">
+  <script>if (localStorage.getItem('git-theme') === 'light') document.documentElement.classList.add('light');</script>
 </head>
+
 <body>
-<div class="page-wrap">
+  <div class="page-wrap">
 
-  <header class="topbar">
-    <a class="topbar-logo" href="../index.html">
-      <img style="height:48px;width:auto;" src="../shared/logo.svg" alt="Grow in Tech">
-    </a>
-    <div class="topbar-right">
-      <span class="topbar-lesson">Final Project · Year 2</span>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    <!-- Topbar -->
+    <header class="topbar">
+      <a class="topbar-logo" href="../index.html">
+        <img style="height:48px;width:auto;" src="../shared/logo.svg" alt="Grow in Tech">
+      </a>
+      <div class="topbar-right">
+        <div class="school-toggle" id="school-toggle">
+          <button class="school-toggle-btn" data-school="sommeiller">Sommeiller</button>
+          <button class="school-toggle-btn" data-school="monti">Monti</button>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+      </div>
+    </header>
+
+    <!-- Countdown -->
+    <div class="lesson-countdown">
+      <div class="lesson-countdown-label" id="fp-cd-label">Select your school to see the countdown</div>
+      <div class="lesson-countdown-units">
+        <div class="lc-unit">
+          <span class="lc-num" id="fp-cd-days">--</span>
+          <span class="lc-lbl">Days</span>
+        </div>
+        <span class="lc-sep">:</span>
+        <div class="lc-unit">
+          <span class="lc-num" id="fp-cd-hours">--</span>
+          <span class="lc-lbl">Hours</span>
+        </div>
+        <span class="lc-sep">:</span>
+        <div class="lc-unit">
+          <span class="lc-num" id="fp-cd-minutes">--</span>
+          <span class="lc-lbl">Min</span>
+        </div>
+        <span class="lc-sep">:</span>
+        <div class="lc-unit">
+          <span class="lc-num" id="fp-cd-seconds">--</span>
+          <span class="lc-lbl">Sec</span>
+        </div>
+      </div>
     </div>
-  </header>
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="activity-badge badge-blue">🎓 Year 2 — 2025/2026</div>
-    <h1>Build Your<br><span class="grad">Startup</span></h1>
-    <p class="lead">Work in pairs. Pick one of 5 tracks, analyse a real problem, and build a product — from problem tree to a live website.</p>
+    <!-- Hero -->
+    <div class="hero">
+      <div class="activity-badge badge-blue">🎓 Year 2 — 2025/2026</div>
+      <h1>Build Your<br><span class="grad">Startup</span></h1>
+      <p class="lead">Work in pairs. Pick one of 5 tracks, analyse a real problem, and build a product — from problem
+        tree to a live website and pitch presentation.</p>
+    </div>
+
+    <div class="callout callout-info" style="margin-bottom:32px;">
+      <span class="callout-icon">👥</span>
+      <div class="callout-body">
+        <strong>Pairs project.</strong> Each pair builds a fictional but realistic startup from scratch. Two pairs on
+        the same track can arrive at completely different solutions. Individual JavaScript knowledge is tested
+        separately (individual test on April 8/10).
+      </div>
+    </div>
+
+    <!-- Project Phases — navigation cards -->
+    <section>
+      <h2>Project Phases</h2>
+      <div class="phase-nav">
+        <a class="phase-nav-card" href="01-problem-to-solution.html">
+          <span class="phase-nav-arrow">→</span>
+          <div class="phase-nav-num">Phase 1</div>
+          <div class="phase-nav-title">Problem to Solution</div>
+          <div class="phase-nav-desc">Choose a track, build a problem tree, write your problem statement</div>
+          <div class="phase-nav-deadline">📅 3 April</div>
+        </a>
+        <a class="phase-nav-card" href="02-form-and-landing.html">
+          <span class="phase-nav-arrow">→</span>
+          <div class="phase-nav-num">Phase 2</div>
+          <div class="phase-nav-title">Form &amp; Landing Page</div>
+          <div class="phase-nav-desc">Validate your idea with real data, build the first website</div>
+          <div class="phase-nav-deadline">📅 <span data-date-sommeiller="8 April" data-date-monti="10 April">8 / 10
+              April</span></div>
+        </a>
+        <a class="phase-nav-card" href="03-website-progress.html">
+          <span class="phase-nav-arrow">→</span>
+          <div class="phase-nav-num">Phase 3</div>
+          <div class="phase-nav-title">Website Progress</div>
+          <div class="phase-nav-desc">Add JS countdown, interactive feature, advance the site</div>
+          <div class="phase-nav-deadline">📅 <span data-date-sommeiller="15 April" data-date-monti="17 April">15 / 17
+              April</span></div>
+        </a>
+        <a class="phase-nav-card" href="04-final-and-presentation.html">
+          <span class="phase-nav-arrow">→</span>
+          <div class="phase-nav-num">Phase 4</div>
+          <div class="phase-nav-title">Final &amp; Presentation</div>
+          <div class="phase-nav-desc">Submit all materials, present your startup to the class</div>
+          <div class="phase-nav-deadline">📅 <span data-date-sommeiller="20 / 22 April"
+              data-date-monti="22 / 24 April">20–24 April</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Phase Overview (brief summaries) -->
+    <section>
+      <h2>Phase Overview</h2>
+
+      <div class="phase-card">
+        <div class="deadline-row">
+          <span class="deadline-pill">📅 Deadline — 3 April</span>
+        </div>
+        <div class="phase-body">
+          <p><strong>Phase 1 — Problem to Solution.</strong> Choose a track. Build a Problem Tree to break the problem
+            down and identify root causes. Define your target audience. Write a clear problem statement (max 10 lines)
+            and give your startup a name.</p>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="deadline-row">
+          <span class="deadline-pill">📅 <span data-date-sommeiller="Sommeiller — 8 April"
+              data-date-monti="Monti — 10 April">8 / 10 April</span></span>
+        </div>
+        <div class="phase-body">
+          <p><strong>Phase 2 — Form &amp; Landing Page.</strong> Validate your idea with a form (Google Forms / Tally) —
+            collect ≥ 20 responses and comment on the results. Build the first version of your startup website (HTML,
+            CSS, JS, responsive, with navbar). Start the development diary.</p>
+          <div class="callout callout-info" style="margin:10px 0 0;">
+            <span class="callout-icon">📝</span>
+            <div class="callout-body"><strong>Individual test on the same day.</strong> The individual JavaScript test
+              covers concepts studied during the course — separate from the project work.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="deadline-row">
+          <span class="deadline-pill">📅 <span data-date-sommeiller="Sommeiller — 15 April"
+              data-date-monti="Monti — 17 April">15 / 17 April</span></span>
+        </div>
+        <div class="phase-body">
+          <p><strong>Phase 3 — Website Progress.</strong> Advance the website with two mandatory JS features: a live
+            countdown using <code>Date()</code> + <code>setInterval()</code>, and at least one additional interactive
+            element (FAQ accordion, slider, contact form with alert, dark mode toggle, etc.).</p>
+          <div class="callout callout-warn" style="margin:10px 0 0;">
+            <span class="callout-icon">🤖</span>
+            <div class="callout-body"><strong>AI is allowed.</strong> You can use ChatGPT, Claude, etc. But you must be
+              able to <strong>explain every single line</strong> during the presentation.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="deadline-row">
+          <span class="deadline-pill">📅 Final: <span data-date-sommeiller="20 April" data-date-monti="22 April">20/22
+              April</span></span>
+          <span class="deadline-pill">🎤 Presentations: <span data-date-sommeiller="22 April"
+              data-date-monti="24 April">22/24 April</span></span>
+        </div>
+        <div class="phase-body">
+          <p><strong>Phase 4 — Final Submission &amp; Presentation.</strong> Upload all final materials (slides, website
+            ZIP, pitch deck PDF, final diary) to Google Classroom. Then present your startup to the class in 5–7
+            minutes: pitch deck walkthrough, live website demo, and Q&amp;A with instructors.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section>
+      <h2>Timeline</h2>
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table class="timeline-table">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Sommeiller (Wed)</th>
+              <th>Monti (Fri)</th>
+              <th>What to deliver</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Project kickoff</td>
+              <td class="tl-sommeiller">27 March</td>
+              <td class="tl-monti">—</td>
+              <td>Final project announced</td>
+            </tr>
+            <tr>
+              <td>Phase 1 — Problem to Solution</td>
+              <td class="tl-sommeiller">3 April</td>
+              <td class="tl-monti">—</td>
+              <td>Problem tree, target, problem statement, startup name</td>
+            </tr>
+            <tr>
+              <td>Phase 2 — Form &amp; Landing Page</td>
+              <td class="tl-sommeiller">8 April</td>
+              <td class="tl-monti">10 April</td>
+              <td>Individual test · Validation form + results · First website · First diary</td>
+            </tr>
+            <tr>
+              <td>Phase 3 — Website Progress</td>
+              <td class="tl-sommeiller">15 April</td>
+              <td class="tl-monti">17 April</td>
+              <td>Guest visitors · Second website (countdown + feature) · Second diary</td>
+            </tr>
+            <tr>
+              <td>Final Submission</td>
+              <td class="tl-sommeiller">20 April</td>
+              <td class="tl-monti">22 April</td>
+              <td>Slides · Complete website ZIP · Pitch Deck PDF · Final diary</td>
+            </tr>
+            <tr>
+              <td>Presentations</td>
+              <td class="tl-sommeiller">22 April</td>
+              <td class="tl-monti">24 April</td>
+              <td>Oral presentation + live demo (last lesson)</td>
+            </tr>
+            <tr>
+              <td>Certificates</td>
+              <td class="tl-sommeiller">6 May</td>
+              <td class="tl-monti">8 May</td>
+              <td>Certificates + final feedback</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Grading Rubric -->
+    <section>
+      <h2>Grading Rubric — 100 points</h2>
+
+      <div class="rubric-card">
+        <div class="rubric-header">
+          <span class="rubric-phase">Goals, Teamwork &amp; Creativity</span>
+          <span class="rubric-pts">40 pts</span>
+        </div>
+        <div class="rubric-body">Depth of problem analysis, originality of the solution, quality of the problem
+          statement and pitch deck, and how effectively the pair worked together toward a convincing idea.</div>
+      </div>
+
+      <div class="rubric-card">
+        <div class="rubric-header">
+          <span class="rubric-phase">Guidelines</span>
+          <span class="rubric-pts">30 pts</span>
+        </div>
+        <div class="rubric-body">Following the project requirements: delivering each phase on time, meeting the
+          technical specifications (countdown, interactive feature, responsive layout), maintaining the development
+          diary, and collecting ≥ 20 validation responses.</div>
+      </div>
+
+      <div class="rubric-card">
+        <div class="rubric-header">
+          <span class="rubric-phase">Presentation</span>
+          <span class="rubric-pts">20 pts</span>
+        </div>
+        <div class="rubric-body">Clarity and confidence of the oral presentation, effective use of the pitch deck (not
+          reading from slides), live demo of the working website, and ability to handle questions from the instructors.
+        </div>
+      </div>
+
+      <div class="rubric-card">
+        <div class="rubric-header">
+          <span class="rubric-phase">Code Quality</span>
+          <span class="rubric-pts">10 pts</span>
+        </div>
+        <div class="rubric-body">Clean, readable HTML/CSS/JS. Students must be able to explain every line — including
+          any code generated with AI. Points are lost if the code was copied without understanding.</div>
+      </div>
+    </section>
+
+    <!-- How-to guides -->
+    <section>
+      <h2>How-to guides</h2>
+
+      <div class="howto-card" id="howto-form">
+        <button class="howto-toggle" onclick="toggleHowto('howto-form')" aria-expanded="false">
+          <span>📋 How to build an effective validation form</span>
+          <i class="howto-chevron">▶</i>
+        </button>
+        <div class="howto-body">
+          <ul>
+            <li><strong>Ask about the problem, not the solution</strong> — at first.<br>
+              ❌ "Would you use an app that helps you manage your money?"<br>
+              ✅ "How often do you reach the end of the month without knowing how you spent your money?"</li>
+            <li><strong>Use numerical scales</strong> for intensity questions — they give you quantifiable data you can
+              cite in the pitch deck.</li>
+            <li><strong>Include at least one open question</strong> — open answers give you insights you'd never have
+              thought to ask for.</li>
+            <li><strong>Briefly explain your idea</strong> before asking if people would use it — 2–3 lines about the
+              startup, then ask.</li>
+            <li><strong>Keep it under 8–10 questions</strong> — beyond that, people abandon the form or answer randomly.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="howto-card" id="howto-diary">
+        <button class="howto-toggle" onclick="toggleHowto('howto-diary')" aria-expanded="false">
+          <span>📓 How to write the development diary</span>
+          <i class="howto-chevron">▶</i>
+        </button>
+        <div class="howto-body">
+          <p>The development diary documents your process as you build the website. It is not a summary written at the
+            end — update it step by step as you work.</p>
+          <ul>
+            <li><strong>What to include:</strong> what you tried to do, what tools or techniques you used, what problems
+              you ran into, and how you solved them.</li>
+            <li><strong>If you used AI:</strong> note what prompt you gave, what the AI produced, and what you changed
+              or didn't understand at first.</li>
+            <li><strong>Format:</strong> a Google Doc with dated entries is fine. Screenshots of your work in progress
+              are a plus.</li>
+            <li><strong>Three deliveries:</strong> first version (Phase 2), second version (Phase 3), final version
+              (Final Submission).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="howto-card" id="howto-perplexity">
+        <button class="howto-toggle" onclick="toggleHowto('howto-perplexity')" aria-expanded="false">
+          <span>🔍 How to use PerplexityAI for market research</span>
+          <i class="howto-chevron">▶</i>
+        </button>
+        <div class="howto-body">
+          <p>Use <strong>PerplexityAI Deep Research</strong> with a precise prompt to get numerical market data with
+            verifiable sources. Every number in your pitch deck must have a source.</p>
+          <p>Find the ready-to-use prompt template in the <a
+              href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing"
+              target="_blank">Deep Research document ↗</a>. The output gives you TAM, SAM and SOM figures with citations
+            — take the key numbers and put them directly into your pitch deck slides.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resources -->
+    <section>
+      <h2>Resources</h2>
+
+      <div class="card">
+        <h3>Phase 1 — Problem &amp; Solution</h3>
+        <div class="resource-grid">
+          <a class="resource-link" href="https://www.loom.com/share/70c6057d71804a31b80c1e556cf60462" target="_blank">
+            <div>
+              <div class="resource-link-name">Problem Tree tutorial</div>
+              <div class="resource-link-desc">Step-by-step video on how to build a problem tree</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link"
+            href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=sharing"
+            target="_blank">
+            <div>
+              <div class="resource-link-name">5 startup examples</div>
+              <div class="resource-link-desc">Complete examples with problem trees, pitches and forms</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link" href="https://xmind.app" target="_blank">
+            <div>
+              <div class="resource-link-name">XMind</div>
+              <div class="resource-link-desc">Tool for building the problem tree digitally</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link" href="https://miro.com" target="_blank">
+            <div>
+              <div class="resource-link-name">Miro</div>
+              <div class="resource-link-desc">Alternative tool for problem trees and visual mapping</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Phase 2 — Validation &amp; Market Research</h3>
+        <div class="resource-grid">
+          <a class="resource-link" href="https://forms.google.com" target="_blank">
+            <div>
+              <div class="resource-link-name">Google Forms</div>
+              <div class="resource-link-desc">Build and share your validation form</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link" href="https://tally.so" target="_blank">
+            <div>
+              <div class="resource-link-name">Tally</div>
+              <div class="resource-link-desc">Alternative to Google Forms (nicer UI)</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link" href="https://www.perplexity.ai" target="_blank">
+            <div>
+              <div class="resource-link-name">PerplexityAI</div>
+              <div class="resource-link-desc">Market research with verifiable sources</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link"
+            href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing"
+            target="_blank">
+            <div>
+              <div class="resource-link-name">Deep Research prompt template</div>
+              <div class="resource-link-desc">Ready-to-use PerplexityAI prompt for TAM/SAM/SOM analysis</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link" href="https://advertising.amazon.com/it-it/library/guides/tam-sam-som#1a"
+            target="_blank">
+            <div>
+              <div class="resource-link-name">TAM/SAM/SOM graph example</div>
+              <div class="resource-link-desc">Visual reference for the market size chart</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link" href="https://slides.google.com" target="_blank">
+            <div>
+              <div class="resource-link-name">Google Slides</div>
+              <div class="resource-link-desc">Build your pitch deck</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link" href="https://www.canva.com" target="_blank">
+            <div>
+              <div class="resource-link-name">Canva</div>
+              <div class="resource-link-desc">Design-focused alternative for the pitch deck</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Phase 3 — Website &amp; Presentation</h3>
+        <div class="resource-grid">
+          <a class="resource-link"
+            href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=drive_link"
+            target="_blank">
+            <div>
+              <div class="resource-link-name">Website examples</div>
+              <div class="resource-link-desc">Startup website examples and inspiration</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link"
+            href="https://docs.google.com/document/u/0/d/15yfYb_NzsoJEd4fyeid9TJfXwSb2sMdCq_b93tZdjTU/edit"
+            target="_blank">
+            <div>
+              <div class="resource-link-name">Delivery techniques guide</div>
+              <div class="resource-link-desc">How to present effectively in front of the class</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link" href="https://jsbin.com" target="_blank">
+            <div>
+              <div class="resource-link-name">JSBin</div>
+              <div class="resource-link-desc">Test and publish your HTML/CSS/JS code online</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+          <a class="resource-link" href="https://getbootstrap.com" target="_blank">
+            <div>
+              <div class="resource-link-name">Bootstrap</div>
+              <div class="resource-link-desc">CSS framework for building responsive layouts quickly</div>
+            </div>
+            <span class="resource-link-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="callout callout-tip" style="margin-top:8px;">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">There will be a moment when it feels like too much. It's normal. Ask the instructors,
+        use AI intelligently, collaborate — and remember why you started this course. Good luck.</div>
+    </div>
+
   </div>
+  <script src="../shared/app-intro.js"></script>
+  <script src="fp-shared.js"></script>
+  <script>
+    function toggleTrack(id) {
+      var card = document.getElementById(id);
+      var isOpen = card.classList.toggle('open');
+      card.querySelector('.track-toggle').setAttribute('aria-expanded', String(isOpen));
+    }
 
-  <div class="callout callout-info" style="margin-bottom:32px;">
-    <span class="callout-icon">👥</span>
-    <div class="callout-body">
-      <strong>Pairs project.</strong> Each pair builds a fictional but realistic startup from scratch. Two pairs on the same track can arrive at completely different solutions. Individual JavaScript knowledge is tested separately (individual test on April 8/10).
-    </div>
-  </div>
-
-  <!-- What you will deliver -->
-  <section>
-    <h2>What you will deliver</h2>
-    <div class="deliver-grid">
-      <div class="deliver-item">
-        <div class="deliver-item-icon">🌳</div>
-        <div class="deliver-item-text">Problem tree analysis + target description</div>
-      </div>
-      <div class="deliver-item">
-        <div class="deliver-item-icon">📝</div>
-        <div class="deliver-item-text">Problem statement + startup name</div>
-      </div>
-      <div class="deliver-item">
-        <div class="deliver-item-icon">📊</div>
-        <div class="deliver-item-text">Market validation data from ≥ 20 real people</div>
-      </div>
-      <div class="deliver-item">
-        <div class="deliver-item-icon">📑</div>
-        <div class="deliver-item-text">Pitch deck with market data &amp; competitor analysis</div>
-      </div>
-      <div class="deliver-item">
-        <div class="deliver-item-icon">💻</div>
-        <div class="deliver-item-text">Working website in HTML, CSS &amp; JavaScript</div>
-      </div>
-      <div class="deliver-item">
-        <div class="deliver-item-icon">🎤</div>
-        <div class="deliver-item-text">Oral presentation + live website demo</div>
-      </div>
-      <div class="deliver-item">
-        <div class="deliver-item-icon">📓</div>
-        <div class="deliver-item-text">Development diary — updated at each phase</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- The 5 Tracks -->
-  <section>
-    <h2>The 5 Tracks</h2>
-    <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px;">Choose one track as your starting point. The tracks don't tell you what to build — they point to a problem to explore. Open each card to read the context and questions to guide your thinking.</p>
-
-    <div class="track-card" id="track-1">
-      <button class="track-toggle" onclick="toggleTrack('track-1')" aria-expanded="false">
-        <div class="track-toggle-left">
-          <span class="track-num">Track 1</span>
-          <span class="track-name">The Attention War</span>
-        </div>
-        <i class="track-chevron">▶</i>
-      </button>
-      <div class="track-body">
-        <div class="track-label">Context</div>
-        <p>Phones and social media are designed to keep us glued to the screen. Everyone knows they should be studying, sleeping or exercising, but often ends up doomscrolling for hours, losing control of their time.</p>
-        <div class="track-label">The real problem</div>
-        <p>Current blocking and "productivity" apps feel like punishments — they lock your screen without solving the need to switch off. There's no way to regain focus that feels rewarding rather than frustrating.</p>
-        <div class="track-label">Stimulus questions</div>
-        <ul>
-          <li>What is the exact moment or emotion that makes you pick up your phone for no reason?</li>
-          <li>Why do focus apps (like Pomodoro timers) often get abandoned after a couple of days?</li>
-          <li>How could you make deep studying something students <em>want</em> to do, not something they <em>have</em> to do?</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="track-card" id="track-2">
-      <button class="track-toggle" onclick="toggleTrack('track-2')" aria-expanded="false">
-        <div class="track-toggle-left">
-          <span class="track-num">Track 2</span>
-          <span class="track-name">The Missing Financial Education</span>
-        </div>
-        <i class="track-chevron">▶</i>
-      </button>
-      <div class="track-body">
-        <div class="track-label">Context</div>
-        <p>Pocket money, summer jobs, birthday gifts: teenagers handle small amounts of money, but nobody teaches them how to manage it. Money often disappears quickly through micro-transactions, forgotten subscriptions and impulse purchases.</p>
-        <div class="track-label">The real problem</div>
-        <p>Saving money is seen as an "adult" concept. Traditional banking apps don't speak the language of an 18-year-old who wants to set aside money for a trip or a new laptop without feeling judged.</p>
-        <div class="track-label">Stimulus questions</div>
-        <ul>
-          <li>Why is it so hard to consistently put aside even just €20–50 a month?</li>
-          <li>What are the "invisible" expenses that drain students' money without them noticing?</li>
-          <li>How could you turn saving into an automatic habit rather than a painful one?</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="track-card" id="track-3">
-      <button class="track-toggle" onclick="toggleTrack('track-3')" aria-expanded="false">
-        <div class="track-toggle-left">
-          <span class="track-num">Track 3</span>
-          <span class="track-name">The Invisible Market (and Talent)</span>
-        </div>
-        <i class="track-chevron">▶</i>
-      </button>
-      <div class="track-body">
-        <div class="track-label">Context</div>
-        <p>Many students would like to do small jobs for financial independence: tutoring, dog-sitting, video editing, tech help for elderly people, graphic design for local shops.</p>
-        <div class="track-label">The real problem</div>
-        <p>Finding these opportunities still relies entirely on chance, posters in bars or word of mouth from parents. There's no local, safe and reliable "marketplace" where young people can offer their micro-skills without being exploited.</p>
-        <div class="track-label">Stimulus questions</div>
-        <ul>
-          <li>What can you (or a friend) do that someone in your neighbourhood would be willing to pay for?</li>
-          <li>What stops a parent or adult from trusting a student with a small job?</li>
-          <li>How would you create a system that guarantees trust, safety and clear payments between both parties?</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="track-card" id="track-4">
-      <button class="track-toggle" onclick="toggleTrack('track-4')" aria-expanded="false">
-        <div class="track-toggle-left">
-          <span class="track-num">Track 4</span>
-          <span class="track-name">The Commuter Nightmare</span>
-        </div>
-        <i class="track-chevron">▶</i>
-      </button>
-      <div class="track-body">
-        <div class="track-label">Context</div>
-        <p>Late buses, missed connections, strikes or parents forced to play taxi at impossible hours. For many students, getting to school, the gym or a party is a daily logistical challenge.</p>
-        <div class="track-label">The real problem</div>
-        <p>Shared mobility solutions (car sharing, rental scooters) are expensive and often off-limits to minors. Carpooling between classmates would be the obvious solution, but organising it is chaotic and leads to awkwardness.</p>
-        <div class="track-label">Stimulus questions</div>
-        <ul>
-          <li>How much time do you lose every day commuting, and how much frustration does it cause?</li>
-          <li>Why is it so difficult to ask for or offer a lift to someone doing the same journey every morning?</li>
-          <li>How could you make this kind of sharing fair, organised and free from awkwardness?</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="track-card" id="track-5">
-      <button class="track-toggle" onclick="toggleTrack('track-5')" aria-expanded="false">
-        <div class="track-toggle-left">
-          <span class="track-num">Track 5</span>
-          <span class="track-name">The Passion Paywall</span>
-        </div>
-        <i class="track-chevron">▶</i>
-      </button>
-      <div class="track-body">
-        <div class="track-label">Context</div>
-        <p>You want to try playing bass, learn film photography, try climbing or experiment with 3D printing. But signing up for a class and buying the equipment costs hundreds of euros.</p>
-        <div class="track-label">The real problem</div>
-        <p>Exploring new hobbies has a very high entry barrier — economic and organisational. This kills curiosity: if a student isn't 100% sure they'll like it, they won't even try. Meanwhile, the world is full of unused equipment gathering dust.</p>
-        <div class="track-label">Stimulus questions</div>
-        <ul>
-          <li>What is a hobby you gave up on trying because it was too expensive or complicated to start?</li>
-          <li>How could you lower this initial economic barrier?</li>
-          <li>How would you connect people who have equipment and experience with people who just want to "try it for a weekend"?</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Phase 1 -->
-  <section>
-    <h2>Phase 1 — Problem to Solution</h2>
-    <div class="phase-card">
-      <div class="deadline-row">
-        <span class="deadline-pill">📅 Deadline — 3 April</span>
-      </div>
-      <div class="phase-body">
-        <ul class="step-list">
-          <li class="step-item">
-            <span class="step-item-num">1</span>
-            <div class="step-item-body">
-              <div class="step-item-title">Choose a track &amp; analyse the problem</div>
-              <div class="step-item-desc">
-                Pick one of the 5 tracks. Build a Problem Tree to break the problem down and identify root causes. Define your target audience (a specific person with a specific problem — not just "young people"). Analyse 2–3 possible solutions.<br><br>
-                <a href="https://www.loom.com/share/70c6057d71804a31b80c1e556cf60462" target="_blank">Watch the Problem Tree tutorial ↗</a> &nbsp;·&nbsp; <a href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=sharing" target="_blank">Browse 5 startup examples ↗</a>
-              </div>
-            </div>
-          </li>
-          <li class="step-item">
-            <span class="step-item-num">2</span>
-            <div class="step-item-body">
-              <div class="step-item-title">Write the Problem Statement &amp; name the startup</div>
-              <div class="step-item-desc">
-                Choose the best solution. Write a problem statement (max 10 lines) answering two questions: <em>What does the startup do? Who uses it?</em> Give your startup a name — provisional is fine.
-              </div>
-            </div>
-          </li>
-        </ul>
-        <div class="deliverables">
-          <div class="deliverables-label">✅ Deliver on Google Classroom</div>
-          <ul>
-            <li>Problem Tree (PDF or photo) + target description</li>
-            <li>Problem statement + startup name</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Phase 2 -->
-  <section>
-    <h2>Phase 2 — Form &amp; Landing Page</h2>
-    <div class="phase-card">
-      <div class="deadline-row">
-        <span class="deadline-pill">📅 Sommeiller — 8 April</span>
-        <span class="deadline-pill">📅 Monti — 10 April</span>
-      </div>
-      <div class="phase-body">
-        <div class="callout callout-info" style="margin:14px 0 4px;">
-          <span class="callout-icon">📝</span>
-          <div class="callout-body"><strong>Individual test on the same day.</strong> The individual JavaScript test (Sommeiller: 8 April · Monti: 10 April) covers concepts studied during the course — separate from the project work.</div>
-        </div>
-        <ul class="step-list">
-          <li class="step-item">
-            <span class="step-item-num">1</span>
-            <div class="step-item-body">
-              <div class="step-item-title">Market validation form</div>
-              <div class="step-item-desc">
-                Create a form (Google Forms or Tally) to test whether other people feel the problem and would use your solution. Collect <strong>at least 20 responses</strong>. Write a short comment (5–10 lines) on what you learned from the results.
-              </div>
-            </div>
-          </li>
-          <li class="step-item">
-            <span class="step-item-num">2</span>
-            <div class="step-item-body">
-              <div class="step-item-title">First website — landing page</div>
-              <div class="step-item-desc">
-                Build the first version of your startup site in HTML, CSS and JavaScript. It must have a responsive layout, a working navbar, and clear sections that describe the startup. Also start your <strong>development diary</strong>.
-              </div>
-            </div>
-          </li>
-        </ul>
-        <div class="deliverables">
-          <div class="deliverables-label">✅ Deliver on Google Classroom</div>
-          <ul>
-            <li>Link to the form + screenshot of results + brief comment</li>
-            <li>First website delivery (ZIP or GitHub link)</li>
-            <li>Development diary — first version</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Phase 3 -->
-  <section>
-    <h2>Phase 3 — Website Progress</h2>
-    <div class="phase-card">
-      <div class="deadline-row">
-        <span class="deadline-pill">📅 Sommeiller — 15 April</span>
-        <span class="deadline-pill">📅 Monti — 17 April</span>
-      </div>
-      <div class="phase-body">
-        <p>Advance the website. By this deadline the site must meet these JavaScript requirements:</p>
-        <ul class="step-list">
-          <li class="step-item">
-            <span class="step-item-num">1</span>
-            <div class="step-item-body">
-              <div class="step-item-title">Countdown to launch using <code>Date()</code> and <code>setInterval()</code></div>
-              <div class="step-item-desc">Display a live countdown (days, hours, minutes, seconds) to a fictional launch date.</div>
-            </div>
-          </li>
-          <li class="step-item">
-            <span class="step-item-num">2</span>
-            <div class="step-item-body">
-              <div class="step-item-title">At least one additional interactive feature</div>
-              <div class="step-item-desc">e.g. contact form with alert, FAQ accordion, image slider, newsletter sign-up, dark mode toggle, etc.</div>
-            </div>
-          </li>
-        </ul>
-
-        <div class="callout callout-warn" style="margin-top:16px;">
-          <span class="callout-icon">🤖</span>
-          <div class="callout-body">
-            <strong>AI is allowed.</strong> You can use ChatGPT, Claude, or other tools to help generate and structure the code. But you must be able to <strong>explain every single line</strong> during the presentation — if you used AI, study and understand the output first.
-          </div>
-        </div>
-
-        <div class="deliverables">
-          <div class="deliverables-label">✅ Deliver on Google Classroom</div>
-          <ul>
-            <li>Website ZIP — second version</li>
-            <li>Development diary — second version</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Final Submission -->
-  <section>
-    <h2>Final Submission</h2>
-    <div class="phase-card">
-      <div class="deadline-row">
-        <span class="deadline-pill">📅 Sommeiller — 20 April</span>
-        <span class="deadline-pill">📅 Monti — 22 April</span>
-      </div>
-      <div class="phase-body">
-        <p>Upload all final materials to Google Classroom before the deadline. This is the last chance to make changes.</p>
-        <div class="deliverables">
-          <div class="deliverables-label">✅ Deliver on Google Classroom</div>
-          <ul>
-            <li>Presentation slides</li>
-            <li>Complete website — ZIP archive</li>
-            <li>Pitch Deck — PDF</li>
-            <li>Development diary — final version</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Phase 4 — Presentation -->
-  <section>
-    <h2>Phase 4 — The Presentation</h2>
-    <div class="phase-card">
-      <div class="deadline-row">
-        <span class="deadline-pill">📅 Sommeiller — 22 April (last lesson)</span>
-        <span class="deadline-pill">📅 Monti — 24 April (last lesson)</span>
-      </div>
-      <div class="phase-body">
-        <p>You have <strong>5–7 minutes</strong> to present your startup. Use the pitch deck as visual support — don't read from it. Structure your talk:</p>
-        <ul class="step-list">
-          <li class="step-item">
-            <span class="step-item-num">1</span>
-            <div class="step-item-body">
-              <div class="step-item-title">Problem → Solution → Market</div>
-              <div class="step-item-desc">Walk through your pitch deck. Present the validation data and the competitor analysis.</div>
-            </div>
-          </li>
-          <li class="step-item">
-            <span class="step-item-num">2</span>
-            <div class="step-item-body">
-              <div class="step-item-title">Live website demo</div>
-              <div class="step-item-desc">Show the site running live. Demonstrate the countdown and the interactive feature. Be ready to explain the code.</div>
-            </div>
-          </li>
-          <li class="step-item">
-            <span class="step-item-num">3</span>
-            <div class="step-item-body">
-              <div class="step-item-title">Call to action</div>
-              <div class="step-item-desc">Close with a strong statement about why your idea wins. Then take questions from the instructors.</div>
-            </div>
-          </li>
-        </ul>
-        <div class="deliverables">
-          <div class="deliverables-label">✅ Deliver in class</div>
-          <ul>
-            <li>Oral presentation + live website demo</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Timeline -->
-  <section>
-    <h2>Timeline</h2>
-    <div class="card" style="padding:0;overflow:hidden;">
-      <table class="timeline-table">
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Sommeiller (Wed)</th>
-            <th>Monti (Fri)</th>
-            <th>What to deliver</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Project kickoff</td>
-            <td>27 March</td>
-            <td>—</td>
-            <td>Final project announced</td>
-          </tr>
-          <tr>
-            <td>Phase 1 — Problem to Solution</td>
-            <td>3 April</td>
-            <td>—</td>
-            <td>Problem tree, target, problem statement, startup name</td>
-          </tr>
-          <tr>
-            <td>Phase 2 — Form &amp; Landing Page</td>
-            <td>8 April</td>
-            <td>10 April</td>
-            <td>Individual test · Validation form results · First website · First diary</td>
-          </tr>
-          <tr>
-            <td>Phase 3 — Website Progress</td>
-            <td>15 April</td>
-            <td>17 April</td>
-            <td>Guest visitors · Second website (with countdown + interactive feature) · Second diary</td>
-          </tr>
-          <tr>
-            <td>Final Submission</td>
-            <td>20 April</td>
-            <td>22 April</td>
-            <td>Slides · Complete website ZIP · Pitch Deck PDF · Final diary</td>
-          </tr>
-          <tr>
-            <td>Phase 4 — Presentations</td>
-            <td>22 April</td>
-            <td>24 April</td>
-            <td>Oral presentation + live demo (last lesson)</td>
-          </tr>
-          <tr>
-            <td>Certificates</td>
-            <td>6 May</td>
-            <td>8 May</td>
-            <td>Certificates + final feedback</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Grading Rubric -->
-  <section>
-    <h2>Grading Rubric — 100 points</h2>
-
-    <div class="rubric-card">
-      <div class="rubric-header">
-        <span class="rubric-phase">Goals, Teamwork &amp; Creativity</span>
-        <span class="rubric-pts">40 pts</span>
-      </div>
-      <div class="rubric-body">Depth of problem analysis, originality of the solution, quality of the problem statement and pitch deck, and how effectively the pair worked together toward a convincing idea.</div>
-    </div>
-
-    <div class="rubric-card">
-      <div class="rubric-header">
-        <span class="rubric-phase">Guidelines</span>
-        <span class="rubric-pts">30 pts</span>
-      </div>
-      <div class="rubric-body">Following the project requirements: delivering each phase on time, meeting the technical specifications (countdown, interactive feature, responsive layout), maintaining the development diary, and collecting ≥ 20 validation responses.</div>
-    </div>
-
-    <div class="rubric-card">
-      <div class="rubric-header">
-        <span class="rubric-phase">Presentation</span>
-        <span class="rubric-pts">20 pts</span>
-      </div>
-      <div class="rubric-body">Clarity and confidence of the oral presentation, effective use of the pitch deck (not reading from slides), live demo of the working website, and ability to handle questions from the instructors.</div>
-    </div>
-
-    <div class="rubric-card">
-      <div class="rubric-header">
-        <span class="rubric-phase">Code Quality</span>
-        <span class="rubric-pts">10 pts</span>
-      </div>
-      <div class="rubric-body">Clean, readable HTML/CSS/JS. Students must be able to explain every line — including any code generated with AI. Points are lost if the code was copied without understanding.</div>
-    </div>
-  </section>
-
-  <!-- How-to guides -->
-  <section>
-    <h2>How-to guides</h2>
-
-    <div class="howto-card" id="howto-form">
-      <button class="howto-toggle" onclick="toggleHowto('howto-form')" aria-expanded="false">
-        <span>📋 How to build an effective validation form</span>
-        <i class="howto-chevron">▶</i>
-      </button>
-      <div class="howto-body">
-        <ul>
-          <li><strong>Ask about the problem, not the solution</strong> — at first.<br>
-            ❌ "Would you use an app that helps you manage your money?"<br>
-            ✅ "How often do you reach the end of the month without knowing how you spent your money?"</li>
-          <li><strong>Use numerical scales</strong> for intensity questions — they give you quantifiable data you can cite in the pitch deck.</li>
-          <li><strong>Include at least one open question</strong> — open answers give you insights you'd never have thought to ask for.</li>
-          <li><strong>Briefly explain your idea</strong> before asking if people would use it — 2–3 lines about the startup, then ask.</li>
-          <li><strong>Keep it under 8–10 questions</strong> — beyond that, people abandon the form or answer randomly.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="howto-card" id="howto-diary">
-      <button class="howto-toggle" onclick="toggleHowto('howto-diary')" aria-expanded="false">
-        <span>📓 How to write the development diary</span>
-        <i class="howto-chevron">▶</i>
-      </button>
-      <div class="howto-body">
-        <p>The development diary documents your process as you build the website. It is not a summary written at the end — update it step by step as you work.</p>
-        <ul>
-          <li><strong>What to include:</strong> what you tried to do, what tools or techniques you used, what problems you ran into, and how you solved them.</li>
-          <li><strong>If you used AI:</strong> note what prompt you gave, what the AI produced, and what you changed or didn't understand at first.</li>
-          <li><strong>Format:</strong> a Google Doc with dated entries is fine. Screenshots of your work in progress are a plus.</li>
-          <li><strong>Three deliveries:</strong> first version (Phase 2), second version (Phase 3), final version (Final Submission).</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="howto-card" id="howto-perplexity">
-      <button class="howto-toggle" onclick="toggleHowto('howto-perplexity')" aria-expanded="false">
-        <span>🔍 How to use PerplexityAI for market research</span>
-        <i class="howto-chevron">▶</i>
-      </button>
-      <div class="howto-body">
-        <p>Use <strong>PerplexityAI Deep Research</strong> with a precise prompt to get numerical market data with verifiable sources. Every number in your pitch deck must have a source.</p>
-        <p>Find the ready-to-use prompt template in the <a href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing" target="_blank">Deep Research document ↗</a>. The output gives you TAM, SAM and SOM figures with citations — take the key numbers and put them directly into your pitch deck slides.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Resources -->
-  <section>
-    <h2>Resources</h2>
-
-    <div class="card">
-      <h3>Phase 1 — Problem &amp; Solution</h3>
-      <div class="resource-grid">
-        <a class="resource-link" href="https://www.loom.com/share/70c6057d71804a31b80c1e556cf60462" target="_blank">
-          <div>
-            <div class="resource-link-name">Problem Tree tutorial</div>
-            <div class="resource-link-desc">Step-by-step video on how to build a problem tree</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=sharing" target="_blank">
-          <div>
-            <div class="resource-link-name">5 startup examples</div>
-            <div class="resource-link-desc">Complete examples with problem trees, pitches and forms</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://xmind.app" target="_blank">
-          <div>
-            <div class="resource-link-name">XMind</div>
-            <div class="resource-link-desc">Tool for building the problem tree digitally</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://miro.com" target="_blank">
-          <div>
-            <div class="resource-link-name">Miro</div>
-            <div class="resource-link-desc">Alternative tool for problem trees and visual mapping</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Phase 2 — Validation &amp; Market Research</h3>
-      <div class="resource-grid">
-        <a class="resource-link" href="https://forms.google.com" target="_blank">
-          <div>
-            <div class="resource-link-name">Google Forms</div>
-            <div class="resource-link-desc">Build and share your validation form</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://tally.so" target="_blank">
-          <div>
-            <div class="resource-link-name">Tally</div>
-            <div class="resource-link-desc">Alternative to Google Forms (nicer UI)</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://www.perplexity.ai" target="_blank">
-          <div>
-            <div class="resource-link-name">PerplexityAI</div>
-            <div class="resource-link-desc">Market research with verifiable sources</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://docs.google.com/document/d/1SaYaIgQMiizNfCSuKkDxed3XPUquUWxQQWkTpRgeXZc/edit?usp=sharing" target="_blank">
-          <div>
-            <div class="resource-link-name">Deep Research prompt template</div>
-            <div class="resource-link-desc">Ready-to-use PerplexityAI prompt for TAM/SAM/SOM analysis</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://advertising.amazon.com/it-it/library/guides/tam-sam-som#1a" target="_blank">
-          <div>
-            <div class="resource-link-name">TAM/SAM/SOM graph example</div>
-            <div class="resource-link-desc">Visual reference for the market size chart</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://slides.google.com" target="_blank">
-          <div>
-            <div class="resource-link-name">Google Slides</div>
-            <div class="resource-link-desc">Build your pitch deck</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://www.canva.com" target="_blank">
-          <div>
-            <div class="resource-link-name">Canva</div>
-            <div class="resource-link-desc">Design-focused alternative for the pitch deck</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Phase 3 — Website &amp; Presentation</h3>
-      <div class="resource-grid">
-        <a class="resource-link" href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=drive_link" target="_blank">
-          <div>
-            <div class="resource-link-name">Website examples</div>
-            <div class="resource-link-desc">Startup website examples and inspiration</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://docs.google.com/document/u/0/d/15yfYb_NzsoJEd4fyeid9TJfXwSb2sMdCq_b93tZdjTU/edit" target="_blank">
-          <div>
-            <div class="resource-link-name">Delivery techniques guide</div>
-            <div class="resource-link-desc">How to present effectively in front of the class</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://jsbin.com" target="_blank">
-          <div>
-            <div class="resource-link-name">JSBin</div>
-            <div class="resource-link-desc">Test and publish your HTML/CSS/JS code online</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-        <a class="resource-link" href="https://getbootstrap.com" target="_blank">
-          <div>
-            <div class="resource-link-name">Bootstrap</div>
-            <div class="resource-link-desc">CSS framework for building responsive layouts quickly</div>
-          </div>
-          <span class="resource-link-arrow">↗</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <div class="callout callout-tip" style="margin-top:8px;">
-    <span class="callout-icon">💡</span>
-    <div class="callout-body">There will be a moment when it feels like too much. It's normal. Ask the instructors, use AI intelligently, collaborate — and remember why you started this course. Good luck.</div>
-  </div>
-
-</div>
-<script src="../shared/app-intro.js"></script>
-<script>
-  function toggleTrack(id) {
-    var card = document.getElementById(id);
-    var isOpen = card.classList.toggle('open');
-    card.querySelector('.track-toggle').setAttribute('aria-expanded', String(isOpen));
-  }
-
-  function toggleHowto(id) {
-    var card = document.getElementById(id);
-    var isOpen = card.classList.toggle('open');
-    card.querySelector('.howto-toggle').setAttribute('aria-expanded', String(isOpen));
-  }
-</script>
+    function toggleHowto(id) {
+      var card = document.getElementById(id);
+      var isOpen = card.classList.toggle('open');
+      card.querySelector('.howto-toggle').setAttribute('aria-expanded', String(isOpen));
+    }
+  </script>
 </body>
+
 </html>

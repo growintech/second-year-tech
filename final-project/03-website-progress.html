@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 3 — Website Progress — Final Project 2026</title>
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <link rel="stylesheet" href="fp-styles.css">
+  <script>if(localStorage.getItem('git-theme')==='light')document.documentElement.classList.add('light');</script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <a class="topbar-logo" href="../index.html">
+      <img style="height:48px;width:auto;" src="../shared/logo.svg" alt="Grow in Tech">
+    </a>
+    <div class="topbar-right">
+      <div class="school-toggle" id="school-toggle">
+        <button class="school-toggle-btn" data-school="sommeiller">Sommeiller</button>
+        <button class="school-toggle-btn" data-school="monti">Monti</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <a class="fp-back" href="index.html">← Back to Final Project Overview</a>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot done"></div>
+    <div class="progress-bar-dot active"></div>
+    <div class="progress-bar-dot"></div>
+  </div>
+
+  <!-- Phase 3 Countdown -->
+  <div class="lesson-countdown phase-countdown" data-phase="3">
+    <div class="phase-cd-label">Deadline — Phase 3</div>
+    <div class="lesson-countdown-units">
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-days">--</span>
+        <span class="lc-lbl">Days</span>
+      </div>
+      <span class="lc-sep">:</span>
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-hours">--</span>
+        <span class="lc-lbl">Hours</span>
+      </div>
+      <span class="lc-sep">:</span>
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-minutes">--</span>
+        <span class="lc-lbl">Min</span>
+      </div>
+      <span class="lc-sep">:</span>
+      <div class="lc-unit">
+        <span class="lc-num phase-cd-seconds">--</span>
+        <span class="lc-lbl">Sec</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="activity-badge badge-blue">Phase 3 of 4</div>
+    <h1>Website <span class="grad">Progress</span></h1>
+    <p class="lead">Add mandatory JavaScript features to your site: a live countdown and at least one interactive element.</p>
+  </div>
+
+  <!-- Deadline -->
+  <div class="phase-card">
+    <div class="deadline-row">
+      <span class="deadline-pill">📅 Deadline — <span data-date-sommeiller="Sommeiller: 15 April" data-date-monti="Monti: 17 April">15 / 17 April</span></span>
+    </div>
+    <div class="phase-body">
+      <p>This is the technical core of the project. Your website must now demonstrate real JavaScript skills with two mandatory features.</p>
+    </div>
+  </div>
+
+  <!-- Requirement 1: Countdown -->
+  <section>
+    <h2>Requirement 1 — Countdown to Launch</h2>
+
+    <div class="card">
+      <h3>Live countdown using <code>Date()</code> and <code>setInterval()</code></h3>
+      <p>Your website must display a live countdown that ticks every second, showing the time remaining until a fictional "launch date" for your startup.</p>
+
+      <ul class="step-list" style="margin-top:14px;">
+        <li class="step-item">
+          <span class="step-item-num">1</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Choose a target date</div>
+            <div class="step-item-desc">Pick a future date for your startup's fictional launch. Store it as a <code>Date</code> object in your JavaScript.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">2</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Calculate the difference</div>
+            <div class="step-item-desc">Subtract the current time (<code>new Date()</code>) from the target date to get the remaining milliseconds. Convert to days, hours, minutes and seconds.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">3</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Update every second</div>
+            <div class="step-item-desc">Use <code>setInterval(function, 1000)</code> to re-calculate and update the display every second. The countdown must tick live on the page.</div>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-item-num">4</span>
+          <div class="step-item-body">
+            <div class="step-item-title">Display it clearly</div>
+            <div class="step-item-desc">Show the countdown in a prominent place on the page (hero section, dedicated banner, etc.). Use <code>document.getElementById()</code> to update the text content.</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="callout callout-info" style="margin-top:16px;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body"><strong>Remember Lesson 14.</strong> You practised this exact technique in the Date &amp; Time lesson. Go back to those exercises if you need a refresher on how <code>Date()</code>, <code>getTime()</code> and <code>setInterval()</code> work together.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Requirement 2: Interactive feature -->
+  <section>
+    <h2>Requirement 2 — Interactive Feature</h2>
+
+    <div class="card">
+      <h3>At least one additional interactive element</h3>
+      <p>Besides the countdown, your website must include at least one more interactive feature built with JavaScript. Here are some ideas:</p>
+
+      <ul style="padding-left:18px;margin-top:12px;">
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>Contact form with alert:</strong> a form that validates inputs and shows a confirmation message using <code>alert()</code> or a custom modal</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>FAQ accordion:</strong> questions that expand/collapse when clicked, using <code>addEventListener</code> and <code>classList.toggle</code></li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>Image slider / carousel:</strong> a rotating set of images with next/previous buttons</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>Newsletter sign-up:</strong> an email input that validates the format and gives feedback</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>Dark mode toggle:</strong> a button that switches between light and dark colour schemes using CSS classes</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;"><strong>Scroll animations:</strong> elements that fade or slide in as you scroll down the page</li>
+      </ul>
+
+      <p style="margin-top:12px;">Choose something that makes sense for your startup. A financial education app could have an interactive savings calculator. A commuter app could have a route planner mockup.</p>
+    </div>
+  </section>
+
+  <!-- AI Policy -->
+  <section>
+    <h2>Using AI (ChatGPT, Claude, etc.)</h2>
+
+    <div class="callout callout-warn" style="margin-bottom:0;">
+      <span class="callout-icon">🤖</span>
+      <div class="callout-body">
+        <strong>AI is allowed — but understanding is mandatory.</strong> You are authorised to use AI tools to help generate and structure your code. However, during the presentation you will be asked to <strong>explain every single line of code</strong> in your project. If you used AI, it is your responsibility to study, understand, and be able to justify every piece of code you include. Points are lost if you cannot explain your own code.
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <h3>Smart AI usage tips</h3>
+      <ul style="padding-left:18px;margin-top:8px;">
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;">Ask the AI to <strong>explain the code it generates</strong> — don't just copy-paste</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;">Try to <strong>modify the output</strong> (change colours, text, layout) to prove you understand it</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;">Document your AI prompts in the <strong>development diary</strong></li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;">If the AI gives you code you don't understand, <strong>ask it to break it down step by step</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Dev diary -->
+  <section>
+    <h2>Development Diary — Second Version</h2>
+    <div class="card">
+      <p>Update your development diary with what you did in this phase. Include:</p>
+      <ul style="padding-left:18px;margin-top:8px;">
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">How you implemented the countdown (what you tried, what worked)</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Which interactive feature you chose and why</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Any problems you encountered and how you solved them</li>
+        <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">If you used AI: what prompts you gave, what it produced, what you changed</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Deliverables -->
+  <section>
+    <h2>Deliverables — Phase 3</h2>
+    <div class="deliverables">
+      <div class="deliverables-label">✅ Upload to Google Classroom by <span data-date-sommeiller="15 April" data-date-monti="17 April">15/17 April</span></div>
+      <ul>
+        <li>Website ZIP — second version (with countdown + interactive feature)</li>
+        <li>Development diary — second version</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Nav footer -->
+  <div class="nav-footer">
+    <a class="nav-btn nav-btn-outline" href="02-form-and-landing.html">← Phase 2</a>
+    <a class="nav-btn nav-btn-primary" href="04-final-and-presentation.html">Phase 4 →</a>
+  </div>
+
+</div>
+<script src="../shared/app-intro.js"></script>
+<script src="fp-shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 1 — Problem to Solution — Final Project 2026</title>
+  <link rel="stylesheet" href="../shared/style-intro.css">
+  <link rel="stylesheet" href="fp-styles.css">
+  <script>if (localStorage.getItem('git-theme') === 'light') document.documentElement.classList.add('light');</script>
+</head>
+
+<body>
+  <div class="page-wrap">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <a class="topbar-logo" href="../index.html">
+        <img style="height:48px;width:auto;" src="../shared/logo.svg" alt="Grow in Tech">
+      </a>
+      <div class="topbar-right">
+        <div class="school-toggle" id="school-toggle">
+          <button class="school-toggle-btn" data-school="sommeiller">Sommeiller</button>
+          <button class="school-toggle-btn" data-school="monti">Monti</button>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+      </div>
+    </header>
+
+    <a class="fp-back" href="index.html">← Back to Final Project Overview</a>
+
+    <!-- Progress bar -->
+    <div class="progress-bar">
+      <div class="progress-bar-dot active"></div>
+      <div class="progress-bar-dot"></div>
+      <div class="progress-bar-dot"></div>
+      <div class="progress-bar-dot"></div>
+    </div>
+
+    <!-- Phase 1 Countdown -->
+    <div class="lesson-countdown phase-countdown" data-phase="1">
+      <div class="phase-cd-label">Deadline — Phase 1</div>
+      <div class="lesson-countdown-units">
+        <div class="lc-unit">
+          <span class="lc-num phase-cd-days">--</span>
+          <span class="lc-lbl">Days</span>
+        </div>
+        <span class="lc-sep">:</span>
+        <div class="lc-unit">
+          <span class="lc-num phase-cd-hours">--</span>
+          <span class="lc-lbl">Hours</span>
+        </div>
+        <span class="lc-sep">:</span>
+        <div class="lc-unit">
+          <span class="lc-num phase-cd-minutes">--</span>
+          <span class="lc-lbl">Min</span>
+        </div>
+        <span class="lc-sep">:</span>
+        <div class="lc-unit">
+          <span class="lc-num phase-cd-seconds">--</span>
+          <span class="lc-lbl">Sec</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="activity-badge badge-blue">Phase 1 of 4</div>
+      <h1>Problem to <span class="grad">Solution</span></h1>
+      <p class="lead">Choose a track, analyse the problem in depth, define your target audience, and write a clear
+        problem statement with your startup name.</p>
+    </div>
+
+    <!-- Deadline -->
+    <div class="phase-card">
+      <div class="deadline-row">
+        <span class="deadline-pill">📅 Deadline — 3 April (both schools)</span>
+      </div>
+      <div class="phase-body">
+        <p>This is the foundation of your entire project. Take time to really understand the problem before jumping to a
+          solution. A strong analysis here makes everything easier later.</p>
+      </div>
+    </div>
+
+    <!-- The 5 Tracks -->
+    <section>
+      <h2>The 5 Tracks</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px;">Choose one track as your starting point. The
+        tracks don't tell you what to build — they point to a problem to explore. Open each card to read the context and
+        questions to guide your thinking.</p>
+
+      <div class="track-card" id="track-1">
+        <button class="track-toggle" onclick="toggleTrack('track-1')" aria-expanded="false">
+          <div class="track-toggle-left">
+            <span class="track-num">Track 1</span>
+            <span class="track-name">The Attention War</span>
+          </div>
+          <i class="track-chevron">▶</i>
+        </button>
+        <div class="track-body">
+          <div class="track-label">Context</div>
+          <p>Phones and social media are designed to keep us glued to the screen. Everyone knows they should be
+            studying, sleeping or exercising, but often ends up doomscrolling for hours, losing control of their time.
+          </p>
+          <div class="track-label">Stimulus questions</div>
+          <ul>
+            <li>What is the exact moment or emotion that makes you pick up your phone for no reason?</li>
+            <li>Why do focus apps (like Pomodoro timers) often get abandoned after a couple of days?</li>
+            <li>How could you make deep studying something students <em>want</em> to do, not something they
+              <em>have</em> to do?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="track-card" id="track-2">
+        <button class="track-toggle" onclick="toggleTrack('track-2')" aria-expanded="false">
+          <div class="track-toggle-left">
+            <span class="track-num">Track 2</span>
+            <span class="track-name">The Missing Financial Education</span>
+          </div>
+          <i class="track-chevron">▶</i>
+        </button>
+        <div class="track-body">
+          <div class="track-label">Context</div>
+          <p>Pocket money, summer jobs, birthday gifts: teenagers handle small amounts of money, but nobody teaches them
+            how to manage it. Money often disappears quickly through micro-transactions, forgotten subscriptions and
+            impulse purchases.</p>
+          <div class="track-label">Stimulus questions</div>
+          <ul>
+            <li>Why is it so hard to consistently put aside even just €20–50 a month?</li>
+            <li>What are the "invisible" expenses that drain students' money without them noticing?</li>
+            <li>How could you turn saving into an automatic habit rather than a painful one?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="track-card" id="track-3">
+        <button class="track-toggle" onclick="toggleTrack('track-3')" aria-expanded="false">
+          <div class="track-toggle-left">
+            <span class="track-num">Track 3</span>
+            <span class="track-name">The Invisible Market (and Talent)</span>
+          </div>
+          <i class="track-chevron">▶</i>
+        </button>
+        <div class="track-body">
+          <div class="track-label">Context</div>
+          <p>Many students would like to do small jobs for financial independence: tutoring, dog-sitting, video editing,
+            tech help for elderly people, graphic design for local shops.</p>
+          <div class="track-label">Stimulus questions</div>
+          <ul>
+            <li>What can you (or a friend) do that someone in your neighbourhood would be willing to pay for?</li>
+            <li>What stops a parent or adult from trusting a student with a small job?</li>
+            <li>How would you create a system that guarantees trust, safety and clear payments between both parties?
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="track-card" id="track-4">
+        <button class="track-toggle" onclick="toggleTrack('track-4')" aria-expanded="false">
+          <div class="track-toggle-left">
+            <span class="track-num">Track 4</span>
+            <span class="track-name">The Commuter Nightmare</span>
+          </div>
+          <i class="track-chevron">▶</i>
+        </button>
+        <div class="track-body">
+          <div class="track-label">Context</div>
+          <p>Late buses, missed connections, strikes or parents forced to play taxi at impossible hours. For many
+            students, getting to school, the gym or a party is a daily logistical challenge.</p>
+          <div class="track-label">Stimulus questions</div>
+          <ul>
+            <li>How much time do you lose every day commuting, and how much frustration does it cause?</li>
+            <li>Why is it so difficult to ask for or offer a lift to someone doing the same journey every morning?</li>
+            <li>How could you make this kind of sharing fair, organised and free from awkwardness?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="track-card" id="track-5">
+        <button class="track-toggle" onclick="toggleTrack('track-5')" aria-expanded="false">
+          <div class="track-toggle-left">
+            <span class="track-num">Track 5</span>
+            <span class="track-name">The Passion Paywall</span>
+          </div>
+          <i class="track-chevron">▶</i>
+        </button>
+        <div class="track-body">
+          <div class="track-label">Context</div>
+          <p>You want to try playing bass, learn film photography, try climbing or experiment with 3D printing. But
+            signing up for a class and buying the equipment costs hundreds of euros.</p>
+          <div class="track-label">Stimulus questions</div>
+          <ul>
+            <li>What is a hobby you gave up on trying because it was too expensive or complicated to start?</li>
+            <li>How could you lower this initial economic barrier?</li>
+            <li>How would you connect people who have equipment and experience with people who just want to "try it for
+              a weekend"?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 1 -->
+    <section>
+      <h2 class="step-heading"><span class="step-heading-num">Step 1</span><span class="step-heading-text">Choose a Track & Analyse the Problem</span></h2>
+
+      <div class="card">
+        <p>Read the 5 tracks above and pick the one that interests you most. Two pairs on the same track can arrive at
+          completely different solutions.</p>
+
+        <h3 style="margin-top:18px;">Build a Problem Tree</h3>
+        <p>A problem tree is a visual diagram that breaks a problem into its <strong>root causes</strong> (below) and
+          <strong>effects</strong> (above). It helps you move from a vague feeling ("transport is annoying") to
+          specific, solvable sub-problems.</p>
+
+        <ul class="step-list" style="margin-top:14px;">
+          <li class="step-item">
+            <span class="step-item-num">1</span>
+            <div class="step-item-body">
+              <div class="step-item-title">Write the core problem in the centre</div>
+              <div class="step-item-desc">One sentence that captures the main problem from the track you chose.</div>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-item-num">2</span>
+            <div class="step-item-body">
+              <div class="step-item-title">Dig into root causes (below the problem)</div>
+              <div class="step-item-desc">Ask "Why does this happen?" repeatedly. Go at least 2–3 levels deep. Each
+                cause should be specific and verifiable.</div>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-item-num">3</span>
+            <div class="step-item-body">
+              <div class="step-item-title">Map the effects (above the problem)</div>
+              <div class="step-item-desc">Ask "What happens because of this?" These effects are what your pitch deck
+                will use to show why the problem matters.</div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="callout callout-tip" style="margin-top:16px;">
+          <span class="callout-icon">🎥</span>
+          <div class="callout-body"><strong>Video tutorial.</strong> Watch the <a
+              href="https://www.loom.com/share/70c6057d71804a31b80c1e556cf60462" target="_blank"
+              style="color:var(--grad-start)">Problem Tree tutorial ↗</a> for a step-by-step walkthrough. Use <a
+              href="https://xmind.app" target="_blank" style="color:var(--grad-start)">XMind</a> or <a
+              href="https://miro.com" target="_blank" style="color:var(--grad-start)">Miro</a> to build it digitally, or
+            draw it on paper.</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <h3>Define your target audience</h3>
+        <p>Don't say "young people" or "everyone." Your target should be a <strong>specific person with a specific
+            problem</strong>. Think about:</p>
+        <ul style="padding-left:18px;margin-top:8px;">
+          <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Age range, location,
+            daily routine</li>
+          <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">What frustrates them
+            about the current situation</li>
+          <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">What solutions they've
+            already tried (and why they failed)</li>
+          <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">How willing they are to
+            try something new</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <h3>Analyse 2–3 possible solutions</h3>
+        <p>Before choosing your final solution, brainstorm at least 2–3 different approaches. For each one, think about:
+        </p>
+        <ul style="padding-left:18px;margin-top:8px;">
+          <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Is it technically
+            feasible for you to build a landing page for it?</li>
+          <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Does it solve the root
+            cause, or just a symptom?</li>
+          <li style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:4px;">Would real people
+            actually use it?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Step 2 -->
+    <section>
+      <h2 class="step-heading"><span class="step-heading-num">Step 2</span><span class="step-heading-text">Problem Statement &amp; Startup Name</span></h2>
+
+      <div class="card">
+        <h3>Write the Problem Statement</h3>
+        <p>The problem statement is <strong>max 10 lines</strong> and must answer two fundamental questions:</p>
+        <ul class="step-list" style="margin-top:14px;">
+          <li class="step-item">
+            <span class="step-item-num">1</span>
+            <div class="step-item-body">
+              <div class="step-item-title">What does the startup do?</div>
+              <div class="step-item-desc">Describe the solution clearly. What does it offer? How does it work at a high
+                level? What makes it different from what already exists?</div>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="step-item-num">2</span>
+            <div class="step-item-body">
+              <div class="step-item-title">Who uses it?</div>
+              <div class="step-item-desc">Describe your target user. Be specific — this should match the target analysis
+                you did in Step 1.</div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="callout callout-info" style="margin-top:16px;">
+          <span class="callout-icon">📖</span>
+          <div class="callout-body"><strong>Need inspiration?</strong> Browse the <a
+              href="https://docs.google.com/document/d/1hgVrsJcedr0YYf8Uj0D5F3D66FXvJRKHmBa6huLaQ4U/edit?usp=sharing"
+              target="_blank" style="color:var(--grad-start)">5 startup examples ↗</a> to see how other teams structured
+            their problem statements.</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <h3>Name your startup</h3>
+        <p>Give your startup a name — it can be provisional. A good name is short, memorable, and hints at what the
+          product does. Don't overthink it — you can always change it later.</p>
+      </div>
+    </section>
+
+    <!-- Step 3: WhatsApp message -->
+    <section>
+      <h2 class="step-heading"><span class="step-heading-num">Step 3</span><span class="step-heading-text">Share on WhatsApp</span></h2>
+
+      <div class="card">
+        <h3>Send your problem statement to the class group</h3>
+        <p>Once you've chosen your track and written your problem statement, <strong>only one member of the
+            group</strong> must send the following message in the class WhatsApp group:</p>
+
+        <div class="code-block" style="margin-top:14px;position:relative;">
+          <pre
+            id="wa-template">Hi! I'm [First Name Last Name]. I have chosen Track [N] — [Title]. My problem statement is: [ONE SENTENCE describing the specific problem you want to address].</pre>
+          <button class="copy-btn" onclick="copyTemplate()" id="wa-copy-btn">Copy</button>
+        </div>
+
+        <div class="callout callout-warn" style="margin-top:14px;">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body"><strong>Only one message per group.</strong> One member of the group sends the
+            message on behalf of the whole team. Make sure everyone has agreed on the chosen track and problem
+            before sending.</div>
+        </div>
+
+        <div class="callout callout-tip" style="margin-top:8px;">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body"><strong>Example:</strong> "Hi! I'm Marco Rossi. I have chosen Track 4 — The Commuter
+            Nightmare. My problem statement is: Students living outside Turin waste over 90 minutes a day commuting
+            because there is no easy way to coordinate shared rides with classmates on the same route."</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deliverables -->
+    <section>
+      <h2>Deliverables — Phase 1</h2>
+      <div class="deliverables">
+        <div class="deliverables-label">✅ Upload to Google Classroom by 3 April</div>
+        <ul>
+          <li>Problem Tree (PDF or photo)</li>
+          <li>Target audience description</li>
+          <li>Problem statement (max 10 lines)</li>
+          <li>Startup name</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Nav footer -->
+    <div class="nav-footer">
+      <a class="nav-btn nav-btn-outline" href="index.html">← Overview</a>
+      <a class="nav-btn nav-btn-primary" href="02-form-and-landing.html">Phase 2 →</a>
+    </div>
+
+  </div>
+  <script src="../shared/app-intro.js"></script>
+  <script src="fp-shared.js"></script>
+</body>
+
+</html>
