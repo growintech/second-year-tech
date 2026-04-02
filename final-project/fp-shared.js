@@ -727,9 +727,10 @@
       '.fp-tour-backdrop{position:fixed;inset:0;pointer-events:all}' +
       /* Highlight cut-out */
       '.fp-tour-highlight{position:absolute;border-radius:12px;box-shadow:0 0 0 4px rgba(0,225,255,.55),0 0 20px rgba(0,225,255,.3),0 0 60px rgba(0,225,255,.12);z-index:2;pointer-events:none;transition:all .5s cubic-bezier(.16,1,.3,1);animation:fpTourPulse 2.5s ease-in-out infinite}' +
+      '.fp-tour-highlight.fp-no-transition{transition:none!important}' +
       '@keyframes fpTourPulse{0%,100%{box-shadow:0 0 0 4px rgba(0,225,255,.55),0 0 20px rgba(0,225,255,.3),0 0 60px rgba(0,225,255,.12)}50%{box-shadow:0 0 0 6px rgba(0,225,255,.75),0 0 30px rgba(0,225,255,.4),0 0 80px rgba(0,225,255,.2)}}' +
       /* Tooltip card */
-      '.fp-tour-tooltip{position:absolute;z-index:3;pointer-events:all;max-width:min(320px,calc(100vw - 32px));width:max-content;opacity:0;transform:translateY(12px);transition:opacity .4s ease .15s,transform .4s cubic-bezier(.16,1,.3,1) .15s;box-sizing:border-box}' +
+      '.fp-tour-tooltip{position:absolute;z-index:3;pointer-events:all;max-width:min(320px,calc(100vw - 32px));width:320px;opacity:0;transform:translateY(12px);transition:opacity .4s ease .15s,transform .4s cubic-bezier(.16,1,.3,1) .15s;box-sizing:border-box}' +
       '#fp-tour-overlay.visible .fp-tour-tooltip{opacity:1;transform:translateY(0)}' +
       '.fp-tour-tooltip-card{background:rgba(8,16,32,.92);border:1px solid rgba(0,225,255,.25);border-radius:14px;padding:18px 20px 16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 16px 48px rgba(0,0,0,.45)}' +
       '.fp-tour-tooltip-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.3}' +
@@ -869,20 +870,13 @@
 
       var rightEdge = hlLeft + hlW;
       var spaceRight = window.innerWidth - rightEdge;
-      // For right-positioned tooltips, use the page-wrap right edge
-      var pageWrap = document.querySelector('.page-wrap');
-      if (pageWrap && stepData.position === 'right') {
-        var pwRect = pageWrap.getBoundingClientRect();
-        rightEdge = pwRect.right + padX;
-        spaceRight = window.innerWidth - rightEdge;
-      }
 
       // Reset maxWidth each positioning pass
       tooltip.style.maxWidth = '';
 
-      if (stepData.position === 'right' && spaceRight > 260) {
+      if (stepData.position === 'right' && spaceRight > 320) {
         // Place to the right of the content area
-        var rightMax = Math.min(300, spaceRight - tooltipGap - 16);
+        var rightMax = Math.min(320, spaceRight - tooltipGap - 16);
         tooltip.style.maxWidth = rightMax + 'px';
         tooltip.style.left = (rightEdge + tooltipGap) + 'px';
         tooltip.style.right = 'auto';
@@ -973,11 +967,19 @@
       }, 500);
     }
 
+    var resizeTimer = null;
     // Update mask hole on scroll/resize
     function updatePositions() {
       if (!tourActive) return;
       var stepData = available[currentStep];
-      if (stepData) positionElements(stepData);
+      if (stepData) {
+        highlight.classList.add('fp-no-transition');
+        positionElements(stepData);
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          highlight.classList.remove('fp-no-transition');
+        }, 150);
+      }
     }
     window.addEventListener('scroll', updatePositions);
     window.addEventListener('resize', updatePositions);
