@@ -4,6 +4,30 @@
  * Uses CSS variables from shared/style-intro.css.
  */
 
+/* ── Tour Button ── */
+.tour-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+}
+.tour-btn:hover {
+  background: var(--surface-2);
+  border-color: rgba(0, 225, 255, 0.3);
+}
+
+
+
 /* ── Phase navigation grid (main page) ── */
 .phase-nav {
   display: grid;

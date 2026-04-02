@@ -33,8 +33,8 @@ This is the singleton Supabase client and the single source of truth for all aut
 ### Constants
 
 ```js
-const SUPABASE_URL      = 'https://xxxxxxxxxxxx.supabase.co'   // replace with real value
-const SUPABASE_ANON_KEY = 'eyJ...'                              // replace with real value
+const SUPABASE_URL      = 'https://wkbnckjssidnzvvvzthf.supabase.co'
+const SUPABASE_ANON_KEY = 'sb_publishable_ip8-A_LhROpjC0CrExYN0A_cgnfigyS'
 
 const SCHOOLS = [
   { code: 'M1', label: 'Monti — 1° anno' },
@@ -49,9 +49,14 @@ const SCHOOLS = [
 ### Client
 
 ```js
-// Import via CDN in every HTML file that uses auth.js:
+// Load Supabase CDN before any module script — in <head> of every HTML file:
 // <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-// <script type="module" src="../../shared/auth.js"></script>
+
+// Import path depends on the file's location in the games/ folder:
+//   games/index.html and games/profile.html  → "./shared/auth.js"
+//   games/hacking-sim/index.html             → "../shared/auth.js"
+//   games/terminal-run/index.html            → "../shared/auth.js"
+// Never use ../../shared/auth.js — there is no auth.js outside the games/ folder.
 
 const { createClient } = supabase
 export const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
@@ -448,7 +453,7 @@ Same pattern as above, replace title and comment.
 
 - Use `type="module"` on all script tags that import from `auth.js` or `leaderboard.js`. ES module `import`/`export` works natively in all modern browsers without a bundler.
 - The Supabase CDN script (`@supabase/supabase-js@2`) must load **before** any module that uses `supabase`. Load it as a regular (non-module) `<script>` tag in `<head>`.
-- **Absolute redirect paths:** `requireAuth()` and `logout()` must use absolute paths (`/games/index.html`, `/games/profile.html`), never relative ones (`../games/index.html`). Relative paths break when called from different folder depths.
+- **Absolute redirect paths:** `requireAuth()` and `logout()` use absolute paths (`/games/index.html`, `/games/profile.html`). This is intentional and does **not** conflict with the repo's relative-path rule in `CLAUDE.md`. That rule applies to lesson content assets (CSS, JS, images) that must work from `file://`. Auth redirects are different — they only ever run on a live server origin, since auth flows require network access to Supabase regardless. Relative redirects like `../games/index.html` break when called from different folder depths; absolute paths are the only safe choice here.
 - **Nickname check uses `.eq()`, not `.ilike()`:** The `citext` column type handles case-insensitive equality natively. Using `.ilike()` would be wrong — `_` and `-` are SQL LIKE wildcard characters and would produce false matches for nicknames containing them.
 - **All leaderboard joins use `profiles_public`**, not `profiles`. This is the structural PII guard — it is not optional. Never query `profiles` from `leaderboard.js`.
 - **`getPersonalBest()` uses `.maybeSingle()`**, not `.single()`. A student with no scores returns `null`, not an error.
